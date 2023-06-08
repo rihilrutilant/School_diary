@@ -1,0 +1,435 @@
+/* .rightside-section {
+  padding: 59px 130px 336px 130px;
+} */
+
+.add_hPlan {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+}
+
+.add_hPlan button {
+  border: 2px solid rgba(115, 115, 115, 1);
+  border-radius: 5px;
+  color: rgba(115, 115, 115, 1);
+  font-size: 20px;
+  font-weight: 400;
+  background: #f5f5f5;
+  padding: 14px 20px;
+  cursor: pointer;
+}
+
+
+.add_hPlan button:hover {
+  background: #d8d8d8;
+}
+
+.eventFor {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 30px;
+}
+
+.eventFor h3 {
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.eventfor_holiday {
+  display: flex;
+  align-items: center;
+}
+
+.eventfor_holiday label {
+  padding: 0 10px;
+  font-size: 18px;
+}
+
+.eventfor_holiday input[type="checkbox"] {
+  zoom: 1.5;
+}
+
+.eventfor_holiday input[type="checkbox"] :hover {
+  background-color: rgba(0, 196, 249, 1) rgba(0, 131, 220, 1);
+  color: white;
+}
+
+/* &&&&&&&&&&&&&      selectHoliday      &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&  */
+
+.selectHoliday {
+  max-width: 1200px;
+  margin: 35px auto;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 55px;
+}
+
+.selectHoliday_list {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.dropeDown_holiday {
+  width: 500px;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+}
+
+.selectHoliday_btn {
+  text-align: right;
+  padding-top: 50px;
+}
+
+.selectHoliday_btn .h-selet_button {
+  padding: 15px 35px;
+  color: white;
+  background: linear-gradient(93.69deg, #00c5f9 2.23%, #0083dc 96.2%);
+  font-size: 20px;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.selectHoliday_btn .h-selet_button:hover {
+  background: linear-gradient(93.69deg, #08c2f5 2.23%, #026bb2 96.2%);
+}
+
+.scrollable-menu {
+  height: auto;
+  max-height: 200px;
+  overflow-x: hidden;
+}
+
+/* &&&&&&&&&&&&&      holiday table    &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&   */
+
+.info {
+  max-width: 363px;
+  width: 100%;
+}
+
+.tab_holiday th,
+.tab_holiday td {
+  border-collapse: collapse;
+  padding: 10px 32px;
+  font-size: 17px;
+}
+
+.FaRegTrashAlt {
+  margin: 0 !important;
+}
+
+.edit-delete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.tab_holiday tr {
+  border-bottom: 1px solid black;
+}
+
+.tab_holiday tr:last-child {
+  border-bottom: 1px solid black;
+}
+
+.tab_holiday {
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 55px 19px;
+  margin: 50px auto;
+  width: 100%;
+}
+
+.edit button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* ----------------     MODAL       ------------------  */
+.modal-header .h_timetable {
+  box-shadow: none;
+  border-radius: 10px;
+  margin: 0px auto;
+  width: 100%;
+  padding: 50px;
+}
+
+.modal-footer .hTable_btn .save_btn {
+  padding: 11px 38px;
+  font-size: 18px;
+}
+
+.eventfor_holiday input {
+  width: 25px;
+  height: 25px;
+}
+
+/* responsive    --------------------------  */
+
+@media screen and (max-width: 1440px) {
+  .dropeDown_holiday {
+    width: 420px;
+    font-size: 20px;
+  }
+
+  .selectHoliday_btn .h-selet_button {
+    padding: 12px 30px;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .add_hPlan button {
+    font-size: 18px;
+    padding: 13px;
+  }
+
+  .selectHoliday {
+    padding: 45px;
+  }
+
+  .tab_holiday th,
+  .tab_holiday td {
+    font-size: 13px;
+  }
+}
+
+@media screen and (max-width: 1260px) {
+  .add_hPlan button {
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  .dropeDown_holiday {
+    width: 350px;
+    font-size: 15px;
+  }
+
+  .selectHoliday_btn .h-selet_button {
+    font-size: 15px;
+  }
+
+  .selectHoliday {
+    padding: 40px;
+  }
+}
+
+@media screen and (max-width: 1130px) {
+  .eventFor h3 {
+    font-size: 20px;
+  }
+
+  .eventFor {
+    max-width: 470px;
+    width: 100%;
+  }
+
+  .dropeDown_holiday {
+    width: 280px;
+    font-size: 15px;
+  }
+
+  .selectHoliday_btn {
+    padding-top: 30px;
+  }
+
+  .selectHoliday_btn .h-selet_button {
+    font-size: 13px;
+  }
+
+  .selectHoliday {
+    padding: 40px;
+  }
+
+  .tab_holiday th,
+  .tab_holiday td {
+    font-size: 12px;
+  }
+
+  .eventfor_holiday input {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.hTable_title input {
+  border: none;
+  outline: none;
+  padding: 15px 0px 5px 0px;
+  font-size: 20px;
+  width: 100%;
+  border-bottom: 1px solid rgba(40, 167, 232, 1);
+}
+
+.hTable_title label {
+  font-size: 25px;
+  font-weight: 500;
+}
+
+/* -------------------- date --------------------  */
+
+.hTable_date {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 50px;
+  width: 100%;
+}
+
+.hTable_date label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 23px;
+  font-weight: 500;
+}
+
+.hTable_date input {
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+  padding: 15px 0px 5px 0px;
+  font-size: 20px;
+  width: 100%;
+}
+
+.hTable_date .date_from,
+.hTable_date .date_to {
+  width: 45%;
+}
+
+/* -------------------- note --------------------  */
+
+.hTable_note {
+  padding-top: 50px;
+}
+
+.hTable_note label {
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.hTable_note input {
+  font-size: 20px;
+  padding: 15px 0px 5px 0px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid black;
+  width: 100%;
+}
+
+/* -------------------- hTable_btn --------------------  */
+.hTable_btn {
+  display: flex;
+  justify-content: space-between;
+}
+
+.hTable_btn .save_btn {
+  padding: 17px 45px;
+  color: white;
+  background: linear-gradient(93.69deg, #00c5f9 2.23%, #0083dc 96.2%);
+  font-size: 20px;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.hTable_btn .save_btn:hover {
+  background: linear-gradient(93.69deg, #08c2f5 2.23%, #026bb2 96.2%);
+}
+
+.hTable_btn .viewAll_btn {
+  padding: 17px 45px;
+  color: rgba(40, 167, 232, 1);
+  background: transparent;
+  font-size: 20px;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.hTable_btn .viewAll_btn:hover {
+  color: #0083dc;
+}
+
+/* ----------------     MODAL       ------------------  */
+
+.modal-footer .hTable_btn .save_btn {
+  padding: 11px 38px;
+  font-size: 18px;
+}
+
+/* -------------    RISONSIVE    ---------------------------------------------------------------------  */
+@media screen and (max-width: 1400px) {
+  .h_timetable {
+    padding: 0 30px;
+  }
+
+  .h_timetable label {
+    font-size: 20px;
+  }
+
+  .h_timetable input {
+    margin-top: 10px;
+    padding: 11px;
+    font-size: 20px;
+  }
+
+  .hTable_btn .viewAll_btn {
+    padding: 16px 35px;
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .hTable_btn .save_btn {
+    padding: 16px 35px;
+    font-size: 18px;
+    font-weight: 500;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .h_timetable {
+    padding: 55px 50px;
+  }
+
+  .h_timetable label {
+    font-size: 18px;
+  }
+
+  .h_timetable input {
+    margin-top: 0;
+    padding: 11px;
+    font-size: 17px;
+  }
+
+  .hTable_btn .viewAll_btn {
+    padding: 14px 30px;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .hTable_btn .save_btn {
+    padding: 14px 30px;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .tab_holiday th, .tab_holiday td {
+    padding: 20px;
+  }
+}

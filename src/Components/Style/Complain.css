@@ -1,0 +1,194 @@
+.add_complain {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add_complain button {
+  padding: 15px 45px;
+  border: 2px solid rgba(115, 115, 115, 1);
+  border-radius: 5px;
+  color: rgba(115, 115, 115, 1);
+  background: #f5f5f5;
+  font-size: 20px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+/* -----------------------   COMPLAIN BOX      --------------- */
+.complainType_main {
+  max-width: 1300px;
+  width: 100%;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 55px 60px;
+}
+
+.complain_box {
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
+  /* padding: 55px 60px; */
+  /* box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1); */
+  /* border-radius: 10px; */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 30px;
+}
+
+.complain_box label {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.dropeDown_class {
+  width: 250px;
+  padding: 12px;
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.complain_type input,
+.complain_by input {
+  width: 250px;
+  font-size: 18px;
+  font-weight: 300;
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+}
+
+/* -----------------------   COMPLAIN FORM     --------------- */
+.cmpForm_main {
+  max-width: 1300px;
+  width: 100%;
+  margin: 55px auto;
+}
+
+.complain_form {
+  max-width: 1300px;
+  width: 100%;
+  margin: 55px auto;
+  padding: 50px 75px;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.complain_form label {
+  font-size: 20px;
+  font-weight: 500;
+  padding: 30px 0 10px 0;
+}
+
+.comForm_title .formTitle_input {
+  width: 100%;
+  font-size: 18px;
+  font-weight: 300;
+  padding: 10px;
+  outline: none;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+.complain_btn button {
+  padding: 15px 100px;
+  border: none;
+  border-radius: 2px;
+  background: linear-gradient(91.02deg, #00c6f9 0%, #0083dc 100%);
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.modal {
+  margin-top: 50px;
+}
+
+.hTable_id {
+  padding-top: 50px;
+}
+
+.hTable_name {
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
+}
+
+.hTable_name label {
+  font-size: 25px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+/* $$$$$$$$$$$$$$$$       RESPONSIVE      $$$$$$$$$$$$$$$$ */
+
+@media screen and (max-width: 1490px) {
+  .complain_box {
+    max-width: 1100px;
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+  .dropeDown_class {
+    width: 350px;
+    font-size: 18px;
+  }
+
+  .complain_type input,
+  .complain_by input {
+    width: 350px;
+    font-size: 18px;
+  }
+
+  .complain_btn button {
+    padding: 15px 80px;
+  }
+}
+
+@media screen and (max-width: 1220px) {
+  .complain_box {
+    max-width: 600px;
+    width: 100%;
+  }
+
+  .dropeDown_class {
+    width: 200px;
+    font-size: 16px;
+  }
+
+  .complain_type input,
+  .complain_by input {
+    width: 200px;
+    font-size: 16px;
+  }
+
+  .complain_box label {
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .complain_form label {
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .complain_btn button {
+    padding: 15px 60px;
+  }
+}
+
+.modal-header1 {
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  padding: 80px;
+  border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);
+  border-top-left-radius: var(--bs-modal-inner-border-radius);
+  border-top-right-radius: var(--bs-modal-inner-border-radius);
+}

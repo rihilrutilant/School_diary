@@ -1,0 +1,89 @@
+.examschedule_btn {
+    position: absolute;
+    border: 1px solid #737373;
+    border-radius: 2px;
+    background: transparent;
+    width: 230px;
+    height: 45px;
+    padding: 12px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+    color: #737373;
+    text-align: center;
+    right: 50px;
+    top: 185px;
+}
+
+.exam_info {
+    padding: 50px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.exam_info_select {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.exam_info_select .custom-dropdown {
+    width: 100%;
+    max-width: 270px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #000 !important;
+}
+
+.exam_info_select .custom-dropdown select {
+    width: 100%;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 20px;
+    color: #272727;
+    border: none;
+    appearance: none;
+    background: url(../Images/down-arrow.svg) no-repeat;
+    background-position: right center;
+    outline: none;
+}
+
+.exam_info .submit_part {
+    text-align: right;
+    width: 100%;
+    margin-top: 40px;
+}
+
+.exam_info .submit_part .submit_btn {
+    background: linear-gradient(91.02deg, #00C6F9 0%, #0083DC 100%);
+    border-radius: 2px;
+    width: 150px;
+    height: 50px;
+    padding: 15px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 20px;
+    color: #FFFFFF;
+    border: none;
+}
+
+.login_error {
+    font-size: 18px;
+    line-height: 18px;
+    color: #bf0000;
+}
+
+@media only screen and (max-width:991px) {
+    .exam_info_select .custom-dropdown select {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 1199px) {
+    .exam_info {
+        padding: 30px;
+    }
+}

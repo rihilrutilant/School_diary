@@ -1,0 +1,423 @@
+// // import React, { useEffect, useRef, useState } from 'react'
+// // import "../Style/Id.css"
+// // import Navbar from "../Pages/Navbar"
+// // import Topbar from './Topbar';
+// // import { ReactSession } from 'react-client-session';
+// // import { Link } from 'react-router-dom';
+// // import Edit from "../Images/edit.svg"
+// // import Delete from "../Images/delete.svg"
+// // import { toast, ToastContainer } from 'react-toastify';
+// // import 'react-toastify/dist/ReactToastify.css';
+
+// // const Demoo = () => {
+
+// //   //--------Main Content--------//
+
+// //   ReactSession.setStoreType("localStorage");
+// //   const [navVisible, showNavbar] = useState(true);
+
+// //   useEffect(() => {
+// //     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+// //   }, []);
+
+// //   const [checkbox1Checked, setCheckbox1Checked] = useState(true);
+// //   const [checkbox2Checked, setCheckbox2Checked] = useState(false);
+// //   const handleCheckbox1Change = () => {
+// //     setCheckbox1Checked(!checkbox1Checked);
+// //     setCheckbox2Checked(false);
+// //   };
+
+// //   const handleCheckbox2Change = () => {
+// //     setCheckbox2Checked(!checkbox2Checked);
+// //     setCheckbox1Checked(false);
+// //   };
+
+// //   const onChange = (event) => {
+// //     const value = event.target.value;
+// //     ReactSession.set("username", value);
+// //     window.location.href = `/StudentData`;
+// //   };
+
+// //   //-------Student Data--------/
+// //   const [YourRestList, YoursetRestList] = useState();
+
+// //   useEffect(() => {
+// //     getYourRestaurant();
+// //   }, []);
+
+
+// //   let Standard
+
+// //   const getYourRestaurant = async () => {
+// //     const response = await fetch("http://localhost:5050/api/classcode/get_all_classes",
+// //       {
+// //         method: "POST",
+// //         body: JSON.stringify({
+// //           Standard
+// //         }),
+// //         headers: {
+// //           "Content-Type": "application/json",
+// //           "authToken_admin": localStorage.getItem("AToken")
+// //         },
+// //       });
+
+// //     const json = await response.json();
+// //     YoursetRestList(json);
+// //   };
+// //   // console.log(YourRestList);
+
+// //   //-------Teacher Data ----------//
+// //   const [teachers, setTeachers] = useState();
+
+// //   useEffect(() => {
+// //     getTeachers();
+// //   }, []);
+
+
+// //   let T_name
+// //   let _id
+
+// //   const getTeachers = async () => {
+// //     const response = await fetch("http://localhost:5050/api/admin/fetch_all_teachers", {
+// //       method: "POST",
+// //       body: JSON.stringify({
+// //         T_name,
+// //         _id
+// //       }),
+// //       headers: {
+// //         "Content-Type": "application/json",
+// //         "authToken_admin": localStorage.getItem("AToken")
+// //       },
+// //     });
+
+// //     const json = await response.json();
+// //     setTeachers(json);
+
+// //     const ids = json.map((item) => item._id);
+// //     // console.log(ids);
+// //   };
+
+// //   //-------Create Teacher ---------//
+// //   const [credentials, setCredentials] = useState({
+// //     T_icard_Id: "",
+// //     T_name: "",
+// //     T_mobile_no: "",
+// //     T_address: "",
+// //     Subject_code: "",
+// //     T_Class_code: "",
+// //     T_Password: ""
+// //   });
+
+// //   const handleSubmit = async (e) => {
+
+// //     e.preventDefault();
+// //     const {
+// //       T_icard_Id,
+// //       T_name,
+// //       T_mobile_no,
+// //       T_address,
+// //       Subject_code,
+// //       T_Class_code,
+// //       T_Password
+// //     } = credentials;
+// //     const response = await fetch("http://localhost:5050/api/teachers/create_teacher", {
+// //       method: 'POST',
+// //       body: JSON.stringify({
+// //         T_icard_Id,
+// //         T_name,
+// //         T_mobile_no,
+// //         T_address,
+// //         Subject_code,
+// //         T_Class_code,
+// //         T_Password
+// //       }),
+// //       headers: {
+// //         'Content-Type': 'application/json',
+// //         'authToken_admin': localStorage.getItem("AToken")
+// //       }
+// //     });
+
+// //     const json = await response.json();
+// //     if (json.success) {
+// //       toast.success(json.success, { position: toast.POSITION.TOP_RIGHT });
+// //       const timer = setTimeout(() => {
+// //         window.location.href = "/id"
+// //       }, 1000);
+// //       return () => clearTimeout(timer);
+// //     }
+// //     else {
+// //       toast.error(json.error, { position: toast.POSITION.TOP_RIGHT });
+// //     }
+// //   }
+
+// //   const onChange1 = (e) => {
+// //     setCredentials({ ...credentials, [e.target.name]: e.target.value });
+// //   }
+
+
+// //   //---------Delete Teacher-------//
+// //   function deleteRest(id) {
+// //     fetch(`http://localhost:5050/api/teachers/delete_teachers_info/${id}`, {
+// //       method: "DELETE",
+// //       headers: {
+// //         "Content-Type": "application/json",
+// //         "authToken_admin": localStorage.getItem("AToken"),
+// //       },
+// //     }).then((result) => {
+// //       result.json().then((resp) => {
+// //         console.log(resp);
+// //         getTeachers();
+// //       })
+// //     })
+// //   }
+
+// //   //----------Update Teacher Data -----------//
+// //   const ref = useRef(null);
+
+// //   const [updateTeacher, setUpdateTeacher] = useState({
+// //     T_icard_Id: "",
+// //     T_name: "",
+// //     T_mobile_no: "",
+// //     T_address: "",
+// //     Subject_code: "",
+// //     T_Class_code: "",
+// //     T_Password: ""
+// //   })
+
+
+
+// //   const updateRestTeacher = (currentTeacher) => {
+// //     ref.current.click();
+// //     setUpdateTeacher({
+// //       id: currentTeacher._id,
+// //       T_icard_Id: currentTeacher.T_icard_Id,
+// //       T_name: currentTeacher.T_name,
+// //       T_mobile_no: currentTeacher.T_mobile_no,
+// //       T_address: currentTeacher.T_address,
+// //       Subject_code: currentTeacher.Subject_code,
+// //       T_Class_code: currentTeacher.T_Class_code,
+// //       T_Password: currentTeacher.T_Password
+// //     })
+// //   }
+
+// //   // console.log(setUpdateTeacher);
+
+// //   const handleSubmit1 = (e) => {
+// //     e.preventDefault();
+// //     RestUpdateTeacher(
+// //       updateTeacher.id,
+// //       updateTeacher.T_Class_code,
+// //       updateTeacher.T_Password,
+// //       updateTeacher.T_address,
+// //       updateTeacher.T_icard_Id,
+// //       updateTeacher.T_mobile_no,
+// //       updateTeacher.T_name,
+// //       updateTeacher.Subject_code,
+// //     );
+// //   }
+
+// //   const RestUpdateTeacher = async (id, T_Class_code, T_Password, T_address, T_icard_Id, T_mobile_no, T_name, Subject_code) => {
+// //     const responseTeacher = await fetch(`http://localhost:5050/api/teachers/update_teacher_details/${id}`, {
+// //       method: "PATCH",
+// //       headers: {
+// //         "Content-Type": "application/json",
+// //         "authToken_admin": localStorage.getItem("AToken"),
+// //       },
+// //       body: JSON.stringify({ T_Class_code, T_Password, T_address, T_icard_Id, T_mobile_no, T_name, Subject_code })
+// //     });
+
+// //     const json = await responseTeacher.json();
+// //     if (json.success === true) {
+// //       getTeachers();
+// //       toast.success("Teacher Update", { position: toast.POSITION.TOP_RIGHT });
+// //     }
+// //     else {
+// //       if(!json.error){
+// //         toast.error("Please Enter Valid", { position: toast.POSITION.TOP_RIGHT });
+// //       }
+// //       else{
+// //         toast.error(json.error, { position: toast.POSITION.TOP_RIGHT });
+
+// //       }
+// //     }
+// //   }
+
+// //   const onChanges = (e) => {
+// //     setUpdateTeacher({ ...updateTeacher, [e.target.name]: e.target.value });
+// //   }
+
+
+// //   return (
+// //     <>
+// //       <ToastContainer autoClose={2000} />
+// //       <div className="main-content">
+// //         <Navbar visible={navVisible} show={showNavbar} />
+// //         <div className="inner-main-content"  >
+// //           <Topbar />
+// //           <div className="container-fluid">
+// //             <h4 className='main-name'>Generate ID</h4>
+// //             <div className='ganerate_id_part'>
+// //               <div className='ganerate_id_check'>
+// //                 <h3>Generate ID for</h3>
+// //                 <label className='ganerateid_opt'>
+// //                   <input type="checkbox" checked={checkbox1Checked} onChange={handleCheckbox1Change} />
+// //                   Teacher
+// //                 </label>
+// //                 <label>
+// //                   <input type="checkbox" checked={checkbox2Checked} onChange={handleCheckbox2Change} />
+// //                   Students
+// //                 </label>
+// //               </div>
+// //               <div className='ganerateid_cnt'>
+// //                 <div className='ganerateid_cnt_inn'>
+
+// //                   {checkbox1Checked && (
+// //                     <div className='teacherid_check'>
+// //                       <button className='teacherid_create' data-bs-toggle="modal" data-bs-target="#staticBackdrop">+ Generate ID</button>
+// //                       <div className='teacherid_detail'>{
+// //                         teachers && teachers.map((d, i) => (
+// //                           <button className='studentid_btn' key={i}>
+// //                             {d.T_name}
+// //                             <Link className="edit_btn" onClick={() => updateRestTeacher(d)}>
+// //                               <img src={Edit} alt="edit" />
+// //                             </Link>
+// //                             <Link className='delete_btn' onClick={() => deleteRest(d.T_name)}>
+// //                               <img src={Delete} alt="delete" />
+// //                             </Link>
+// //                           </button>
+// //                         ))}
+// //                       </div>
+// //                     </div>
+// //                   )}
+
+// //                   {/* ------------------Edit Modal------------------ */}
+// //                   <button type="button" ref={ref} style={{ display: "none" }} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editTeacherModal">
+// //                     Launch demo modal
+// //                   </button>
+// //                   <div className="modal" id="editTeacherModal">
+// //                     <div className="modal-dialog">
+// //                       <div className="modal-content editid_modal">
+// //                         <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
+// //                         <form id="editid_form1" className="editid_form">
+// //                           <div className='input_part idcard_input'>
+// //                             <label>ID Card</label> <br />
+// //                             <input type="text" id="idcard1" name="T_icard_Id" required onChange={onChanges} value={updateTeacher.T_icard_Id} />
+// //                           </div>
+// //                           <div className='input_part name_input'>
+// //                             <label>Name</label> <br />
+// //                             <input type="text" id="name1" name="T_name" required onChange={onChanges} value={updateTeacher.T_name} />
+// //                           </div>
+// //                           <div className='input_part standard_input'>
+// //                             <label>Standard</label> <br />
+// //                             <input type="text" id="standard1" name="Subject_code" required onChange={onChanges} value={updateTeacher.Subject_code} />
+// //                           </div>
+// //                           <div className='input_part classcode_input'>
+// //                             <label>Class Code</label> <br />
+// //                             <input type="text" id="classcode1" name="T_Class_code" required onChange={onChanges} value={updateTeacher.T_Class_code} />
+// //                           </div>
+// //                           <div className='input_part mobile_input'>
+// //                             <label>Mobile</label> <br />
+// //                             <input type="number" id="mobile1" name="T_mobile_no" required onChange={onChanges} value={updateTeacher.T_mobile_no} />
+// //                           </div>
+// //                           <div className='input_part address_input'>
+// //                             <label>Address</label> <br />
+// //                             <input type="text" id="address1" name="T_address" required onChange={onChanges} value={updateTeacher.T_address} />
+// //                           </div>
+// //                           <div className='input_part password_input'>
+// //                             <label>Password</label> <br />
+// //                             <input type="password" id="password1" name="T_Password" required onChange={onChanges} value={updateTeacher.T_Password} />
+// //                           </div>
+// //                           <div className="save_part">
+// //                             <button className="save_btn" type="submit" data-bs-dismiss="modal" onClick={handleSubmit1}>SAVE</button>
+// //                           </div>
+// //                         </form>
+// //                       </div>
+// //                     </div>
+// //                   </div>
+
+// //                   <div className="modal fade sp_model_1" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+// //                     <div className="modal-dialog">
+// //                       <div className="modal-content editid_modal">
+// //                         <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
+// //                         <form id="editid_form" className="editid_form" onSubmit={handleSubmit}>
+// //                           <div className='input_part idcard_input'>
+// //                             <label>ID Card</label> <br />
+// //                             <input type="text" id="idcard" name="T_icard_Id" required onChange={onChange1} />
+// //                           </div>
+// //                           <div className='input_part name_input'>
+// //                             <label>Name</label> <br />
+// //                             <input type="text" id="name" name="T_name" required onChange={onChange1} />
+// //                           </div>
+// //                           <div className='input_part standard_input'>
+// //                             <label>Subject code</label> <br />
+// //                             <input type="text" id="standard" name="Subject_code" required onChange={onChange1} />
+// //                           </div>
+// //                           <div className='input_part classcode_input'>
+// //                             <label>Class Code</label> <br />
+// //                             <input type="text" id="classcode" name="T_Class_code" required onChange={onChange1} />
+// //                           </div>
+// //                           <div className='input_part mobile_input'>
+// //                             <label>Mobile</label> <br />
+// //                             <input type="number" id="mobile" name="T_mobile_no" required onChange={onChange1} />
+// //                           </div>
+// //                           <div className='input_part address_input'>
+// //                             <label>Address</label> <br />
+// //                             <input type="text" id="address" name="T_address" required onChange={onChange1} />
+// //                           </div>
+// //                           <div className='input_part password_input'>
+// //                             <label>Password</label> <br />
+// //                             <input type="password" id="password" name="T_Password" required onChange={onChange1} />
+// //                           </div>
+// //                           <div className="save_part">
+// //                             <button className="save_btn" type="submit">SAVE</button>
+// //                           </div>
+// //                         </form>
+// //                       </div>
+// //                     </div>
+// //                   </div>
+// //                 </div>
+// //               </div>
+// //             </div>
+// //           </div>
+// //         </div>
+// //       </div>
+// //     </>
+// //   )
+// // }
+
+// // export default Demoo
+
+
+
+import React, { useState } from 'react';
+import "../Style/Demoo.css"
+
+const Demoo = () => {
+  const [fileName, setFileName] = useState('');
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setFileName(file.name);
+  };
+
+  return (
+    <div>
+      <label htmlFor="file-upload" className="custom-file-upload">
+        {
+          !fileName && <span>Browse</span>
+        }
+        {
+          fileName && <span>{fileName}</span>
+        }
+      </label>
+      <input
+        id="file-upload"
+        type="file"
+        onChange={handleFileChange}
+        style={{ display: 'none' }}
+      />
+    </div>
+  );
+};
+
+export default Demoo;
