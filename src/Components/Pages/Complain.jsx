@@ -4,19 +4,22 @@ import "../Style/Complain.css";
 import Navbar from "../Pages/Navbar";
 import Topbar from "./Topbar";
 import { BiEditAlt } from 'react-icons/bi'
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { FaRegTrashAlt } from "react-icons/fa";
+import apiConst from "../Api_keys"
 
 const Complain = () => {
   const [navVisible, showNavbar] = useState(true);
   const refClose = useRef(null);
   const refClose2 = useRef(null);
-  const ref = useRef(null);
+
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     getTeachers();
     getYourRestaurant();
+    fetchData();
+    fetchDataS();
   }, []);
 
   //-------Teacher Data ----------//
@@ -25,7 +28,7 @@ const Complain = () => {
   const [teachers, setTeachers] = useState();
 
   const getTeachers = async () => {
-    const response = await fetch("http://localhost:5050/api/admin/fetch_all_teachers", {
+    const response = await fetch(apiConst.fetch_all_teachers, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -40,6 +43,7 @@ const Complain = () => {
   //--------------- Teacher Data --------------------
 
   //-------Student Data--------/
+
   const [YourRestList, YoursetRestList] = useState();
   const [stdData, setStdData] = useState();
   const [getStudent, setgetStudent] = useState()
@@ -50,7 +54,7 @@ const Complain = () => {
 
 
   const getYourRestaurant = async () => {
-    const response = await fetch("http://localhost:5050/api/classcode/get_all_classes",
+    const response = await fetch(apiConst.fetch_all_standards,
       {
         method: "POST",
         headers: {
@@ -68,8 +72,8 @@ const Complain = () => {
 
   //------------- Select Group ------------------------------
 
-  const [teacher, setTeacher] = useState(false);
-  const [student, setStudent] = useState(true);
+  const [teacher, setTeacher] = useState(true);
+  const [student, setStudent] = useState(false);
 
   const handleTeacher = () => {
     setTeacher(!teacher);
@@ -81,18 +85,18 @@ const Complain = () => {
     setStudent(!student);
   };
 
-  const [secondDD, setsecondDD] = useState(false)
-  const [ThirdDD, setThirdDD] = useState(false)
+  const [secondDD, setsecondDD] = useState()
+  const [ThirdDD, setThirdDD] = useState()
 
   const getStandard = async (e) => {
     const Standard = e.target.value
     if (Standard === "DEFAULT") {
-      console.log("abcd");
+      toast.error("Choose Correct Data", { position: toast.POSITION.TOP_RIGHT });
     }
     else {
       setStdVal(e.target.value)
 
-      const response = await fetch("http://localhost:5050/api/classcode/get_all_classes_std_wise", {
+      const response = await fetch(apiConst.get_all_classes_std_wise, {
         method: 'POST',
         body: JSON.stringify({
           Standard
@@ -104,7 +108,8 @@ const Complain = () => {
       });
       const json = await response.json();
       setStdData(json);
-      setsecondDD(true)
+      setsecondDD(false)
+      setThirdDD(false)
     }
   }
 
@@ -113,11 +118,11 @@ const Complain = () => {
     setClassVal(e.target.value)
 
     if (S_Class_code === "DEFAULT") {
-      console.log("This inkjabnkjm");
+      toast.error("Choose Correct Data", { position: toast.POSITION.TOP_RIGHT });
     } else {
 
 
-      const response = await fetch("http://localhost:5050/api/admin/fetch_all_Students", {
+      const response = await fetch(apiConst.fetch_all_students, {
         method: 'POST',
         body: JSON.stringify({
           S_Class_code
@@ -130,13 +135,265 @@ const Complain = () => {
 
       const json = await response.json();
       setgetStudent(json);
-      setThirdDD(true)
+      setThirdDD(false)
     }
   }
 
-  const getStudentData = async (e) => {
-    console.log(e.target.value);
+  //------------------------Add Complain for Teacher---------------------
+
+  const [newComplain, setNewComplain] = useState({
+    Complain_title: "",
+    Complain_description: "",
+    user: ""
+  })
+
+  const AddComplainTeacher = async (e) => {
+    e.preventDefault();
+    const {
+      Complain_title,
+      Complain_description,
+      user
+    } = newComplain;
+
+    const User_Id = user.split('/')[1];
+    const User_name = user.split('/')[0];
+    const Groups = "Teacher"
+
+    const response = await fetch(apiConst.send_complains_to_the_t_S, {
+      method: 'POST',
+      body: JSON.stringify({
+        Complain_title,
+        Complain_description,
+        User_Id,
+        User_name,
+        Groups
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'authToken_admin': localStorage.getItem("AToken")
+      }
+    });
+
+    const json = await response.json();
+    if (json.success) {
+      refClose.current.click();
+      fetchData();
+      toast.success("Complain added successfully", { position: toast.POSITION.TOP_RIGHT });
+      const timer = setTimeout(() => {
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+    else {
+      if (!json.error[0].msg) {
+        toast.error(json.error, { position: toast.POSITION.TOP_RIGHT });
+      }
+      else {
+        toast.error(json.error[0].msg, { position: toast.POSITION.TOP_RIGHT });
+      }
+    }
   }
+
+  const onChnageComplain = (e) => {
+    console.log(e.target.value);
+    setNewComplain({ ...newComplain, [e.target.name]: e.target.value })
+  }
+
+  //------------------------Add Complain for Teacher---------------------
+
+  //------------------------Add Complain for Student---------------------
+
+  const [newComplainS, setNewComplainS] = useState({
+    Complain_title: "",
+    Complain_description: "",
+    sUser: ""
+  })
+
+  const AddComplainStudent = async (e) => {
+    e.preventDefault();
+    const {
+      Complain_title,
+      Complain_description,
+      sUser
+    } = newComplainS;
+
+    const User_Id = sUser.split('/')[1];
+    const User_name = sUser.split('/')[0];
+    const Groups = "Student"
+
+    const response = await fetch(apiConst.send_complains_to_the_t_S, {
+      method: 'POST',
+      body: JSON.stringify({
+        Complain_title,
+        Complain_description,
+        User_Id,
+        User_name,
+        Groups
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'authToken_admin': localStorage.getItem("AToken")
+      }
+    });
+
+    const json = await response.json();
+    if (json.success) {
+      refClose.current.click();
+      fetchDataS();
+      toast.success("Complain added successfully", { position: toast.POSITION.TOP_RIGHT });
+      const timer = setTimeout(() => {
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+    else {
+      if (!json.error[0].msg) {
+        toast.error(json.error, { position: toast.POSITION.TOP_RIGHT });
+      }
+      else {
+        toast.error(json.error[0].msg, { position: toast.POSITION.TOP_RIGHT });
+      }
+    }
+  }
+
+  const onChnageComplainS = (e) => {
+    setNewComplainS({ ...newComplainS, [e.target.name]: e.target.value })
+  }
+
+  //------------------------Add Complain Student---------------------
+
+  //------------------------------- Fetch Complain Teacher------------------------------
+  const [complainsT, setComplainsT] = useState([]);
+
+  const fetchData = async () => {
+    const Groups = "Teacher"
+    try {
+      const response = await fetch(apiConst.fetch_all_complains_of_admin, {
+        method: "POST",
+        body: JSON.stringify({ Groups }),
+        headers: {
+          "Content-Type": "application/json",
+          "authToken_admin": localStorage.getItem("AToken")
+        },
+      });
+      const jsonData = await response.json();
+      setComplainsT(jsonData); // Update the state with the received data array
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  //------------------------------- Fetch Complain Teacher------------------------------
+
+  //------------------------------- Fetch Complain STUDENT------------------------------
+  const [complainsS, setComplainsS] = useState([]);
+
+  const fetchDataS = async () => {
+    const Groups = "Student"
+    try {
+      const response = await fetch(apiConst.fetch_all_complains_of_admin, {
+        method: "POST",
+        body: JSON.stringify({ Groups }),
+        headers: {
+          "Content-Type": "application/json",
+          "authToken_admin": localStorage.getItem("AToken")
+        },
+      });
+      const jsonData = await response.json();
+      setComplainsS(jsonData); // Update the state with the received data array
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  //------------------------------- Fetch Complain STUDENT------------------------------
+
+  //-----------------------Delete Complain --------------------------------
+
+  const deleteRest = (id) => {
+    fetch(`http://localhost:5050/api/admin/delete_complain/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "authToken_admin": localStorage.getItem("AToken"),
+      },
+    }).then((result) => {
+      result.json().then((resp) => {
+        if (resp.success) {
+          toast.success("Event Deleted Successfully", { position: toast.POSITION.TOP_RIGHT });
+          fetchData();
+          fetchDataS();
+        }
+        else {
+          toast.error(resp.error, { position: toast.POSITION.TOP_RIGHT });
+        }
+      })
+    })
+  }
+
+  //--------------------Delete Complain --------------------------------
+
+  //--------------------Edit Complain --------------------------------
+  const ref2 = useRef(null);
+
+  const [updateEvents, setUpdateEvents] = useState({
+    Complain_title: "",
+    Complain_description: "",
+  })
+
+  const updateRestEvents = (currentEvents) => {
+    ref2.current.click();
+    setUpdateEvents({
+      id: currentEvents._id,
+      Complain_title: currentEvents.Complain_title,
+      Complain_description: currentEvents.Complain_description,
+    })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    RestUpdateEvents(
+      updateEvents.id,
+      updateEvents.Complain_title,
+      updateEvents.Complain_description,
+    );
+  }
+
+  const RestUpdateEvents = async (id, Complain_title, Complain_description) => {
+
+    const responseHoliday = await fetch(`http://localhost:5050/api/admin/edit_complain/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "authToken_admin": localStorage.getItem("AToken"),
+      },
+      body: JSON.stringify({ Complain_title, Complain_description })
+    });
+
+    // console.log(responseHoliday);
+    const json = await responseHoliday.json();
+
+    // console.log(json);
+    if (json.success === true) {
+      refClose2.current.click();
+      fetchDataS();
+      fetchData();
+      toast.success("Holiday Update", { position: toast.POSITION.TOP_RIGHT });
+    }
+    else {
+      if (!json.error[0].msg) {
+        toast.error(json.error, { position: toast.POSITION.TOP_RIGHT });
+      }
+      else {
+        toast.error(json.error[0].msg, { position: toast.POSITION.TOP_RIGHT });
+      }
+    }
+  }
+
+  const onChanges = (e) => {
+    setUpdateEvents({ ...updateEvents, [e.target.name]: e.target.value });
+  }
+
+  //--------------------Edit Complain --------------------------------
+
   return (
     <>
       <ToastContainer autoClose={2000} />
@@ -150,7 +407,7 @@ const Complain = () => {
               <button data-bs-toggle="modal" data-bs-target="#add_Holiday">+ Add Complain</button>
             </div>
             <div className="eventFor">
-              <h3>Event Complain For</h3>
+              <h3>Complain For</h3>
               <div className="eventfor_holiday">
                 <input type="radio" checked={teacher} onChange={handleTeacher} />
                 <label htmlFor="Teacher"> Teacher</label>
@@ -174,86 +431,66 @@ const Complain = () => {
                   </thead>
                   {teacher && (
                     <tbody>
-                      <tr>
-                        <td>EFG456XY</td>
-                        <td>Rihil Sanghani</td>
-                        <td>This is for Testing perpose</td>
-                        <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, magnam.</td>
-                        <td>2021/01/01</td>
-                        <td className="edit-delete">
-                          <BiEditAlt style={{ cursor: "pointer" }} size={30} />
-                          <FaRegTrashAlt className="FaRegTrashAlt" style={{ cursor: "pointer", marginLeft: "10px" }} size={20} />
-                        </td>
-                      </tr>
+                      {complainsT && complainsT.map((a, i) => (
+                        <tr key={i}>
+                          <td>{a.User_Id}</td>
+                          <td>{a.User_name}</td>
+                          <td>{a.Complain_title}</td>
+                          <td>{a.Complain_description}</td>
+                          <td>{a.Date.split('T')[0]}</td>
+                          <td className="edit-delete">
+                            <BiEditAlt style={{ cursor: "pointer" }} size={30} onClick={() => updateRestEvents(a)} />
+                            <FaRegTrashAlt className="FaRegTrashAlt" style={{ cursor: "pointer", marginLeft: "10px" }} size={20} onClick={() => deleteRest(a._id)} />
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   )}
                   {student && (
                     <tbody>
-                      <tr>
-                        <td>ABC123CD</td>
-                        <td>Jenish Vekariya</td>
-                        <td>This is for Testing perpose</td>
-                        <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquid, officiis.</td>
-                        <td>2023/06/07</td>
-                        <td className="edit-delete">
-                          <BiEditAlt style={{ cursor: "pointer" }} size={30} />
-                          <FaRegTrashAlt className="FaRegTrashAlt" style={{ cursor: "pointer", marginLeft: "10px" }} size={20} />
-                        </td>
-                      </tr>
+                      {complainsS && complainsS.map((a, i) => (
+                        <tr key={i}>
+                          <td>{a.User_Id}</td>
+                          <td>{a.User_name}</td>
+                          <td>{a.Complain_title}</td>
+                          <td>{a.Complain_description}</td>
+                          <td>{a.Date.split('T')[0]}</td>
+                          <td className="edit-delete">
+                            <BiEditAlt style={{ cursor: "pointer" }} size={30} onClick={() => updateRestEvents(a)}  />
+                            <FaRegTrashAlt className="FaRegTrashAlt" style={{ cursor: "pointer", marginLeft: "10px" }} size={20} onClick={() => deleteRest(a._id)} />
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   )}
                 </>
               </table>
 
-              {/* ------------------------ Update holiday MODAL     -----------------------------  */}
-              <button type="button" ref={ref} style={{ display: "none" }} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#holiday_one">
+              {/* ------------------------ Update Complain MODAL     -----------------------------  */}
+              <button type="button" ref={ref2} style={{ display: "none" }} className="btn btn-primary" data-bs-target="#edit_complain" data-bs-toggle="modal">
                 Launch demo modal
               </button>
-              {/* ------------------------ Update holiday MODAL     -----------------------------  */}
+              {/* ------------------------ Update Complain MODAL     -----------------------------  */}
 
               <div
                 className="modal fade"
-                id="holiday_one"
+                id="edit_complain"
                 tabIndex="-1"
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
               >
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <div className="modal-header">
+                    <div className="modal-header1">
                       <div className="h_timetable">
                         <div className="hTable_title">
                           <label htmlFor="">Complain Title</label>
-                          <input type="text" placeholder="Fees notification" name="Holiday_title" />
-                        </div>
-
-                        <div className="hTable_date">
-                          <div className="date_from">
-                            <label htmlFor="">Holiday from date</label>
-                            <input id="date" type="date" name="Holiday_Start" />
-                          </div>
-                          <div className="date_to">
-                            <label htmlFor="">Holiday to date</label>
-                            <input id="date" type="date" name="Holiday_End" />
-                          </div>
+                          <input type="text" placeholder="Fees notification" name="Complain_title" value={updateEvents.Complain_title} onChange={onChanges}/>
                         </div>
 
                         <div className="hTable_note">
                           <label>Note</label>
-                          <input type="text" name="Holiday_description" />
-                        </div>
-                      </div>
-                      <div className="second-part">
-                        <p className='send'>Massage To</p>
-                        <div className="rightside-section">
-                          <div className='sright'>
-                            <input className='chbtn' type="radio" id="1" required name="Groups" value="Students" />
-                            <label className='chstudent' htmlFor="1" name='Group'>Student</label><br />
-                          </div>
-                          <div className='tright'>
-                            <input className='chbtn' type="radio" id="2" required name="Groups" value="Teachers" />
-                            <label className='chstudent' htmlFor="2" name='Group'>Teacher</label><br />
-                          </div>
+                          <input type="text" name="Complain_description" value={updateEvents.Complain_description} onChange={onChanges}/>
                         </div>
                       </div>
 
@@ -267,7 +504,7 @@ const Complain = () => {
                     </div>
                     <div className="modal-footer">
                       <div className="hTable_btn">
-                        <button className="save_btn"> SAVE</button>
+                        <button className="save_btn" onClick={handleSubmit}> SAVE</button>
                       </div>
                     </div>
                   </div>
@@ -275,7 +512,7 @@ const Complain = () => {
               </div>
 
 
-              {/* --------------------------------Add Holiday-------------------------------------- */}
+              {/* --------------------------------Add Complain-------------------------------------- */}
               <div
                 className="modal fade"
                 id="add_Holiday"
@@ -285,14 +522,14 @@ const Complain = () => {
               >
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <div className="modal-header">
+                    <div className="modal-header1">
                       <div className="h_timetable">
 
-                        <h3>Event Complain For</h3>
+                        <h3>Complain For</h3>
                         <div className="eventfor_holiday">
-                          <input type="radio" checked={teacher} onChange={handleTeacher} />
+                          <input type="radio" checked={teacher} onChange={handleTeacher} name="Group" value="Teacher" />
                           <label htmlFor="Teacher"> Teacher</label>
-                          <input type="radio" checked={student} onChange={handleStudent} />
+                          <input type="radio" checked={student} onChange={handleStudent} name="Group" value="Student" />
                           <label htmlFor="Student"> Student</label>
                         </div>
 
@@ -301,10 +538,10 @@ const Complain = () => {
                           <>
                             <div className="hTable_name">
                               <label htmlFor="">Teacher Name</label>
-                              <select className="any-options" name='T_name' required id='T_name' defaultValue={"DEFAULT"}>
+                              <select className="any-options" name='user' required id='User_name' defaultValue={"DEFAULT"} onChange={onChnageComplain}>
                                 <option value="DEFAULT" disabled>Select Teacher Name</option>
                                 {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name} key={index}>
+                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
                                     {item.T_name}
                                   </option>
                                 ))}
@@ -313,12 +550,26 @@ const Complain = () => {
 
                             <div className="hTable_title" style={{ paddingTop: "30px" }}>
                               <label htmlFor="">Complain Title</label>
-                              <input type="text" placeholder="Complain title" name="Holiday_title" />
+                              <input type="text" placeholder="Complain title" name="Complain_title" onChange={onChnageComplain} />
                             </div>
 
                             <div className="hTable_note">
                               <label>Complain</label>
-                              <input type="text" name="Holiday_description" placeholder="Complain description" />
+                              <input type="text" name="Complain_description" placeholder="Complain description" onChange={onChnageComplain} />
+                            </div>
+
+                            <button
+                              type="button"
+                              className="btn-close"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                              ref={refClose}
+                            ></button>
+
+                            <div className="modal-footer">
+                              <div className="hTable_btn">
+                                <button className="save_btn" onClick={AddComplainTeacher}> SAVE</button>
+                              </div>
                             </div>
                           </>
                         )}
@@ -330,7 +581,7 @@ const Complain = () => {
                           <>
                             <div className="hTable_name">
                               <label htmlFor="">Student Standard</label>
-                              <select className="any-options" name='Standard' value={stdVal} onChange={getStandard} defaultValue={"DEFAULT"}>
+                              <select className="any-options" name='Standard' value={stdVal} onChange={getStandard}>
                                 <option value="DEFAULT" >Select Standard</option>
                                 {YourRestList?.map((item, index) => (
                                   <option value={item?.Standard} key={index}>
@@ -342,7 +593,7 @@ const Complain = () => {
 
                             <div className="hTable_name">
                               <label htmlFor="">Student Class</label>
-                              <select className="any-options" disabled={secondDD} name='SClass' id="sclass" value={classVal} onChange={getClassCode} defaultValue={"DEFAULT"}>
+                              <select className="any-options" disabled={secondDD} name='SClass' id="sclass" value={classVal} onChange={getClassCode}>
                                 <option value="DEFAULT" >Select Class</option>
                                 {stdData?.map((item, index) => (
                                   <option value={item} key={index}>
@@ -353,45 +604,57 @@ const Complain = () => {
                             </div>
 
                             <div className="hTable_name">
-                              <label htmlFor="">Student Class</label>
+                              <label htmlFor="">Student Name</label>
                               {
                                 getStudent === "Student Not Found"
                                   ?
-                                  <select className="any-options" disabled={ThirdDD} name='Standard' required id='Standard' onChange={getStudentData} defaultValue={"DEFAULT"}>
+                                  <select className="any-options" disabled={ThirdDD} name='name' required id='name' defaultValue={"DEFAULT"}>
                                     <option value="DEFAULT" disabled>Data Not Found</option>
                                   </select>
                                   :
-                                  <select className="any-options" name='Standard' disabled={ThirdDD} required id='Standard' onChange={getStudentData} defaultValue={"DEFAULT"}>
-                                    <option value="DEFAULT" disabled>Select Class</option>
+                                  <select className="any-options" name='sUser' disabled={ThirdDD} required id='Standard' onChange={onChnageComplainS} defaultValue={"DEFAULT"}>
+                                    <option value="DEFAULT" disabled>Select Student</option>
                                     {getStudent && getStudent.map((item, index) => (
-                                      <option value={item.S_name} key={index}>
+                                      <option value={item.S_name + "/" + item.S_icard_Id} key={index}>
                                         {item.S_name}
                                       </option>
                                     ))}
                                   </select>
                               }
                             </div>
+
+                            <div className="hTable_title" style={{ paddingTop: "30px" }}>
+                              <label htmlFor="">Complain Title</label>
+                              <input type="text" placeholder="Complain title" name="Complain_title" onChange={onChnageComplainS} />
+                            </div>
+
+                            <div className="hTable_note">
+                              <label>Complain</label>
+                              <input type="text" name="Complain_description" placeholder="Complain description" onChange={onChnageComplainS} />
+                            </div>
+
+                            <button
+                              type="button"
+                              className="btn-close"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                              ref={refClose}
+                            ></button>
+
+                            <div className="modal-footer">
+                              <div className="hTable_btn">
+                                <button className="save_btn" onClick={AddComplainStudent}> SAVE</button>
+                              </div>
+                            </div>
                           </>
                         )}
 
                         {/* Student Add */}
-                        <button
-                          type="button"
-                          className="btn-close"
-                          data-bs-dismiss="modal"
-                          aria-label="Close"
-                          ref={refClose}
-                        ></button>
-                      </div>
-                      <div className="modal-footer">
-                        <div className="hTable_btn">
-                          <button className="save_btn"> SAVE</button>
-                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                {/* --------------------------------Add Holiday-------------------------------------- */}
+                {/* --------------------------------Add Complain-------------------------------------- */}
               </div>
             </section>
           </div>

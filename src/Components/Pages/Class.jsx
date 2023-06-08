@@ -8,6 +8,7 @@ import "../Style/Class.css"
 import Plus from "../Images/plus.svg"
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import apiConst from "../Api_keys"
 
 
 const Class = () => {
@@ -19,7 +20,7 @@ const Class = () => {
 
 
   const getClasses = useCallback(async () => {
-    const response = await fetch("http://localhost:5050/api/classcode/get_all_classes",
+    const response = await fetch(apiConst.fetch_all_standards,
       {
         method: "POST",
         headers: {
@@ -55,7 +56,7 @@ const Class = () => {
 
     const Standard = Classcode.substring(0, 2);
 
-    const responseTeacher = await fetch("http://localhost:5050/api/classcode/create_class_code", {
+    const responseTeacher = await fetch(apiConst.create_class_code, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -86,7 +87,7 @@ const Class = () => {
   //------------- Delete Classes ------------------
   const deleteClass = async (id, Classcode) => {
 
-    const responseTeacher = await fetch(`http://localhost:5050/api/classcode/delete_class/${id}`, {
+    const responseTeacher = await fetch(apiConst.delete_class_code+id, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
