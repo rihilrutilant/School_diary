@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { AiFillDelete } from 'react-icons/ai'
 import "../Style/EventsPhoto.css"
+import apiConst from "../Api_keys"
 
 
 const EventsPhoto = () => {
@@ -36,7 +37,7 @@ const EventsPhoto = () => {
   const [EventTitle, setEventTitle] = useState();
 
   const getAllPhotos = async () => {
-    const response = await fetch("http://localhost:5050/api/admin/fetch_all_events_photoes",
+    const response = await fetch(apiConst.fetch_all_event_photos,
       {
         method: "POST",
         headers: {
@@ -64,7 +65,7 @@ const EventsPhoto = () => {
       for (let index = 0; index < img_files.length; index++) {
         formData.append('events_files', img_files[index]);
       }
-      const response = await axios.post('http://localhost:5050/api/admin/upload_event_photos', formData, {
+      const response = await axios.post(apiConst.upload_event_photos, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           "authToken_admin": localStorage.getItem("AToken"),
@@ -100,7 +101,7 @@ const EventsPhoto = () => {
 
   const [events, setEvents] = useState();
   const getEvents = async () => {
-    const response = await fetch("http://localhost:5050/api/admin/get_all_eventes", {
+    const response = await fetch(apiConst.fetch_all_events, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -116,7 +117,7 @@ const EventsPhoto = () => {
   //---------------------- Delete Event --------------------
 
   const deleteRest = (id) => {
-    fetch(`http://localhost:5050/api/admin/delete_evente_photoes/${id}`, {
+    fetch(apiConst.delete_event_photos+id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

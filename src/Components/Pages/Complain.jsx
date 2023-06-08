@@ -309,7 +309,7 @@ const Complain = () => {
   //-----------------------Delete Complain --------------------------------
 
   const deleteRest = (id) => {
-    fetch(`http://localhost:5050/api/admin/delete_complain/${id}`, {
+    fetch(apiConst.delete_complains+id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -359,7 +359,7 @@ const Complain = () => {
 
   const RestUpdateEvents = async (id, Complain_title, Complain_description) => {
 
-    const responseHoliday = await fetch(`http://localhost:5050/api/admin/edit_complain/${id}`, {
+    const responseHoliday = await fetch(apiConst.edit_complains +id, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

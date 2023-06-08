@@ -5,6 +5,7 @@ import Topbar from "./Topbar";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Edit from "../Images/edit.svg"
+import apiConst from "../Api_keys";
 
 const Fees = () => {
   const [navVisible, showNavbar] = useState(true);
@@ -16,18 +17,13 @@ const Fees = () => {
   const [error, setError] = useState("");
 
   const [FeesField1, setFeesField1] = useState('');
-  const [FeesField2, setFeesField2] = useState('');
   const [FeesField3, setFeesField3] = useState('');
   const [FeesField4, setFeesField4] = useState('');
 
-  console.log(FeesField1);
-  // console.log(FeesField2);
-  // console.log(FeesField3);
-  // console.log(FeesField4);
 
   const handleFeeSubmit = (e) => {
     e.preventDefault();
-    if (FeesField1 && FeesField2 && FeesField3 && FeesField4) {
+    if (FeesField1 && FeesField3 && FeesField4) {
       window.location.href = "/dashboard";
     }
     else {
@@ -41,7 +37,7 @@ const Fees = () => {
   const [getFees, setgetFees] = useState()
 
   const getAllFees = async () => {
-    const response = await fetch("http://localhost:5050/api/admin/get_all_standard_fees", {
+    const response = await fetch(apiConst.get_fees_of_all_standards, {
       method: "POST",
       headers: {
         "authToken_admin": localStorage.getItem("AToken")
@@ -57,7 +53,7 @@ const Fees = () => {
 
   const handleEdit = async (id) => {
     const Fees_Amount = prompt('Enter new number:');
-    const response = await fetch(`http://localhost:5050/api/admin/edit_fees_of_standard/${id}`, {
+    const response = await fetch(apiConst.edit_fees_of_standard + id, {
       method: "PATCH",
       body: JSON.stringify({ Fees_Amount }),
       headers: {
@@ -85,7 +81,7 @@ const Fees = () => {
   // -----------------------Fetch all Standards ---------------------
   const [classes, setclasses] = useState()
   const getclasses = async () => {
-    const response = await fetch("http://localhost:5050/api/classcode/get_all_classes", {
+    const response = await fetch(apiConst.fetch_all_standards, {
       method: "POST",
       headers: {
         "authToken_admin": localStorage.getItem("AToken")
@@ -100,7 +96,7 @@ const Fees = () => {
   const [classCode, setclassCode] = useState()
   const getclasscodes = async (e) => {
     const Standard = e.target.value
-    const response = await fetch("http://localhost:5050/api/classcode/get_all_classes_std_wise", {
+    const response = await fetch(apiConst.get_all_classes_std_wise, {
       method: "POST",
       body: JSON.stringify({ Standard }),
       headers: {
@@ -154,7 +150,7 @@ const Fees = () => {
                     </div>
                     <div className="custom-dropdown">
                       <select defaultValue={"DEFAULT"} onChange={(e) => setFeesField3(e.target.value)}>
-                        <option value="DEFAULT" disabled>Select Division</option>
+                        <option value="DEFAULT">Select Division</option>
                         {
                           classCode && classCode.map((item, k) => {
                             return (

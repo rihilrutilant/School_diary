@@ -7,7 +7,7 @@ import { FaEdit } from "react-icons/fa";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { toast, ToastContainer } from 'react-toastify';
 import { Link } from "react-router-dom";
-
+import apiConst from "../Api_keys"
 
 const Events = () => {
 
@@ -20,7 +20,7 @@ const Events = () => {
   //------------------------- Fetch Events --------------------
   const [events, setEvents] = useState();
   const getEvents = async () => {
-    const response = await fetch("http://localhost:5050/api/admin/get_all_eventes", {
+    const response = await fetch(apiConst.fetch_all_events, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -35,7 +35,7 @@ const Events = () => {
   //-----------------------Delete Events --------------------------------
 
   const deleteRest = (id) => {
-    fetch(`http://localhost:5050/api/admin/delete_events/${id}`, {
+    fetch(apiConst.delete_events + id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -81,7 +81,7 @@ const Events = () => {
       Event_End,
       Groups
     } = newEvents;
-    const response = await fetch("http://localhost:5050/api/admin/send_event", {
+    const response = await fetch(apiConst.send_event, {
       method: 'POST',
       body: JSON.stringify({
         Event_title,
@@ -157,7 +157,7 @@ const Events = () => {
 
   const RestUpdateEvents = async (id, Event_title, Event_description, Event_Start, Event_End, Groups) => {
 
-    const responseHoliday = await fetch(`http://localhost:5050/api/admin/edit_Events/${id}`, {
+    const responseHoliday = await fetch(apiConst.edit_event + id, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
