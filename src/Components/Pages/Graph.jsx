@@ -4,6 +4,7 @@ import { Bar } from 'react-chartjs-2';
 import { CategoryScale } from 'chart.js';
 import Chart from 'chart.js/auto';
 import "../Style/Chart.css"
+import Api_keys from '../Api_keys'
 Chart.register(CategoryScale);
 
 const Graph = () => {
@@ -48,7 +49,7 @@ const Graph = () => {
   // ---------------fetch all standards-------------------
   const [classes, setclasses] = useState()
   const getclasses = async () => {
-    const response = await fetch("http://localhost:5050/api/classcode/get_all_classes", {
+    const response = await fetch(Api_keys.fetch_all_standards, {
       method: "POST",
       headers: {
         "authToken_admin": localStorage.getItem("AToken")

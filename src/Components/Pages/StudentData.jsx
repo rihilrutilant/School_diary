@@ -8,6 +8,8 @@ import Delete from "../Images/delete.svg"
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Api_keys from '../Api_keys'
+
 
 const StudentData = () => {
 
@@ -44,7 +46,7 @@ const StudentData = () => {
             S_address,
             S_Password
         } = credentials;
-        const response = await fetch("http://localhost:5050/api/students/create_students", {
+        const response = await fetch(Api_keys.create_students, {
             method: 'POST',
             body: JSON.stringify({
                 S_icard_Id,
@@ -88,7 +90,7 @@ const StudentData = () => {
     const S_Class_code = Data
 
     const getYourRestaurant = useCallback(async () => {
-        const response = await fetch("http://localhost:5050/api/admin/fetch_all_Students", {
+        const response = await fetch(Api_keys.fetch_all_students, {
             method: "POST",
             body: JSON.stringify({
                 S_Class_code
@@ -105,7 +107,7 @@ const StudentData = () => {
         } else {
             YoursetRestList(json);
         }
-    },[S_Class_code]);
+    }, [S_Class_code]);
     //----------------- Edit a new Student ------------------------------
 
     const ref = useRef(null);
@@ -147,7 +149,7 @@ const StudentData = () => {
     const updateStds = async (id, S_icard_Id, S_name, S_mobile_no, S_address, S_Password) => {
         const S_standard = DataStudent
         const S_Class_code = Data
-        const response = await fetch(`http://localhost:5050/api/students/update_student_details/${id}`, {
+        const response = await fetch(Api_keys.update_student_details + id, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -178,7 +180,7 @@ const StudentData = () => {
     //----------------- Delete a new Student ------------------------------
 
     const deleteStudent = async (id) => {
-        const response = await fetch(`http://localhost:5050/api/students/delete_students_info/${id}`, {
+        const response = await fetch(Api_keys.delete_students_info + id, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

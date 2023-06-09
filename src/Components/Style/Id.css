@@ -129,3 +129,11 @@
     display: flex;
     justify-content: space-between;
 }
+
+.t_name{
+    cursor: pointer;
+}
+
+.studentid_btn{
+    cursor: default !important;
+}

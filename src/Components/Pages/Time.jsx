@@ -5,6 +5,8 @@ import Topbar from './Topbar';
 import { ReactSession } from 'react-client-session';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
+import Api_keys from '../Api_keys'
+
 
 const Time = () => {
 
@@ -26,7 +28,7 @@ const Time = () => {
   let Standard;
 
   const getYourRestaurant = useCallback(async () => {
-    const response = await fetch("http://localhost:5050/api/classcode/get_all_classes", {
+    const response = await fetch(Api_keys.fetch_all_standards, {
       method: "POST",
       body: JSON.stringify({
         Standard

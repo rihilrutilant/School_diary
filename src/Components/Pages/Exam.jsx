@@ -50,7 +50,6 @@ const Exam = () => {
                         <option value="" selected disabled>Exam Type</option>
                         <option value="First term">First term</option>
                         <option value="Second term">Second term</option>
-                        <option value="Final">Final</option>
                       </select>
                     </div>
                     <div className="custom-dropdown">

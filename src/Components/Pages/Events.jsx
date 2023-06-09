@@ -263,7 +263,7 @@ const Events = () => {
               >
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <div className="modal-header">
+                    <div className="modal-header1">
                       <div className="addEvent_modal">
                         <h2>Add Event</h2>
 
@@ -343,7 +343,7 @@ const Events = () => {
               >
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <div className="modal-header">
+                    <div className="modal-header1">
                       <div className="addEvent_modal">
                         <h2>Update Events</h2>
                         <hr />

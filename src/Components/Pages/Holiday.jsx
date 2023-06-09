@@ -5,6 +5,7 @@ import Topbar from "./Topbar";
 import { BiEditAlt } from 'react-icons/bi'
 import { toast, ToastContainer } from 'react-toastify';
 import { FaRegTrashAlt } from "react-icons/fa";
+import Api_keys from '../Api_keys'
 
 const Holiday = () => {
   const [navVisible, showNavbar] = useState(true);
@@ -53,7 +54,7 @@ const Holiday = () => {
   }
 
   const RestUpdateHoliday = async (id, Holiday_title, Holiday_description, Holiday_Start, Holiday_End, Groups) => {
-    const responseHoliday = await fetch(`http://localhost:5050/api/admin/edit_holidays/${id}`, {
+    const responseHoliday = await fetch(Api_keys.update_holidays + id, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -118,7 +119,7 @@ const Holiday = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:5050/api/admin/get_all_holidays', {
+      const response = await fetch(Api_keys.get_all_holidays, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -160,7 +161,7 @@ const Holiday = () => {
       Holiday_End,
       Groups
     } = newHoliday;
-    const response = await fetch("http://localhost:5050/api/admin/send_holiday", {
+    const response = await fetch(Api_keys.send_holidays, {
       method: 'POST',
       body: JSON.stringify({
         Holiday_title,
@@ -203,7 +204,7 @@ const Holiday = () => {
   //-----------------------Delete Holiday --------------------------------
 
   const deleteRest = (id) => {
-    fetch(` http://localhost:5050/api/admin/delete_holidays/${id}`, {
+    fetch(Api_keys.delete_holidays + id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

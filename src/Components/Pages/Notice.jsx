@@ -8,6 +8,7 @@ import { AiFillDelete } from 'react-icons/ai'
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Api_keys from '../Api_keys'
 
 
 
@@ -44,7 +45,7 @@ const Notice = () => {
       formData.append('notice_attach', noticeData.noticeFile);
 
 
-      const response = await axios.post('http://localhost:5050/api/noticeBord/send_notice', formData, {
+      const response = await axios.post(Api_keys.send_notice, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           "authToken_admin": localStorage.getItem("AToken"),
@@ -77,13 +78,13 @@ const Notice = () => {
     }
   }
 
-  
+
   //-----------------Fetch Notices ----------------
 
   const [notice, setNotice] = useState();
 
   const getNotice = async () => {
-    const response = await fetch("http://localhost:5050/api/noticeBord/get_all_notice", {
+    const response = await fetch(Api_keys.get_all_notice, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -138,7 +139,7 @@ const Notice = () => {
       updateformData.append('notice_attach', Notice_attechments);
       updateformData.append('Group', Group);
 
-      const response = await axios.patch(`http://localhost:5050/api/noticeBord/edit_Notice/${id}`, updateformData, {
+      const response = await axios.patch(Api_keys.edit_Notice + id, updateformData, {
         headers: {
           "Content-Type": "multipart/form-data",
           "authToken_admin": localStorage.getItem("AToken"),
@@ -171,7 +172,7 @@ const Notice = () => {
   //----------------------------------------------------------------Delete Notices --------------------------------
 
   const deleteRest = (id) => {
-    fetch(`http://localhost:5050/api/noticeBord/delete_notice/${id}`, {
+    fetch(Api_keys.delete_notice+id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

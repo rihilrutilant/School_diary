@@ -8,11 +8,14 @@ import Edit from "../Images/edit.svg"
 import Delete from "../Images/delete.svg"
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Api_keys from '../Api_keys'
+
 
 const Id = () => {
 
   const refClose = useRef(null);
   const ref2 = useRef(null);
+  const ref3 = useRef(null);
   const refClose2 = useRef(null);
   const navigate = useNavigate();
   //--------Main Content--------//
@@ -44,7 +47,7 @@ const Id = () => {
 
 
   const getYourRestaurant = useCallback(async () => {
-    const response = await fetch("http://localhost:5050/api/classcode/get_all_classes",
+    const response = await fetch(Api_keys.fetch_all_standards,
       {
         method: "POST",
         headers: {
@@ -55,7 +58,7 @@ const Id = () => {
 
     const json = await response.json();
     YoursetRestList(json);
-  },[]);
+  }, []);
 
   //-------Teacher Data ----------//
 
@@ -63,7 +66,7 @@ const Id = () => {
   const [teachers, setTeachers] = useState();
 
   const getTeachers = useCallback(async () => {
-    const response = await fetch("http://localhost:5050/api/admin/fetch_all_teachers", {
+    const response = await fetch(Api_keys.fetch_all_teachers, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -74,7 +77,7 @@ const Id = () => {
     const json = await response.json();
     setTeachers(json);
     // console.log(json);
-  },[]);
+  }, []);
 
   //-------Create Teacher ---------//
 
@@ -101,7 +104,7 @@ const Id = () => {
       T_Class_code,
       T_Password
     } = credentials;
-    const response = await fetch("http://localhost:5050/api/teachers/create_teacher", {
+    const response = await fetch(Api_keys.create_teacher, {
       method: 'POST',
       body: JSON.stringify({
         T_icard_Id,
@@ -144,7 +147,7 @@ const Id = () => {
 
   //---------Delete Teacher-------//
   function deleteRest(id) {
-    fetch(`http://localhost:5050/api/teachers/delete_teachers_info/${id}`, {
+    fetch(Api_keys.delete_teachers_info + id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -197,7 +200,7 @@ const Id = () => {
   }
 
   const RestUpdateTeacher = async (id, T_Class_code, T_Password, T_address, T_icard_Id, T_mobile_no, T_name, Subject_code) => {
-    const responseTeacher = await fetch(`http://localhost:5050/api/teachers/update_teacher_details/${id}`, {
+    const responseTeacher = await fetch(Api_keys.update_teacher_details + id, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -262,7 +265,9 @@ const Id = () => {
                       <div className='teacherid_detail'>{
                         teachers && teachers.map((d, i) => (
                           <button className='studentid_btn' key={i}>
-                            {d.T_name}
+                            <div className="t_name" data-bs-toggle="modal" data-bs-target="#onlyData">
+                              {d.T_name}
+                            </div>
                             <Link className="edit_btn" onClick={() => updateRestTeacher(d)}>
                               <img src={Edit} alt="edit" />
                             </Link>
@@ -294,7 +299,7 @@ const Id = () => {
                   <button type="button" ref={ref2} style={{ display: "none" }} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editTeacherModal">
                     Launch demo modal
                   </button>
-                  <div className="modal" id="editTeacherModal">
+                  {/* <div className="modal" id="editTeacherModal">
                     <div className="modal-dialog">
                       <div className="modal-content editid_modal">
                         <button type="button" className="btn-close" data-bs-dismiss="modal" ref={refClose2}></button>
@@ -333,7 +338,7 @@ const Id = () => {
                         </form>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="modal fade sp_model_1" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div className="modal-dialog">
@@ -370,6 +375,45 @@ const Id = () => {
                           </div>
                           <div className="save_part">
                             <button className="save_btn" type="submit">SAVE</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div className="modal fade sp_model_1" id="onlyData" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                      <div className="modal-content editid_modal">
+                        <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
+                        <form id="editid_form2" className="editid_form">
+                          <div className='input_part idcard_input'>
+                            <label>ID Card</label> <br />
+                            <input type="text" id="idcard2" name="T_icard_Id" value={updateTeacher.T_icard_Id} readOnly/>
+                          </div>
+                          <div className='input_part name_input'>
+                            <label>Name</label> <br />
+                            <input type="text" id="name2" name="T_name" value={updateTeacher.T_name} readOnly/>
+                          </div>
+                          <div className='input_part standard_input'>
+                            <label>Subject code</label> <br />
+                            <input type="text" id="standard2" name="Subject_code" value={updateTeacher.Subject_code} readOnly/>
+                          </div>
+                          <div className='input_part classcode_input'>
+                            <label>Class Code</label> <br />
+                            <input type="text" id="classcode2" name="T_Class_code" value={updateTeacher.T_Class_code} readOnly/>
+                          </div>
+                          <div className='input_part mobile_input'>
+                            <label>Mobile</label> <br />
+                            <input type="number" id="mobile2" name="T_mobile_no" value={updateTeacher.T_mobile_no} readOnly/>
+                          </div>
+                          <div className='input_part address_input'>
+                            <label>Address</label> <br />
+                            <input type="text" id="address2" name="T_address" value={updateTeacher.T_address} readOnly/>
+                          </div>
+                          <div className='input_part password_input'>
+                            <label>Password</label> <br />
+                            <input type="password" id="password2" name="T_Password" value={updateTeacher.T_Password} readOnly/>
                           </div>
                         </form>
                       </div>

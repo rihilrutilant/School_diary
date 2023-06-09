@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import "../Style/Login.css"
 import logo from "../Images/blue-loogo.svg"
 import { Navigate } from "react-router-dom";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Api_keys from '../Api_keys'
+
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ Password: "", Mobile_no: "" });
@@ -16,7 +18,7 @@ const Login = () => {
 
     e.preventDefault();
     const { Mobile_no, Password } = credentials;
-    const response = await fetch("http://localhost:5050/api/admin/admin_login", {
+    const response = await fetch(Api_keys.login, {
       method: 'POST',
       body: JSON.stringify({ Mobile_no, Password }),
       headers: {

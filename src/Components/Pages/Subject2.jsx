@@ -3,6 +3,7 @@ import "../Style/Subject.css"
 import Navbar from "./Navbar"
 import Topbar from "./Topbar"
 
+
 const Subject2 = () => {
     const [navVisible, showNavbar] = useState(true);
     useEffect(() => {
