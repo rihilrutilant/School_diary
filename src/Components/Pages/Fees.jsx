@@ -17,13 +17,12 @@ const Fees = () => {
   const [error, setError] = useState("");
 
   const [FeesField1, setFeesField1] = useState('');
-  const [FeesField3, setFeesField3] = useState('');
   const [FeesField4, setFeesField4] = useState('');
 
 
   const handleFeeSubmit = (e) => {
     e.preventDefault();
-    if (FeesField1 && FeesField3 && FeesField4) {
+    if (FeesField1 && FeesField4) {
       window.location.href = "/dashboard";
     }
     else {
@@ -92,6 +91,8 @@ const Fees = () => {
   };
   // -----------------------Fetch all Standards ---------------------
 
+  const [classVal, setClassVal] = useState('');
+
   //-----------------------Fetch all Classcode standard wise-------------------------
   const [classCode, setclassCode] = useState()
   const getclasscodes = async (e) => {
@@ -109,6 +110,10 @@ const Fees = () => {
   };
   //-----------------------Fetch all Classcode standard wise-------------------------
 
+
+  const getdatas= (e)=>{
+    setClassVal(e.target.value)
+  }
   return (
     <>
       <ToastContainer />
@@ -149,7 +154,7 @@ const Fees = () => {
                       </select>
                     </div>
                     <div className="custom-dropdown">
-                      <select defaultValue={"DEFAULT"} onChange={(e) => setFeesField3(e.target.value)}>
+                      <select defaultValue={"DEFAULT"} value={classVal} onChange={getdatas}>
                         <option value="DEFAULT">Select Division</option>
                         {
                           classCode && classCode.map((item, k) => {

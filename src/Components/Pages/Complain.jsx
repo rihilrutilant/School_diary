@@ -48,8 +48,7 @@ const Complain = () => {
   const [stdData, setStdData] = useState();
   const [getStudent, setgetStudent] = useState()
 
-  const [stdVal, setStdVal] = useState('');
-  const [classVal, setClassVal] = useState('');
+
 
 
 
@@ -85,8 +84,7 @@ const Complain = () => {
     setStudent(!student);
   };
 
-  const [secondDD, setsecondDD] = useState()
-  const [ThirdDD, setThirdDD] = useState()
+  const [classVal, setClassVal] = useState('');
 
   const getStandard = async (e) => {
     const Standard = e.target.value
@@ -94,8 +92,6 @@ const Complain = () => {
       toast.error("Choose Correct Data", { position: toast.POSITION.TOP_RIGHT });
     }
     else {
-      setStdVal(e.target.value)
-
       const response = await fetch(apiConst.get_all_classes_std_wise, {
         method: 'POST',
         body: JSON.stringify({
@@ -108,8 +104,6 @@ const Complain = () => {
       });
       const json = await response.json();
       setStdData(json);
-      setsecondDD(false)
-      setThirdDD(false)
     }
   }
 
@@ -135,7 +129,6 @@ const Complain = () => {
 
       const json = await response.json();
       setgetStudent(json);
-      setThirdDD(false)
     }
   }
 
@@ -309,7 +302,7 @@ const Complain = () => {
   //-----------------------Delete Complain --------------------------------
 
   const deleteRest = (id) => {
-    fetch(apiConst.delete_complains+id, {
+    fetch(apiConst.delete_complains + id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -359,7 +352,7 @@ const Complain = () => {
 
   const RestUpdateEvents = async (id, Complain_title, Complain_description) => {
 
-    const responseHoliday = await fetch(apiConst.edit_complains +id, {
+    const responseHoliday = await fetch(apiConst.edit_complains + id, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -456,7 +449,7 @@ const Complain = () => {
                           <td>{a.Complain_description}</td>
                           <td>{a.Date.split('T')[0]}</td>
                           <td className="edit-delete">
-                            <BiEditAlt style={{ cursor: "pointer" }} size={30} onClick={() => updateRestEvents(a)}  />
+                            <BiEditAlt style={{ cursor: "pointer" }} size={30} onClick={() => updateRestEvents(a)} />
                             <FaRegTrashAlt className="FaRegTrashAlt" style={{ cursor: "pointer", marginLeft: "10px" }} size={20} onClick={() => deleteRest(a._id)} />
                           </td>
                         </tr>
@@ -485,12 +478,12 @@ const Complain = () => {
                       <div className="h_timetable">
                         <div className="hTable_title">
                           <label htmlFor="">Complain Title</label>
-                          <input type="text" placeholder="Fees notification" name="Complain_title" value={updateEvents.Complain_title} onChange={onChanges}/>
+                          <input type="text" placeholder="Fees notification" name="Complain_title" value={updateEvents.Complain_title} onChange={onChanges} />
                         </div>
 
                         <div className="hTable_note">
                           <label>Note</label>
-                          <input type="text" name="Complain_description" value={updateEvents.Complain_description} onChange={onChanges}/>
+                          <input type="text" name="Complain_description" value={updateEvents.Complain_description} onChange={onChanges} />
                         </div>
                       </div>
 
@@ -581,11 +574,11 @@ const Complain = () => {
                           <>
                             <div className="hTable_name">
                               <label htmlFor="">Student Standard</label>
-                              <select className="any-options" name='Standard' value={stdVal} onChange={getStandard}>
+                              <select className="any-options" name='Standard' onChange={getStandard}>
                                 <option value="DEFAULT" >Select Standard</option>
-                                {YourRestList?.map((item, index) => (
+                                {YourRestList && YourRestList.map((item, index) => (
                                   <option value={item?.Standard} key={index}>
-                                    {item?.Standard}
+                                    {item.Standard}
                                   </option>
                                 ))}
                               </select>
@@ -593,9 +586,9 @@ const Complain = () => {
 
                             <div className="hTable_name">
                               <label htmlFor="">Student Class</label>
-                              <select className="any-options" disabled={secondDD} name='SClass' id="sclass" value={classVal} onChange={getClassCode}>
+                              <select className="any-options" name='SClass' id="sclass" value={classVal} onChange={getClassCode}>
                                 <option value="DEFAULT" >Select Class</option>
-                                {stdData?.map((item, index) => (
+                                {stdData && stdData.map((item, index) => (
                                   <option value={item} key={index}>
                                     {item}
                                   </option>
@@ -608,11 +601,11 @@ const Complain = () => {
                               {
                                 getStudent === "Student Not Found"
                                   ?
-                                  <select className="any-options" disabled={ThirdDD} name='name' required id='name' defaultValue={"DEFAULT"}>
+                                  <select className="any-options" name='name' required id='name' defaultValue={"DEFAULT"}>
                                     <option value="DEFAULT" disabled>Data Not Found</option>
                                   </select>
                                   :
-                                  <select className="any-options" name='sUser' disabled={ThirdDD} required id='Standard' onChange={onChnageComplainS} defaultValue={"DEFAULT"}>
+                                  <select className="any-options" name='sUser' required id='Standard' onChange={onChnageComplainS} defaultValue={"DEFAULT"}>
                                     <option value="DEFAULT" disabled>Select Student</option>
                                     {getStudent && getStudent.map((item, index) => (
                                       <option value={item.S_name + "/" + item.S_icard_Id} key={index}>
