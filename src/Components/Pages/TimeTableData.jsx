@@ -397,17 +397,15 @@ const TimeTableData = () => {
   // const fridayTimeTable = timetableData.Daily_TimeTable && timetableData.Daily_TimeTable.length > 0 ? timetableData.Daily_TimeTable[0].Friday : {};
   // const fridaySubjectCodes = Object.values(fridayTimeTable).map(item => item.Subject_Code);
 
-  useEffect(() => {
-    getTimetable();
-  }, [getTimetable])
 
   //---------------- Timtable Data --------------------
 
   useEffect(() => {
     getTeachers();
     getSubject();
+    getTimetable();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, [getTeachers, getSubject]);
+  }, [getTeachers, getSubject, getTimetable]);
 
   return (
     <div className="main-content">
