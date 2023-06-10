@@ -151,9 +151,15 @@ const TimeTableData = () => {
 
     const json = await response.json();
     setTimetableData(json);
+    setMonday(json.Daily_TimeTable[0].Monday)
+    setTuesday(json.Daily_TimeTable[0].Tuesday)
+    setWednesday(json.Daily_TimeTable[0].Wednesday)
+    setThursday(json.Daily_TimeTable[0].Thursday)
+    setFriday(json.Daily_TimeTable[0].Friday)
+    setSaturday(json.Daily_TimeTable[0].Saturday)
   }, []);
 
-  console.log(timetableData.Daily_TimeTable[0]);
+  console.log(timetableData);
 
   const [Monday, setMonday] = useState({
     1: {
@@ -397,13 +403,12 @@ const TimeTableData = () => {
   // const fridayTimeTable = timetableData.Daily_TimeTable && timetableData.Daily_TimeTable.length > 0 ? timetableData.Daily_TimeTable[0].Friday : {};
   // const fridaySubjectCodes = Object.values(fridayTimeTable).map(item => item.Subject_Code);
 
-
   //---------------- Timtable Data --------------------
-
+  
   useEffect(() => {
+    getTimetable();
     getTeachers();
     getSubject();
-    getTimetable();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [getTeachers, getSubject, getTimetable]);
 
@@ -1487,6 +1492,66 @@ const TimeTableData = () => {
                     <div className={day5 ? 'active123' : ''} onClick={handleDay5}>Friday</div>
                     <div className={day6 ? 'active123' : ''} onClick={handleDay6}>Saturday</div>
                   </div>
+
+
+                  {/*-------------------------- my space--------------------  */}
+                  {Object.entries(Monday).map(([key, value]) => (
+                    <div key={key}>
+                      <h3>Period {key}</h3>
+                      <p>T_icard_Id: {value.T_icard_Id}</p>
+                      <p>Subject_Code: {value.Subject_Code}</p>
+                      <p>Time_From: {value.Time_From}</p>
+                      <p>Time_TO: {value.Time_TO}</p>
+                    </div>
+                  ))}
+                  {Object.entries(Tuesday).map(([key, value]) => (
+                    <div key={key}>
+                      <h3>Period {key}</h3>
+                      <p>T_icard_Id: {value.T_icard_Id}</p>
+                      <p>Subject_Code: {value.Subject_Code}</p>
+                      <p>Time_From: {value.Time_From}</p>
+                      <p>Time_TO: {value.Time_TO}</p>
+                    </div>
+                  ))}
+                  {Object.entries(Wednesday).map(([key, value]) => (
+                    <div key={key}>
+                      <h3>Period {key}</h3>
+                      <p>T_icard_Id: {value.T_icard_Id}</p>
+                      <p>Subject_Code: {value.Subject_Code}</p>
+                      <p>Time_From: {value.Time_From}</p>
+                      <p>Time_TO: {value.Time_TO}</p>
+                    </div>
+                  ))}
+                  {Object.entries(Thursday).map(([key, value]) => (
+                    <div key={key}>
+                      <h3>Period {key}</h3>
+                      <p>T_icard_Id: {value.T_icard_Id}</p>
+                      <p>Subject_Code: {value.Subject_Code}</p>
+                      <p>Time_From: {value.Time_From}</p>
+                      <p>Time_TO: {value.Time_TO}</p>
+                    </div>
+                  ))}
+                  {Object.entries(Friday).map(([key, value]) => (
+                    <div key={key}>
+                      <h3>Period {key}</h3>
+                      <p>T_icard_Id: {value.T_icard_Id}</p>
+                      <p>Subject_Code: {value.Subject_Code}</p>
+                      <p>Time_From: {value.Time_From}</p>
+                      <p>Time_TO: {value.Time_TO}</p>
+                    </div>
+                  ))}
+                  {Object.entries(Saturday).map(([key, value]) => (
+                    <div key={key}>
+                      <h3>Period {key}</h3>
+                      <p>T_icard_Id: {value.T_icard_Id}</p>
+                      <p>Subject_Code: {value.Subject_Code}</p>
+                      <p>Time_From: {value.Time_From}</p>
+                      <p>Time_TO: {value.Time_TO}</p>
+                    </div>
+                  ))}
+                  {/*-------------------------- my space--------------------  */ }
+
+
                   {/* <form>
                     {day1 && (
                       <table className='tab-time'>
