@@ -9,7 +9,9 @@ import { Link } from "react-router-dom";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Api_keys from '../Api_keys'
-
+import student from '../Images/stu.png'
+import father from '../Images/father.png'
+import mother from '../Images/mother.png'
 
 const StudentData = () => {
 
@@ -197,6 +199,34 @@ const StudentData = () => {
         }
     }
 
+    // -------------------Show all details of the teachers----------------------
+    const ref3 = useRef(null);
+
+    const [S_Details, setS_Details] = useState({
+        S_icard_Id: "",
+        S_name: "",
+        S_mobile_no: "",
+        S_address: "",
+        S_photo: "",
+        S_standard: "",
+        S_Class_code: ""
+    })
+    const teacherDetails = (S_data) => {
+        ref3.current.click();
+        setS_Details({
+            S_icard_Id: S_data.S_icard_Id,
+            S_name: S_data.S_name,
+            S_mobile_no: S_data.S_mobile_no,
+            S_address: S_data.S_address,
+            S_photo: S_data.S_photo,
+            S_standard: S_data.S_standard,
+            S_Class_code: S_data.S_Class_code
+        });
+    }
+
+    console.log(S_Details.S_name);
+    // -------------------Show all details of the teachers----------------------
+
     useEffect(() => {
         getYourRestaurant();
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -222,7 +252,9 @@ const StudentData = () => {
                                     :
                                     YourRestList && YourRestList.map((d, i) => (
                                         <button className='studentid_btn' key={i}>
-                                            {d.S_name}
+                                            <div className="t_name" onClick={() => teacherDetails(d)}>
+                                                {d.S_name}
+                                            </div>
                                             <Link className="edit_btn" to="#" onClick={() => updatestudent(d)}>
                                                 <img src={Edit} alt="edit" />
                                             </Link>
@@ -324,6 +356,59 @@ const StudentData = () => {
                         </div>
                         {/* edit students  */}
 
+                        <button type="button" ref={ref3} style={{ display: "none" }} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#onlyData">
+                            Launch demo modal
+                        </button>
+                        <div className="modal fade sp_model_1" id="onlyData" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div className="modal-dialog">
+                                <div className="modal-content nanu-model">
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
+                                    <form id="editid_form2" className="editid_form">
+                                        <div className="upper-section-onlydata">
+                                            <div className="first-photo">
+                                                <img src={student} alt="" />
+                                                <p>Student Photo</p>
+                                            </div>
+                                            <div className="first-photo">
+                                                <img src={father} alt="" />
+                                                <p>Father Photo</p>
+                                            </div>
+                                            <div className="first-photo">
+                                                <img src={mother} alt="" />
+                                                <p>Mother Photo</p>
+                                            </div>
+                                        </div>
+                                        <div className="lower-section-onlydata">
+                                            <div className="dust-div">
+                                                <span className='title-onlydata'>Id card  id : </span>
+                                                <span className='data-onlydata'>{S_Details.S_icard_Id}</span>
+                                            </div>
+                                            <div className="dust-div">
+                                                <span className='title-onlydata'>Name : </span>
+                                                <span className='data-onlydata'>{S_Details.S_name}</span>
+                                            </div>
+                                            <div className="dust-div">
+                                                <span className='title-onlydata'>Standard : </span>
+                                                <span className='data-onlydata'>{S_Details.S_standard}</span>
+                                            </div>
+                                            <div className="dust-div">
+                                                <span className='title-onlydata'>Class code : </span>
+                                                <span className='data-onlydata'>{S_Details.S_Class_code}</span>
+                                            </div>
+                                            <div className="dust-div">
+                                                <span className='title-onlydata'>Mobile No. : </span>
+                                                <span className='data-onlydata'>{S_Details.S_mobile_no}</span>
+                                            </div>
+                                            <div className="dust-div">
+                                                <span className='title-onlydata'>Address : </span>
+                                                <span className='data-onlydata'>{S_Details.S_address}</span>
+                                            </div>
+                                        </div>
+                                        {/* <p>{}</p> */}
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

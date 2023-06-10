@@ -125,15 +125,61 @@
     right: 25px;
 }
 
-.jcsb{
+.jcsb {
     display: flex;
     justify-content: space-between;
 }
 
-.t_name{
+.t_name {
     cursor: pointer;
 }
 
-.studentid_btn{
+.studentid_btn {
     cursor: default !important;
+}
+
+.upper-section-onlydata {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 20px;
+    gap: 30px;
+}
+
+.upper-section-onlydata img {
+    width: 100%;
+    max-width: 100px;
+    margin-bottom: 10px;
+}
+
+.nanu-model {
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 0 100px;
+}
+
+.title-onlydata {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 500;
+    font-size: 25px;
+    color: #272727;
+}
+
+.data-onlydata {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    color: #737373;
+}
+
+.dust-div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.lower-section-onlydata {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }

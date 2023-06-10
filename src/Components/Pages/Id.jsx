@@ -9,7 +9,7 @@ import Delete from "../Images/delete.svg"
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Api_keys from '../Api_keys'
-
+import teacher from '../Images/teacher.png';
 
 const Id = () => {
 
@@ -61,7 +61,6 @@ const Id = () => {
   }, []);
 
   //-------Teacher Data ----------//
-
 
   const [teachers, setTeachers] = useState();
 
@@ -229,11 +228,63 @@ const Id = () => {
     setUpdateTeacher({ ...updateTeacher, [e.target.name]: e.target.value });
   }
 
+  // -------------------Show all details of the teachers----------------------
+
+  const [T_Details, setT_Details] = useState({
+    T_icard_Id: "",
+    T_name: "",
+    T_mobile_no: "",
+    T_address: "",
+    Subject_code: "",
+    T_Class_code: "",
+    T_Password: ""
+  })
+  const teacherDetails = (T_data) => {
+    ref3.current.click();
+    setT_Details({
+      T_icard_Id: T_data.T_icard_Id,
+      T_name: T_data.T_name,
+      T_mobile_no: T_data.T_mobile_no,
+      T_address: T_data.T_address,
+      Subject_code: T_data.Subject_code,
+      T_Class_code: T_data.T_Class_code
+    });
+    teacherphotos(T_data.T_icard_Id);
+  }
+  // -------------------Show all details of the teachers----------------------
+
+  // -------------------Show all photo of the teachers----------------------
+
+  const [T_photos, setT_photos] = useState({
+    T_icard_Id: "",
+    T_img: ""
+  });
+
+  const teacherphotos = async (T_icard_Id) => {
+    console.log(T_icard_Id);
+    const response = await fetch(Api_keys.fetch_img_of_teacher, {
+      method: "POST",
+      body: JSON.stringify({
+        T_icard_Id
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        "authToken_admin": localStorage.getItem("AToken")
+      },
+    });
+
+    const json = await response.json();
+    setT_photos(json);
+  }
+
+  // -------------------Show all details of the teachers----------------------
+
   useEffect(() => {
     getYourRestaurant();
     getTeachers();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [getYourRestaurant, getTeachers]);
+
 
   return (
     <>
@@ -265,7 +316,7 @@ const Id = () => {
                       <div className='teacherid_detail'>{
                         teachers && teachers.map((d, i) => (
                           <button className='studentid_btn' key={i}>
-                            <div className="t_name" data-bs-toggle="modal" data-bs-target="#onlyData">
+                            <div className="t_name" onClick={() => teacherDetails(d)}>
                               {d.T_name}
                             </div>
                             <Link className="edit_btn" onClick={() => updateRestTeacher(d)}>
@@ -299,7 +350,7 @@ const Id = () => {
                   <button type="button" ref={ref2} style={{ display: "none" }} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editTeacherModal">
                     Launch demo modal
                   </button>
-                  {/* <div className="modal" id="editTeacherModal">
+                  <div className="modal" id="editTeacherModal">
                     <div className="modal-dialog">
                       <div className="modal-content editid_modal">
                         <button type="button" className="btn-close" data-bs-dismiss="modal" ref={refClose2}></button>
@@ -338,7 +389,7 @@ const Id = () => {
                         </form>
                       </div>
                     </div>
-                  </div> */}
+                  </div>
 
                   <div className="modal fade sp_model_1" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div className="modal-dialog">
@@ -382,39 +433,52 @@ const Id = () => {
                   </div>
 
 
+                  <button type="button" ref={ref3} style={{ display: "none" }} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#onlyData">
+                    Launch demo modal
+                  </button>
                   <div className="modal fade sp_model_1" id="onlyData" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div className="modal-dialog">
-                      <div className="modal-content editid_modal">
+                      <div className="modal-content nanu-model">
                         <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
                         <form id="editid_form2" className="editid_form">
-                          <div className='input_part idcard_input'>
-                            <label>ID Card</label> <br />
-                            <input type="text" id="idcard2" name="T_icard_Id" value={updateTeacher.T_icard_Id} readOnly/>
+                          <div className="upper-section-onlydata">
+                            <div className="first-photo">
+                              {T_photos === null
+                                ?
+                                <img src={teacher} alt=" " />
+                                :
+                                <img src={`http://localhost:5050/teacher_img/${T_photos.T_img}`} alt=" " />
+                              }
+                              <p> Teacher Photo</p>
+                            </div>
                           </div>
-                          <div className='input_part name_input'>
-                            <label>Name</label> <br />
-                            <input type="text" id="name2" name="T_name" value={updateTeacher.T_name} readOnly/>
+                          <div className="lower-section-onlydata">
+                            <div className="dust-div">
+                              <span className='title-onlydata'>Id card  id : </span>
+                              <span className='data-onlydata'>{T_Details.T_icard_Id}</span>
+                            </div>
+                            <div className="dust-div">
+                              <span className='title-onlydata'>Name : </span>
+                              <span className='data-onlydata'>{T_Details.T_name}</span>
+                            </div>
+                            <div className="dust-div">
+                              <span className='title-onlydata'>Subject Code : </span>
+                              <span className='data-onlydata'>{T_Details.Subject_code}</span>
+                            </div>
+                            <div className="dust-div">
+                              <span className='title-onlydata'>Class code : </span>
+                              <span className='data-onlydata'>{T_Details.T_Class_code}</span>
+                            </div>
+                            <div className="dust-div">
+                              <span className='title-onlydata'>Mobile No. : </span>
+                              <span className='data-onlydata'>{T_Details.T_mobile_no}</span>
+                            </div>
+                            <div className="dust-div">
+                              <span className='title-onlydata'>Address : </span>
+                              <span className='data-onlydata'>{T_Details.T_address}</span>
+                            </div>
                           </div>
-                          <div className='input_part standard_input'>
-                            <label>Subject code</label> <br />
-                            <input type="text" id="standard2" name="Subject_code" value={updateTeacher.Subject_code} readOnly/>
-                          </div>
-                          <div className='input_part classcode_input'>
-                            <label>Class Code</label> <br />
-                            <input type="text" id="classcode2" name="T_Class_code" value={updateTeacher.T_Class_code} readOnly/>
-                          </div>
-                          <div className='input_part mobile_input'>
-                            <label>Mobile</label> <br />
-                            <input type="number" id="mobile2" name="T_mobile_no" value={updateTeacher.T_mobile_no} readOnly/>
-                          </div>
-                          <div className='input_part address_input'>
-                            <label>Address</label> <br />
-                            <input type="text" id="address2" name="T_address" value={updateTeacher.T_address} readOnly/>
-                          </div>
-                          <div className='input_part password_input'>
-                            <label>Password</label> <br />
-                            <input type="password" id="password2" name="T_Password" value={updateTeacher.T_Password} readOnly/>
-                          </div>
+                          {/* <p>{}</p> */}
                         </form>
                       </div>
                     </div>
@@ -424,7 +488,7 @@ const Id = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div >
     </>
   )
 }

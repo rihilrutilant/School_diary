@@ -19,7 +19,7 @@ const Time = () => {
   const onChange = (event) => {
     const value = event.target.value;
     ReactSession.set("username", value);
-    navigate('/Timetabledata')
+    navigate('/timetabledata')
   };
 
   //-------Student Data--------/
