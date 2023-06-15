@@ -42,6 +42,7 @@ const apiConst = {
   fetch_img_of_teacher: `${BASE_URL}admin/fetch_img_of_teacher/`,
   get_all_subjects: `${BASE_URL}subject/get_all_subjects_class_wise`,
   fetch_all_timetable_by_classes: `${BASE_URL}timetable/fetch_all_timetable_by_classes`,
+  make_timetable: `${BASE_URL}timetable/make_timetable`,
 };
 
 export default apiConst;

@@ -297,6 +297,7 @@ const Id = () => {
             <h4 className='main-name'>Generate ID</h4>
             <div className='ganerate_id_part'>
               <div className='ganerate_id_check'>
+                <div className="first-haft">
                 <h3>Generate ID for</h3>
                 <label className='ganerateid_opt'>
                   <input type="radio" checked={checkbox1Checked} onChange={handleCheckbox1Change} />
@@ -306,13 +307,14 @@ const Id = () => {
                   <input type="radio" checked={checkbox2Checked} onChange={handleCheckbox2Change} />
                   Students
                 </label>
+                </div>
+                <button className='teacherid_create' data-bs-toggle="modal" data-bs-target="#staticBackdrop">+ Generate ID</button>
               </div>
               <div className='ganerateid_cnt'>
                 <div className='ganerateid_cnt_inn'>
 
                   {checkbox1Checked && (
                     <div className='teacherid_check'>
-                      <button className='teacherid_create' data-bs-toggle="modal" data-bs-target="#staticBackdrop">+ Generate ID</button>
                       <div className='teacherid_detail'>{
                         teachers && teachers.map((d, i) => (
                           <button className='studentid_btn' key={i}>

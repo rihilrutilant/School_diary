@@ -398,7 +398,7 @@ const Holiday = () => {
                     </div>
                     <div className="modal-footer">
                       <div className="hTable_btn">
-                        <button className="save_btn" onClick={handleSubmit} > SAVE</button>
+                        <button className="save_btn" onClick={handleSubmit} >SAVE</button>
                       </div>
                     </div>
                   </div>

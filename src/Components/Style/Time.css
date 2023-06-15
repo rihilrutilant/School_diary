@@ -8,6 +8,13 @@
     padding: 16px 56px;
     border-radius: 5px;
     border: 2px solid;
+    position: absolute;
+    right: 0;
+    top: -100px;
+}
+
+.modal-content .btn-close{
+    z-index: 1;
 }
 
 .weekdays {
@@ -87,9 +94,9 @@
     border-radius: 7px;
 }
 
-/* .ganerateid_cnt {
-    text-align: center;
-} */
+.ganerateid_cnt {
+    position: relative;
+}
 
 .ganerate_id_part{
     margin-bottom: 120px;
