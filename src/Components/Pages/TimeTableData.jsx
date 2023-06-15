@@ -413,12 +413,13 @@ const TimeTableData = () => {
     Class_code: "",
   });
 
-  console.log(createTimeTable);
+  // console.log(createTimeTable);
+
+  const [monday1, setMonday1] = useState()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const Class_code= Data
-    console.log(Class_code);
     const response = await fetch(apiConst.make_timetable, {
       method: 'POST',
       body: JSON.stringify({
@@ -429,7 +430,7 @@ const TimeTableData = () => {
         'authToken_admin': localStorage.getItem("AToken")
       }
     })
-    // console.log(Class_code);
+    console.log(response);
 
     const json = await response.json();
     console.log(json);
@@ -646,7 +647,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
