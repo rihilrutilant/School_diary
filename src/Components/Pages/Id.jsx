@@ -247,36 +247,10 @@ const Id = () => {
       T_mobile_no: T_data.T_mobile_no,
       T_address: T_data.T_address,
       Subject_code: T_data.Subject_code,
-      T_Class_code: T_data.T_Class_code
+      T_Class_code: T_data.T_Class_code,
+      T_img: T_data.T_img
     });
-    teacherphotos(T_data.T_icard_Id);
   }
-  // -------------------Show all details of the teachers----------------------
-
-  // -------------------Show all photo of the teachers----------------------
-
-  const [T_photos, setT_photos] = useState({
-    T_icard_Id: "",
-    T_img: ""
-  });
-
-  const teacherphotos = async (T_icard_Id) => {
-    console.log(T_icard_Id);
-    const response = await fetch(Api_keys.fetch_img_of_teacher, {
-      method: "POST",
-      body: JSON.stringify({
-        T_icard_Id
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        "authToken_admin": localStorage.getItem("AToken")
-      },
-    });
-
-    const json = await response.json();
-    setT_photos(json);
-  }
-
   // -------------------Show all details of the teachers----------------------
 
   useEffect(() => {
@@ -298,15 +272,15 @@ const Id = () => {
             <div className='ganerate_id_part'>
               <div className='ganerate_id_check'>
                 <div className="first-haft">
-                <h3>Generate ID for</h3>
-                <label className='ganerateid_opt'>
-                  <input type="radio" checked={checkbox1Checked} onChange={handleCheckbox1Change} />
-                  Teacher
-                </label>
-                <label>
-                  <input type="radio" checked={checkbox2Checked} onChange={handleCheckbox2Change} />
-                  Students
-                </label>
+                  <h3>Generate ID for</h3>
+                  <label className='ganerateid_opt'>
+                    <input type="radio" checked={checkbox1Checked} onChange={handleCheckbox1Change} />
+                    Teacher
+                  </label>
+                  <label>
+                    <input type="radio" checked={checkbox2Checked} onChange={handleCheckbox2Change} />
+                    Students
+                  </label>
                 </div>
                 <button className='teacherid_create' data-bs-toggle="modal" data-bs-target="#staticBackdrop">+ Generate ID</button>
               </div>
@@ -445,11 +419,11 @@ const Id = () => {
                         <form id="editid_form2" className="editid_form">
                           <div className="upper-section-onlydata">
                             <div className="first-photo">
-                              {T_photos === null
+                              {!T_Details.T_img
                                 ?
                                 <img src={teacher} alt=" " />
                                 :
-                                <img src={`http://localhost:5050/teacher_img/${T_photos.T_img}`} alt=" " />
+                                <img src={`http://localhost:5050/teacher_img/${T_Details.T_img}`} alt=" " />
                               }
                               <p> Teacher Photo</p>
                             </div>

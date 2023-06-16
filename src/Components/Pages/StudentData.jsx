@@ -9,9 +9,7 @@ import { Link } from "react-router-dom";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Api_keys from '../Api_keys'
-import student from '../Images/stu.png'
-import father from '../Images/father.png'
-import mother from '../Images/mother.png'
+import teacher from '../Images/teacher.png';
 
 const StudentData = () => {
 
@@ -69,7 +67,6 @@ const StudentData = () => {
         if (json.success) {
             toast.success(json.success, { position: toast.POSITION.TOP_RIGHT });
             const timer = setTimeout(() => {
-                // window.location.href = "/id"
                 getYourRestaurant();
             }, 1000);
             return () => clearTimeout(timer);
@@ -209,7 +206,10 @@ const StudentData = () => {
         S_address: "",
         S_photo: "",
         S_standard: "",
-        S_Class_code: ""
+        S_Class_code: "",
+        S_img:"",
+        S_father_img:"",
+        S_mother_img:""
     })
     const teacherDetails = (S_data) => {
         ref3.current.click();
@@ -220,11 +220,12 @@ const StudentData = () => {
             S_address: S_data.S_address,
             S_photo: S_data.S_photo,
             S_standard: S_data.S_standard,
-            S_Class_code: S_data.S_Class_code
+            S_Class_code: S_data.S_Class_code,
+            S_img: S_data.S_img,
+            S_father_img: S_data.S_father_img,
+            S_mother_img: S_data.S_mother_img
         });
     }
-
-    console.log(S_Details.S_name);
     // -------------------Show all details of the teachers----------------------
 
     useEffect(() => {
@@ -366,15 +367,30 @@ const StudentData = () => {
                                     <form id="editid_form2" className="editid_form">
                                         <div className="upper-section-onlydata">
                                             <div className="first-photo">
-                                                <img src={student} alt="" />
+                                                {!S_Details.S_img
+                                                    ?
+                                                    <img src={teacher} alt=" " />
+                                                    :
+                                                    <img src={`http://localhost:5050/student_img/${S_Details.S_img}`} alt=" " />
+                                                }
                                                 <p>Student Photo</p>
                                             </div>
                                             <div className="first-photo">
-                                                <img src={father} alt="" />
+                                                {!S_Details.S_father_img
+                                                    ?
+                                                    <img src={teacher} alt=" " />
+                                                    :
+                                                    <img src={`http://localhost:5050/student_img/${S_Details.S_father_img}`} alt=" " />
+                                                }
                                                 <p>Father Photo</p>
                                             </div>
                                             <div className="first-photo">
-                                                <img src={mother} alt="" />
+                                                {!S_Details.S_mother_img
+                                                    ?
+                                                    <img src={teacher} alt=" " />
+                                                    :
+                                                    <img src={`http://localhost:5050/student_img/${S_Details.S_mother_img}`} alt=" " />
+                                                }
                                                 <p>Mother Photo</p>
                                             </div>
                                         </div>
