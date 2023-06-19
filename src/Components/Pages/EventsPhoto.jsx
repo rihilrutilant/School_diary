@@ -170,7 +170,6 @@ const EventsPhoto = () => {
                         ))
                     }
                   </div>
-                  {/* onClick={() => deleteRest(a._id)} */}
                 </div>
               </div>
             </div>

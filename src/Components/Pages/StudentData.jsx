@@ -65,7 +65,7 @@ const StudentData = () => {
 
         const json = await response.json();
         if (json.success) {
-            toast.success(json.success, { position: toast.POSITION.TOP_RIGHT });
+            toast.success("Student Created", { position: toast.POSITION.TOP_RIGHT });
             const timer = setTimeout(() => {
                 getYourRestaurant();
             }, 1000);
@@ -107,6 +107,7 @@ const StudentData = () => {
             YoursetRestList(json);
         }
     }, [S_Class_code]);
+
     //----------------- Edit a new Student ------------------------------
 
     const ref = useRef(null);
@@ -244,7 +245,7 @@ const StudentData = () => {
                     <div className="container-fluid">
                         <div className='studentid_cnt'>
                             <h3>Generate ID / <span>{DataClass}</span></h3>
-                            <button className='studentid_create' data-bs-toggle="modal" data-bs-target="#staticBackdrop">+ Generate ID</button>
+                            <button className='studentid_create' data-bs-toggle="modal" data-bs-target="#staticBackdrop">+ Generate Student ID</button>
                         </div>
                         <div className='studentid_detail'>
                             {

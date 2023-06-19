@@ -33,6 +33,7 @@ const TimeTableData = () => {
       setDay6(false)
     }
   }
+
   const handleDay2 = () => {
     if (day2 === false) {
       setDay1(false)
@@ -43,6 +44,7 @@ const TimeTableData = () => {
       setDay6(false)
     }
   }
+
   const handleDay3 = () => {
     if (day3 === false) {
       setDay1(false)
@@ -53,6 +55,7 @@ const TimeTableData = () => {
       setDay6(false)
     }
   }
+
   const handleDay4 = () => {
     if (day4 === false) {
       setDay1(false)
@@ -63,6 +66,7 @@ const TimeTableData = () => {
       setDay6(false)
     }
   }
+
   const handleDay5 = () => {
     if (day5 === false) {
       setDay1(false)
@@ -73,6 +77,7 @@ const TimeTableData = () => {
       setDay6(false)
     }
   }
+
   const handleDay6 = () => {
     if (day6 === false) {
       setDay1(false)
@@ -396,30 +401,26 @@ const TimeTableData = () => {
   })
 
   //---------------- Timtable Data --------------------
-  const [timeString, setTimeString] = useState('');
-  const [timeObject, setTimeObject] = useState(null);
+  // const [timeString, setTimeString] = useState('');
+  // const [timeObject, setTimeObject] = useState(null);
 
-  const handleInputChange = (event) => {
-    const inputTime = event.target.value;
-    setTimeString(inputTime);
-    console.log(inputTime);
+  // const handleInputChange = (event) => {
+  //   const inputTime = event.target.value;
+  //   setTimeString(inputTime);
+  //   console.log(inputTime);
 
-    const convertedTime = new Date(`2000-01-01T${inputTime}`);
-    setTimeObject(convertedTime);
-  };
+  //   const convertedTime = new Date(`2000-01-01T${inputTime}`);
+  //   setTimeObject(convertedTime);
+  // };
 
   //---------------- Create Time Table ----------------
   const [createTimeTable, setCreateTimeTable] = useState({
     Class_code: "",
   });
 
-  // console.log(createTimeTable);
-
-  const [monday1, setMonday1] = useState()
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const Class_code= Data
+    const Class_code = Data
     const response = await fetch(apiConst.make_timetable, {
       method: 'POST',
       body: JSON.stringify({
@@ -440,6 +441,33 @@ const TimeTableData = () => {
     setCreateTimeTable({ ...createTimeTable, [e.target.name]: e.target.value })
   }
 
+
+  //--------------- Edit Time Table --------------------
+
+  const [editTable, seteditTable] = useState()
+
+  const onChangeTimeTable = (e) => {
+    seteditTable({ ...editTable, [e.target.name]: e.target.value })
+  }
+
+  // const apiTime = "8:00 AM";
+
+  // // Function to convert the time value to a valid format
+  // const convertToValidTimeFormat = (timeString) => {
+  //   const [time, period] = timeString.split(' ');
+  //   let [hours, minutes] = time.split(':');
+
+  //   if (period === 'PM' && hours !== '12') {
+  //     hours = String(parseInt(hours, 10) + 12);
+  //   } else if (period === 'AM' && hours === '12') {
+  //     hours = '00';
+  //   }
+
+  //   return `${hours}:${minutes}`;
+  // };
+  // const formattedTime = convertToValidTimeFormat(apiTime);
+
+  //--------------- Edit Time Table --------------------
   useEffect(() => {
     getTimetable();
     getTeachers();
@@ -675,7 +703,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -703,7 +731,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -731,7 +759,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -759,7 +787,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -787,7 +815,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -830,7 +858,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -858,7 +886,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -886,7 +914,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -914,7 +942,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -942,7 +970,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -970,7 +998,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -1013,7 +1041,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -1041,7 +1069,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -1069,7 +1097,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -1097,7 +1125,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -1125,7 +1153,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -1153,7 +1181,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -1196,7 +1224,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -1224,7 +1252,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -1252,7 +1280,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -1280,7 +1308,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -1308,7 +1336,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -1336,7 +1364,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -1379,7 +1407,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -1407,7 +1435,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -1435,7 +1463,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -1463,7 +1491,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -1491,7 +1519,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -1519,7 +1547,7 @@ const TimeTableData = () => {
                               <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                 <option value="DEFAULT" disabled>Select Subject</option>
                                 {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                  <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                     {item.Subject_Name}
                                   </option>
                                 ))}
@@ -1563,7 +1591,7 @@ const TimeTableData = () => {
                                 <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                   <option value="DEFAULT" disabled>Select Subject</option>
                                   {subject && subject.map((item, index) => (
-                                    <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                    <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                       {item.Subject_Name}
                                     </option>
                                   ))}
@@ -1591,7 +1619,7 @@ const TimeTableData = () => {
                                 <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                   <option value="DEFAULT" disabled>Select Subject</option>
                                   {subject && subject.map((item, index) => (
-                                    <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                    <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                       {item.Subject_Name}
                                     </option>
                                   ))}
@@ -1619,7 +1647,7 @@ const TimeTableData = () => {
                                 <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                   <option value="DEFAULT" disabled>Select Subject</option>
                                   {subject && subject.map((item, index) => (
-                                    <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                    <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                       {item.Subject_Name}
                                     </option>
                                   ))}
@@ -1647,7 +1675,7 @@ const TimeTableData = () => {
                                 <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"} onChange={onChangesTimeTable}>
                                   <option value="DEFAULT" disabled>Select Subject</option>
                                   {subject && subject.map((item, index) => (
-                                    <option value={item.Subject_Name + "/" + item.Standard} key={index}>
+                                    <option value={item.Subject_Name + "/" + item.Subject_Code} key={index}>
                                       {item.Subject_Name}
                                     </option>
                                   ))}
@@ -1704,7 +1732,7 @@ const TimeTableData = () => {
                           {Object.entries(Monday).map(([key, value]) => (
                             <tr key={key}>
                               <td>
-                                <select className="select-any-options" name='user' required id='User_name' value={value.T_icard_Id} onChange={(e) => { console.log(e.target.value); }}>
+                                <select className="select-any-options" name='user' required id='User_name' value={value.T_icard_Id} onChange={onChangeTimeTable}>
                                   <option value="" disabled>Select Teacher Name</option>
                                   {teachers && teachers.map((item, index) => (
                                     <option value={item.T_icard_Id} key={index}>
@@ -1714,37 +1742,20 @@ const TimeTableData = () => {
                                 </select>
                               </td>
                               <td>
-                                <select className="select-any-options" name="subject" required id="subject" value={value.Subject_Code} onChange={(e) => { console.log(e.target.value); }}>
+                                <select className="select-any-options" name="subject" required id="subject" value={value.Subject_Code} onChange={onChangeTimeTable}>
                                   <option value="" disabled>Select Subject</option>
                                   {subject && subject.map((item, index) => (
                                     <option value={item.Subject_Code} key={index}>
-                                      {item.Subject_Name}
+                                      {item.Subject_Code}
                                     </option>
                                   ))}
                                 </select>
                               </td>
                               <td>
-                                <input
-                                  type="time"
-                                  value={timeString}
-                                  onChange={handleInputChange}
-                                />
+                                <input type='time' value={value.Time_From} onChange={(e) => { console.log(e.target.value); }} />
                               </td>
                               <td>
-                                <input
-                                  defaultValue={value.Time_From}
-                                  type="time"
-                                  className='time-table-time'
-                                  onChange={(e) => {
-                                    const selectedTime = new Date(`2000-01-01T${e.target.value}`);
-                                    const formattedTime = selectedTime.toLocaleString('en-US', {
-                                      hour: 'numeric',
-                                      minute: 'numeric',
-                                      hour12: true
-                                    });
-                                    console.log(formattedTime);
-                                  }}
-                                />
+                                <input type='time' value={value.TIme_TO} onChange={(e) => { console.log(e.target.value); }} />
                               </td>
                             </tr>
                           ))}
@@ -1763,174 +1774,36 @@ const TimeTableData = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
+                          {Object.entries(Tuesday).map(([key, value]) => (
+                            <tr key={key}>
+                              <td>
+                                <select className="select-any-options" name='user' required id='User_name' value={value.T_icard_Id} onChange={(e) => { console.log(e.target.value); }}>
+                                  <option value="" disabled>Select Teacher Name</option>
+                                  {teachers && teachers.map((item, index) => (
+                                    <option value={item.T_icard_Id} key={index}>
+                                      {item.T_name}
+                                    </option>
+                                  ))}
+                                </select>
+                              </td>
+                              <td>
+                                <select className="select-any-options" name="subject" required id="subject" value={value.Subject_Code} onChange={(e) => { console.log(e.target.value); }}>
+                                  <option value="" disabled>Select Subject</option>
+                                  {subject && subject.map((item, index) => (
+                                    <option value={item.Subject_Code} key={index}>
+                                      {item.Subject_Code}
+                                    </option>
+                                  ))}
+                                </select>
+                              </td>
+                              <td>
+                                <input type='time' value={value.Time_From} onChange={(e) => { console.log(e.target.value); }} />
+                              </td>
+                              <td>
+                                <input type='time' value={value.TIme_TO} onChange={(e) => { console.log(e.target.value); }} />
+                              </td>
+                            </tr>
+                          ))}
                         </tbody>
                       </table>
                     )}
@@ -1946,174 +1819,36 @@ const TimeTableData = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
+                          {Object.entries(Wednesday).map(([key, value]) => (
+                            <tr key={key}>
+                              <td>
+                                <select className="select-any-options" name='user' required id='User_name' value={value.T_icard_Id} onChange={(e) => { console.log(e.target.value); }}>
+                                  <option value="" disabled>Select Teacher Name</option>
+                                  {teachers && teachers.map((item, index) => (
+                                    <option value={item.T_icard_Id} key={index}>
+                                      {item.T_name}
+                                    </option>
+                                  ))}
+                                </select>
+                              </td>
+                              <td>
+                                <select className="select-any-options" name="subject" required id="subject" value={value.Subject_Code} onChange={(e) => { console.log(e.target.value); }}>
+                                  <option value="" disabled>Select Subject</option>
+                                  {subject && subject.map((item, index) => (
+                                    <option value={item.Subject_Code} key={index}>
+                                      {item.Subject_Code}
+                                    </option>
+                                  ))}
+                                </select>
+                              </td>
+                              <td>
+                                <input type='time' value={value.Time_From} onChange={(e) => { console.log(e.target.value); }} />
+                              </td>
+                              <td>
+                                <input type='time' value={value.TIme_TO} onChange={(e) => { console.log(e.target.value); }} />
+                              </td>
+                            </tr>
+                          ))}
                         </tbody>
                       </table>
                     )}
@@ -2129,174 +1864,36 @@ const TimeTableData = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
+                          {Object.entries(Thursday).map(([key, value]) => (
+                            <tr key={key}>
+                              <td>
+                                <select className="select-any-options" name='user' required id='User_name' value={value.T_icard_Id} onChange={(e) => { console.log(e.target.value); }}>
+                                  <option value="" disabled>Select Teacher Name</option>
+                                  {teachers && teachers.map((item, index) => (
+                                    <option value={item.T_icard_Id} key={index}>
+                                      {item.T_name}
+                                    </option>
+                                  ))}
+                                </select>
+                              </td>
+                              <td>
+                                <select className="select-any-options" name="subject" required id="subject" value={value.Subject_Code} onChange={(e) => { console.log(e.target.value); }}>
+                                  <option value="" disabled>Select Subject</option>
+                                  {subject && subject.map((item, index) => (
+                                    <option value={item.Subject_Code} key={index}>
+                                      {item.Subject_Code}
+                                    </option>
+                                  ))}
+                                </select>
+                              </td>
+                              <td>
+                                <input type='time' value={value.Time_From} onChange={(e) => { console.log(e.target.value); }} />
+                              </td>
+                              <td>
+                                <input type='time' value={value.TIme_TO} onChange={(e) => { console.log(e.target.value); }} />
+                              </td>
+                            </tr>
+                          ))}
                         </tbody>
                       </table>
                     )}
@@ -2312,174 +1909,36 @@ const TimeTableData = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                {teachers && teachers.map((item, index) => (
-                                  <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                    {item.T_name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                <option value="DEFAULT" disabled>Select Subject</option>
-                                {subject && subject.map((item, index) => (
-                                  <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                    {item.Subject_Name}
-                                  </option>
-                                ))}
-                              </select>
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                            <td>
-                              <input type="time" placeholder='Select Date' className='time-table-time' />
-                            </td>
-                          </tr>
+                          {Object.entries(Friday).map(([key, value]) => (
+                            <tr key={key}>
+                              <td>
+                                <select className="select-any-options" name='user' required id='User_name' value={value.T_icard_Id} onChange={(e) => { console.log(e.target.value); }}>
+                                  <option value="" disabled>Select Teacher Name</option>
+                                  {teachers && teachers.map((item, index) => (
+                                    <option value={item.T_icard_Id} key={index}>
+                                      {item.T_name}
+                                    </option>
+                                  ))}
+                                </select>
+                              </td>
+                              <td>
+                                <select className="select-any-options" name="subject" required id="subject" value={value.Subject_Code} onChange={(e) => { console.log(e.target.value); }}>
+                                  <option value="" disabled>Select Subject</option>
+                                  {subject && subject.map((item, index) => (
+                                    <option value={item.Subject_Code} key={index}>
+                                      {item.Subject_Code}
+                                    </option>
+                                  ))}
+                                </select>
+                              </td>
+                              <td>
+                                <input type='time' value={value.Time_From} onChange={(e) => { console.log(e.target.value); }} />
+                              </td>
+                              <td>
+                                <input type='time' value={value.TIme_TO} onChange={(e) => { console.log(e.target.value); }} />
+                              </td>
+                            </tr>
+                          ))}
                         </tbody>
                       </table>
                     )}
@@ -2496,118 +1955,36 @@ const TimeTableData = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>
-                                <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                  <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                  {teachers && teachers.map((item, index) => (
-                                    <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                      {item.T_name}
-                                    </option>
-                                  ))}
-                                </select>
-                              </td>
-                              <td>
-                                <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                  <option value="DEFAULT" disabled>Select Subject</option>
-                                  {subject && subject.map((item, index) => (
-                                    <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                      {item.Subject_Name}
-                                    </option>
-                                  ))}
-                                </select>
-                              </td>
-                              <td>
-                                <input type="time" placeholder='Select Date' className='time-table-time' />
-                              </td>
-                              <td>
-                                <input type="time" placeholder='Select Date' className='time-table-time' />
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                  <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                  {teachers && teachers.map((item, index) => (
-                                    <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                      {item.T_name}
-                                    </option>
-                                  ))}
-                                </select>
-                              </td>
-                              <td>
-                                <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                  <option value="DEFAULT" disabled>Select Subject</option>
-                                  {subject && subject.map((item, index) => (
-                                    <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                      {item.Subject_Name}
-                                    </option>
-                                  ))}
-                                </select>
-                              </td>
-                              <td>
-                                <input type="time" placeholder='Select Date' className='time-table-time' />
-                              </td>
-                              <td>
-                                <input type="time" placeholder='Select Date' className='time-table-time' />
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                  <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                  {teachers && teachers.map((item, index) => (
-                                    <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                      {item.T_name}
-                                    </option>
-                                  ))}
-                                </select>
-                              </td>
-                              <td>
-                                <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                  <option value="DEFAULT" disabled>Select Subject</option>
-                                  {subject && subject.map((item, index) => (
-                                    <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                      {item.Subject_Name}
-                                    </option>
-                                  ))}
-                                </select>
-                              </td>
-                              <td>
-                                <input type="time" placeholder='Select Date' className='time-table-time' />
-                              </td>
-                              <td>
-                                <input type="time" placeholder='Select Date' className='time-table-time' />
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <select className="select-any-options" name='user' required id='User_name' defaultValue={"DEFAULT"}>
-                                  <option value="DEFAULT" disabled>Select Teacher Name</option>
-                                  {teachers && teachers.map((item, index) => (
-                                    <option value={item.T_name + "/" + item.T_icard_Id} key={index}>
-                                      {item.T_name}
-                                    </option>
-                                  ))}
-                                </select>
-                              </td>
-                              <td>
-                                <select className="select-any-options" name='subject' required id='subject' defaultValue={"DEFAULT"}>
-                                  <option value="DEFAULT" disabled>Select Subject</option>
-                                  {subject && subject.map((item, index) => (
-                                    <option value={item.Subject_Name + "/" + item.Standard} key={index}>
-                                      {item.Subject_Name}
-                                    </option>
-                                  ))}
-                                </select>
-                              </td>
-                              <td>
-                                <input type="time" placeholder='Select Date' className='time-table-time' />
-                              </td>
-                              <td>
-                                <input type="time" placeholder='Select Date' className='time-table-time' />
-                              </td>
-                            </tr>
+                            {Object.entries(Saturday).map(([key, value]) => (
+                              <tr key={key}>
+                                <td>
+                                  <select className="select-any-options" name='user' required id='User_name' value={value.T_icard_Id} onChange={(e) => { console.log(e.target.value); }}>
+                                    <option value="" disabled>Select Teacher Name</option>
+                                    {teachers && teachers.map((item, index) => (
+                                      <option value={item.T_icard_Id} key={index}>
+                                        {item.T_name}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </td>
+                                <td>
+                                  <select className="select-any-options" name="subject" required id="subject" value={value.Subject_Code} onChange={(e) => { console.log(e.target.value); }}>
+                                    <option value="" disabled>Select Subject</option>
+                                    {subject && subject.map((item, index) => (
+                                      <option value={item.Subject_Code} key={index}>
+                                        {item.Subject_Code}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </td>
+                                <td>
+                                  <input type='time' value={value.Time_From} onChange={(e) => { console.log(e.target.value); }} />
+                                </td>
+                                <td>
+                                  <input type='time' value={value.TIme_TO} onChange={(e) => { console.log(e.target.value); }} />
+                                </td>
+                              </tr>
+                            ))}
                           </tbody>
                         </table>
                       </>

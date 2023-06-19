@@ -3,14 +3,63 @@ import React, { useEffect, useState } from 'react'
 import "../Style/Result.css"
 import Navbar from "../Pages/Navbar"
 import Topbar from './Topbar';
-import { Link } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
+import apiConst from "../Api_keys";
+import { ReactSession } from 'react-client-session';
 
 const Result = () => {
+  const navigate = useNavigate();
+  ReactSession.setStoreType("localStorage");
+
+  const onChange = (event) => {
+    const value = event.target.value;
+    ReactSession.set("jenish", value);
+    navigate('/ResultData')
+  };
+
   const [navVisible, showNavbar] = useState(true);
+
   useEffect(() => {
+    getclasses()
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
+
+  // -----------------------Fetch all Standards ---------------------
+  const [classes, setclasses] = useState()
+  const getclasses = async (e) => {
+    const response = await fetch(apiConst.fetch_all_standards, {
+      method: "POST",
+      headers: {
+        "authToken_admin": localStorage.getItem("AToken")
+      },
+    });
+    const json = await response.json();
+    setclasses(json)
+    ReactSession.set("jenish", json);
+  };
+  // -----------------------Fetch all Standards ---------------------
+
+  const [classVal] = useState('');
+
+  //-----------------------Fetch all Classcode standard wise-------------------------
+  const [classCode, setclassCode] = useState()
+  const getclasscodes = async (e) => {
+    const Standard = e.target.value
+    const response = await fetch(apiConst.get_all_classes_std_wise, {
+      method: "POST",
+      body: JSON.stringify({ Standard }),
+      headers: {
+        "Content-Type": "application/json",
+        "authToken_admin": localStorage.getItem("AToken")
+      },
+    });
+    const json = await response.json();
+    setclassCode(json)
+
+    const value = e.target.value;
+    ReactSession.set("jenish", value);
+  };
+  //-----------------------Fetch all Classcode standard wise-------------------------
 
   return (
     <>
@@ -21,244 +70,36 @@ const Result = () => {
           <div className="container-fluid">
             <div className="add-btn">
               <h4 className='main-name'>Result</h4>
-              <Link to="/AddResult"><button> + Add a exam result</button></Link>
+              {/* <Link to="/AddResult"><button> + Add a exam result</button></Link> */}
             </div>
             <div className="r-info">
               <div className="sel-sec">
+                <select defaultValue={"DEFAULT"} className="form-select345" onChange={getclasscodes}>
+                  <option value="DEFAULT" disabled>Select Class</option>
+                  {
+                    classes && classes.map((item, k) => {
+                      return (
+                        <option key={k} value={item.Standard}>Std {item.Standard}</option>
+                      )
+                    })
+                  }
+                </select>
                 <div className="cls1">
-                  <select className="form-select" aria-label="Default select example">
-                    <option selected disabled>Select Class</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="2">5</option>
-                    <option value="3">6</option>
-                    <option value="1">7</option>
-                    <option value="2">8</option>
-                    <option value="3">9</option>
-                    <option value="1">10</option>
-                    <option value="3">11</option>
-                    <option value="1">12</option>
-                  </select>
-                </div>
-                <div className="cls1">
-                  <select className="form-select" aria-label="Default select example">
-                    <option selected disabled>Exam Type</option>
-                    <option value="1">A</option>
-                    <option value="2">B</option>
-                    <option value="3">C</option>
-                    <option value="3">D</option>
-                  </select>
-                </div>
-                <div className="cls1">
-                  <select className="form-select" aria-label="Default select example">
-                    <option selected disabled>Select Division</option>
-                    <option value="1">
-                      Kenneth Donna <span>Roll no.01</span>
-                    </option>
-                    <option value="1">
-                      <div className="roll-info">
-                        <h3>Lucas Peterson </h3>
-                        <p>Roll no.02</p>
-                      </div>
-                    </option>
-                    <option value="1">
-                      <div className="roll-info">
-                        <h3>Manish Singh  </h3>
-                        <p>Roll no.03</p>
-                      </div>
-                    </option>
-                  </select>
-                </div>
-                <div className="cls1">
-                  <select className="form-select" aria-label="Default select example">
-                    <option selected disabled>Exam Type</option>
-                    <option value="1">First term</option>
-                    <option value="2">Second term</option>
-                    <option value="3">Final</option>
+                  <select className="form-select345" value={classVal} onChange={onChange}>
+                    <option value="DEFAULT">Select Division</option>
+                    {
+                      classCode && classCode.map((item, k) => {
+                        return (
+                          <option key={k} value={item}>{item}</option>
+                        )
+                      })
+                    }
                   </select>
                 </div>
               </div>
-              <div className="t-btn1">
+              {/* <div className="t-btn1">
                 <button className='t-submit'>SUBMIT</button>
-              </div>
-            </div>
-
-            {/* ---------------------------------------------------- */}
-
-            <div className="r-tab" >
-              <div className="sub-inner-sec1">
-                <button className='s-add-btn'>+Add</button>
-              </div>
-              <div className="r-inner-part">
-                <div className='classtable_data1' >
-                  <table className='sub-table' >
-                    <tr className='f-row'>
-                      <th className='s-th'>Subject</th>
-                      <th className='s-th'>Marks from</th>
-                      <th className='s-th'>Marks to</th>
-                    </tr>
-                    <tr>
-                      <td className='innerdata s-th'>
-                        <select className="form-select1" aria-label="Default select example">
-                          <option selected disabled>Select Class</option>
-                          <option value="1">10</option>
-                          <option value="1">9</option>
-                          <option value="1">8</option>
-                        </select>
-                      </td>
-                      <td className='innerdata s-th'>
-                        <select className="form-select1" aria-label="Default select example">
-                          <option selected disabled>Select Divison</option>
-                          <option value="1">A</option>
-                          <option value="1">B</option>
-                          <option value="1">C</option>
-                        </select>
-                      </td>
-                      <td className='innerdata s-th'>
-                        <select className="form-select1" aria-label="Default select example">
-                          <option selected disabled>Subject</option>
-                          <option value="1">English</option>
-                          <option value="1">Hindi</option>
-                          <option value="1">Gujrati</option>
-                        </select>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td className='innerdata s-th'>
-                        <select className="form-select1" aria-label="Default select example">
-                          <option selected disabled>Select Subject</option>
-                          <option value="1">10</option>
-                          <option value="1">9</option>
-                          <option value="1">8</option>
-                        </select>
-                      </td>
-                      <td className='innerdata s-th'>
-                        <select className="form-select1" aria-label="Default select example">
-                          <option selected disabled>Select Marks</option>
-                          <option value="1">A</option>
-                          <option value="1">B</option>
-                          <option value="1">C</option>
-                        </select>
-                      </td>
-                      <td className='innerdata s-th'>
-                        <select className="form-select1" aria-label="Default select example">
-                          <option selected disabled>Select Marks</option>
-                          <option value="1">English</option>
-                          <option value="1">Hindi</option>
-                          <option value="1">Gujrati</option>
-                        </select>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td className='innerdata s-th'>
-                        <select className="form-select1" aria-label="Default select example">
-                          <option selected disabled>Select Subject</option>
-                          <option value="1">10</option>
-                          <option value="1">9</option>
-                          <option value="1">8</option>
-                        </select>
-                      </td>
-                      <td className='innerdata s-th'>
-                        <select className="form-select1" aria-label="Default select example">
-                          <option selected disabled>Select Marks</option>
-                          <option value="1">A</option>
-                          <option value="1">B</option>
-                          <option value="1">C</option>
-                        </select>
-                      </td>
-                      <td className='innerdata s-th'>
-                        <select className="form-select1" aria-label="Default select example">
-                          <option selected disabled>Select Marks</option>
-                          <option value="1">English</option>
-                          <option value="1">Hindi</option>
-                          <option value="1">Gujrati</option>
-                        </select>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td className='innerdata s-th'>
-                        <select className="form-select1" aria-label="Default select example">
-                          <option selected disabled>Select Subject</option>
-                          <option value="1">10</option>
-                          <option value="1">9</option>
-                          <option value="1">8</option>
-                        </select>
-                      </td>
-                      <td className='innerdata s-th'>
-                        <select className="form-select1" aria-label="Default select example">
-                          <option selected disabled>Select Marks</option>
-                          <option value="1">A</option>
-                          <option value="1">B</option>
-                          <option value="1">C</option>
-                        </select>
-                      </td>
-                      <td className='innerdata s-th'>
-                        <select className="form-select1" aria-label="Default select example">
-                          <option selected disabled>Select Marks</option>
-                          <option value="1">English</option>
-                          <option value="1">Hindi</option>
-                          <option value="1">Gujrati</option>
-                        </select>
-                      </td>
-                    </tr>
-
-                  </table>
-
-
-
-                </div>
-                <div className="ref-inner-2nd">
-                  <tr>
-                    <td className='innerdata s-th'>
-                      <select className="form-select12f" aria-label="Default select example">
-                        <option selected disabled>Total</option>
-                        <option value="1">10</option>
-                        <option value="1">9</option>
-                        <option value="1">8</option>
-                      </select>
-                    </td>
-
-                  </tr>
-                  <tr>
-                    <td className='innerdata s-th'>
-                      <select className="form-select12" aria-label="Default select example">
-                        <option selected disabled>Obtain Marks</option>
-                        <option value="1">10</option>
-                        <option value="1">9</option>
-                        <option value="1">8</option>
-                      </select>
-                    </td>
-
-                  </tr>
-                  <tr>
-                    <td className='innerdata s-th'>
-                      <select className="form-select12" aria-label="Default select example">
-                        <option selected disabled>Percent</option>
-                        <option value="1">10</option>
-                        <option value="1">9</option>
-                        <option value="1">8</option>
-                      </select>
-                    </td>
-
-                  </tr>
-                  <tr>
-                    <td className='innerdata s-th'>
-                      <select className="form-select12" aria-label="Default select example">
-                        <option selected disabled>Rank</option>
-                        <option value="1">10</option>
-                        <option value="1">9</option>
-                        <option value="1">8</option>
-                      </select>
-                    </td>
-                  </tr>
-                </div>
-              </div>
-              <button className='upd'>UPDATE</button>
+              </div> */}
             </div>
           </div>
         </div>

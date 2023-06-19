@@ -3,34 +3,66 @@ import "../Style/Exam.css"
 import Navbar from "../Pages/Navbar"
 import Topbar from './Topbar';
 import { ReactSession } from 'react-client-session';
+import apiConst from "../Api_keys";
+
 
 const Exam = () => {
   const [navVisible, showNavbar] = useState(true);
   useEffect(() => {
+    getclasses();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
   ReactSession.setStoreType("localStorage");
 
-  const [error, setError] = useState("");
+  const [error] = useState("");
 
   const [field1, setField1] = useState('');
-  const [field2, setField2] = useState('');
   const [field3, setField3] = useState('');
-  const [field4, setField4] = useState('');
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (field1 && field2 && field3 && field4) {
+    if (field1) {
       window.location.href = "/ExamSchedule";
       ReactSession.set("field1", field1);
-      ReactSession.set("field2", field2);
       ReactSession.set("field3", field3);
     }
-    else {
-      setError("Please fill all fields");
-    }
   };
+
+
+  // -----------------------Fetch all Standards ---------------------
+  const [classes, setclasses] = useState()
+  const getclasses = async () => {
+    const response = await fetch(apiConst.fetch_all_standards, {
+      method: "POST",
+      headers: {
+        "authToken_admin": localStorage.getItem("AToken")
+      },
+    });
+    const json = await response.json();
+    setclasses(json)
+  };
+  // -----------------------Fetch all Standards ---------------------
+
+  //-----------------------Fetch all Classcode standard wise-------------------------
+  const [classCode, setclassCode] = useState()
+  const getclasscodes = async (e) => {
+    const Standard = e.target.value
+    const response = await fetch(apiConst.get_all_classes_std_wise, {
+      method: "POST",
+      body: JSON.stringify({ Standard }),
+      headers: {
+        "Content-Type": "application/json",
+        "authToken_admin": localStorage.getItem("AToken")
+      },
+    });
+    const json = await response.json();
+    setclassCode(json)
+  };
+
+  const getdatas = (e) => {
+    setField3(e.target.value)
+  }
+  //-----------------------Fetch all Classcode standard wise-------------------------
 
   return (
     <>
@@ -47,33 +79,36 @@ const Exam = () => {
                   <div className='exam_info_select'>
                     <div className="custom-dropdown">
                       <select value={field1} onChange={(e) => setField1(e.target.value)}>
-                        <option value="" selected disabled>Exam Type</option>
+                        <option value="" disabled>Exam Type</option>
                         <option value="First term">First term</option>
                         <option value="Second term">Second term</option>
+                        <option value="Weekly">Weekly</option>
+                        <option value="Monthly">Monthly</option>
+                        <option value="Mid term">Mid Term</option>
                       </select>
                     </div>
                     <div className="custom-dropdown">
-                      <select value={field2} onChange={(e) => setField2(e.target.value)}>
-                        <option value="" selected disabled>Select Class</option>
-                        <option value="10">10</option>
-                        <option value="9">9</option>
-                        <option value="8">8</option>
+                      <select onChange={getclasscodes}>
+                        <option value="DEFAULT" disabled>Select Class</option>
+                        {
+                          classes && classes.map((item, k) => {
+                            return (
+                              <option key={k} value={item.Standard}>std {item.Standard}</option>
+                            )
+                          })
+                        }
                       </select>
                     </div>
                     <div className="custom-dropdown">
-                      <select value={field3} onChange={(e) => setField3(e.target.value)}>
-                        <option value="" selected disabled>Select Division</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                      </select>
-                    </div>
-                    <div className="custom-dropdown">
-                      <select value={field4} onChange={(e) => setField4(e.target.value)}>
-                        <option value="" selected disabled>Marks From</option>
-                        <option value="100">100</option>
-                        <option value="50">50</option>
-                        <option value="30">30</option>
+                      <select value={field3} onChange={getdatas}>
+                        <option value="DEFAULT">Select Division</option>
+                        {
+                          classCode && classCode.map((item, k) => {
+                            return (
+                              <option key={k} value={item}>{item}</option>
+                            )
+                          })
+                        }
                       </select>
                     </div>
                   </div>

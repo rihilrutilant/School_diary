@@ -282,7 +282,7 @@ const Id = () => {
                     Students
                   </label>
                 </div>
-                <button className='teacherid_create' data-bs-toggle="modal" data-bs-target="#staticBackdrop">+ Generate ID</button>
+                <button className='teacherid_create' data-bs-toggle="modal" data-bs-target="#staticBackdrop">+ Generate Teacher ID</button>
               </div>
               <div className='ganerateid_cnt'>
                 <div className='ganerateid_cnt_inn'>

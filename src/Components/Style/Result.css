@@ -1,11 +1,10 @@
 .sel-sec {
-    gap: 20px;
+    gap: 200px;
     display: flex;
     justify-content: space-between;
 }
 
 .cls1 {
-    max-width: 250px;
     width: 100%;
 }
 
@@ -149,6 +148,46 @@ ul li {
     font-size: 20px;
     line-height: 20px;
     margin-bottom: 167px;
+}
+
+.form-select345 {
+    border: none;
+    border-bottom: 1px solid #272727;
+    display: block;
+    width: 100%;
+    border-radius: 0px;
+    padding: 0.375rem 0 0.375rem 0.75rem !important;
+}
+
+.all-the-data {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.height-and {
+    height: 250px;
+}
+
+.label-title {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.label-des {
+    font-size: 18px;
+}
+
+.main-div-flex {
+    display: flex;
+    align-items: center;
+}
+
+.dust-div-r {
+    margin: 0 auto;
+    text-align: center;
+    font-size: 25px;
 }
 
 @media screen and (max-width: 1316px) {

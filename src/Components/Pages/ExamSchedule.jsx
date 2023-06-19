@@ -7,13 +7,13 @@ import Remove from "../Images/remove.svg"
 
 const ExamSchedule = () => {
     const [navVisible, showNavbar] = useState(true);
+
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }, []);
 
     ReactSession.setStoreType("localStorage");
     const Data1 = ReactSession.get("field1");
-    const Data2 = ReactSession.get("field2");
     const Data3 = ReactSession.get("field3");
 
     const [numberOfTextBoxes, setNumberOfTextBoxes] = useState(0);
@@ -25,6 +25,11 @@ const ExamSchedule = () => {
     const DeleteBox = () => {
         setNumberOfTextBoxes(numberOfTextBoxes - 1);
     };
+
+    // Add Exam Time Table
+
+    // Add Exam Time Table
+
     return (
         <>
             <div className="main-content">
@@ -32,7 +37,7 @@ const ExamSchedule = () => {
                 <div className="inner-main-content"  >
                     <Topbar />
                     <div className="container-fluid">
-                        <h4 className='main-name'>Exam Schedule / <span>{Data1} / {Data2} / {Data3}</span></h4>
+                        <h4 className='main-name'>Exam Schedule / <span>{Data1} / {Data3}</span></h4>
                         <button className='examschedule_add' onClick={addTextBox}>+ Add</button>
                         <div className='examschedule_t_data'>
                             <table className='examschedule_table'>
@@ -51,7 +56,7 @@ const ExamSchedule = () => {
                                     <tr>
                                         <td>
                                             <select>
-                                                <option value="" selected disabled>Select Subject</option>
+                                                <option value="" disabled>Select Subject</option>
                                                 <option value="First term">Science</option>
                                                 <option value="Second term">Maths</option>
                                                 <option value="Final">English</option>
@@ -60,7 +65,7 @@ const ExamSchedule = () => {
                                         </td>
                                         <td>
                                             <select>
-                                                <option value="" selected disabled>Select Marks</option>
+                                                <option value="" disabled>Select Marks</option>
                                                 <option value="First term">100</option>
                                                 <option value="Second term">50</option>
                                                 <option value="Final">30</option>
@@ -68,7 +73,7 @@ const ExamSchedule = () => {
                                         </td>
                                         <td>
                                             <select>
-                                                <option value="" selected disabled>Select standard</option>
+                                                <option value="" disabled>Select standard</option>
                                                 <option value="First term">1</option>
                                                 <option value="Second term">2</option>
                                                 <option value="Final">3</option>
@@ -100,7 +105,7 @@ const ExamSchedule = () => {
                                         <tr key={index}>
                                             <td>
                                                 <select>
-                                                    <option value="" selected disabled>Select Subject</option>
+                                                    <option value="" disabled>Select Subject</option>
                                                     <option value="First term">Science</option>
                                                     <option value="Second term">Maths</option>
                                                     <option value="Final">English</option>
@@ -109,7 +114,7 @@ const ExamSchedule = () => {
                                             </td>
                                             <td>
                                                 <select>
-                                                    <option value="" selected disabled>Select Marks</option>
+                                                    <option value="" disabled>Select Marks</option>
                                                     <option value="First term">100</option>
                                                     <option value="Second term">50</option>
                                                     <option value="Final">30</option>
@@ -117,7 +122,7 @@ const ExamSchedule = () => {
                                             </td>
                                             <td>
                                                 <select>
-                                                    <option value="" selected disabled>Select standard</option>
+                                                    <option value="" disabled>Select standard</option>
                                                     <option value="First term">1</option>
                                                     <option value="Second term">2</option>
                                                     <option value="Final">3</option>

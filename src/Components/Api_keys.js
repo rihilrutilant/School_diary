@@ -39,10 +39,13 @@ const apiConst = {
   create_students: `${BASE_URL}students/create_students`,
   update_student_details: `${BASE_URL}students/update_student_details/`,
   delete_students_info: `${BASE_URL}students/delete_students_info/`,
-  fetch_img_of_teacher: `${BASE_URL}admin/fetch_img_of_teacher/`,
   get_all_subjects: `${BASE_URL}subject/get_all_subjects_class_wise`,
   fetch_all_timetable_by_classes: `${BASE_URL}timetable/fetch_all_timetable_by_classes`,
   make_timetable: `${BASE_URL}timetable/make_timetable`,
+  set_examtimetable: `${BASE_URL}examtimetable/set_examtimetable`,
+  upload_results: `${BASE_URL}results/upload_results`,
+  fetch_results_of_student: `${BASE_URL}results/fetch_results_of_student`,
+  delete_results: `${BASE_URL}results/delete_results/`
 };
 
 export default apiConst;
