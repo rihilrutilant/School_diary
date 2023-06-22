@@ -45,8 +45,8 @@ const Fees = () => {
     const json = await response.json();
     setgetFees(json)
   };
-  //----------------fetch all fees of all standards----------------------
 
+  //----------------fetch all fees of all standards----------------------
 
   //---------------Update Fees----------------------------------------
 
@@ -78,6 +78,7 @@ const Fees = () => {
 
 
   // -----------------------Fetch all Standards ---------------------
+
   const [classes, setclasses] = useState()
   const getclasses = async () => {
     const response = await fetch(apiConst.fetch_all_standards, {
@@ -89,6 +90,7 @@ const Fees = () => {
     const json = await response.json();
     setclasses(json)
   };
+
   // -----------------------Fetch all Standards ---------------------
 
   const [classVal, setClassVal] = useState('');
@@ -182,7 +184,7 @@ const Fees = () => {
               </div>
             </div>
             <div className="fees_show">
-              <button className="fees_show_btn" onClick={getAllFees} data-bs-toggle="modal" data-bs-target="#FeesBackdrop">FEES</button>
+              <button className="fees_show_btn" onClick={getAllFees} data-bs-toggle="modal" data-bs-target="#FeesBackdrop">Edit Fees</button>
               <button className="add_fees_btn"> Add Fees</button>
             </div>
 

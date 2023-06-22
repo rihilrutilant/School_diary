@@ -35,7 +35,6 @@ const EventsPhoto = () => {
 
   // --------------- Fetch all phtos --------------------
   const [EventTitle, setEventTitle] = useState();
-
   const getAllPhotos = async () => {
     const response = await fetch(apiConst.fetch_all_event_photos,
       {
@@ -56,7 +55,7 @@ const EventsPhoto = () => {
   const [photosData, setPhotosData] = useState({
     Event_title: ''
   });
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -71,7 +70,7 @@ const EventsPhoto = () => {
           "authToken_admin": localStorage.getItem("AToken"),
         }
       });
-      
+
       if (response.data.success) {
         refClose.current.click();
         toast.success("Photo Added", { position: toast.POSITION.TOP_RIGHT });
@@ -100,6 +99,8 @@ const EventsPhoto = () => {
   //  -------------------- Extra Stuff --------------------
 
   const [events, setEvents] = useState();
+  console.log(events);
+
   const getEvents = async () => {
     const response = await fetch(apiConst.fetch_all_events, {
       method: "POST",
@@ -117,7 +118,7 @@ const EventsPhoto = () => {
   //---------------------- Delete Event --------------------
 
   const deleteRest = (id) => {
-    fetch(apiConst.delete_event_photos+id, {
+    fetch(apiConst.delete_event_photos + id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -154,7 +155,7 @@ const EventsPhoto = () => {
                 <div className='teacherid_check'>
                   <div className='teacherid_detail'>
                     {
-                      EventTitle === "No Event Photos Found"
+                      EventTitle === "Data Not Found"
                         ?
                         <h2 style={{ color: "red" }}>Data not available</h2>
                         :
@@ -184,11 +185,16 @@ const EventsPhoto = () => {
                       <label>Title</label><br />
                       <select className="any-options" onChange={onChange1} name='Event_title' required id='Event_title' defaultValue={"DEFAULT"}>
                         <option value="DEFAULT" disabled>Select Event Title</option>
-                        {events && events.map((item, index) => (
-                          <option value={item.Event_title} key={index}>
-                            {item.Event_title}
-                          </option>
-                        ))}
+                        {
+                          events === "Data Not Found"
+                            ?
+                            <h2 style={{ color: "red" }}>Data Not Found</h2>
+                            :
+                            events && events.map((item, index) => (
+                              <option value={item.Event_title} key={index}>
+                                {item.Event_title}
+                              </option>
+                            ))}
                       </select>
 
                     </div>

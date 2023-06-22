@@ -14,13 +14,14 @@ import Time from "./Components/Pages/Time";
 import Events from "./Components/Pages/Events";
 import Dashboard from "./Components/Pages/Dashboard";
 import StudentData from "./Components/Pages/StudentData";
-import ExamSchedule from "./Components/Pages/ExamSchedule";
 import PageNotFound from "./Components/Pages/PageNotFound";
 import Class from "./Components/Pages/Class";
 import EventsPhoto from "./Components/Pages/EventsPhoto";
 import PhotosData from "./Components/Pages/PhotosData";
 import TimeTableData from "./Components/Pages/TimeTableData";
 import ResultData from "./Components/Pages/ResultData";
+import SubjectData from "./Components/Pages/SubjectData";
+import ExamData from "./Components/Pages/ExamData";
 
 function App() {
   const userData = localStorage.getItem("AToken");
@@ -46,12 +47,13 @@ function App() {
             <Route path="/Time" element={<Time />} />
             <Route path="/StudentData" element={<StudentData />} />
             <Route path="/Subject" element={<Subject />} />
-            <Route path="/ExamSchedule" element={<ExamSchedule />} />
             <Route path="/Class" element={<Class />} />
             <Route path="/EventsPhoto" element={<EventsPhoto />} />
             <Route path="/PhotosData" element={<PhotosData />} />
             <Route path="/TimeTableData" element={<TimeTableData />} />
             <Route path="/ResultData" element={<ResultData />} />
+            <Route path="/SubjectData" element={<SubjectData />} />
+            <Route path="/ExamData" element={<ExamData />} />
 
             <Route path="/demoo" element={<Demoo />} />
             <Route path="Demo" element={<Demo />} />

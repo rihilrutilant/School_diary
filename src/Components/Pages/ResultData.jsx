@@ -13,8 +13,15 @@ const ResultData = () => {
     ReactSession.setStoreType("localStorage");
     const Data = ReactSession.get("jenish");
 
-    const DataStudent = Data.substring(0, 2);
-    const DataStudClass = Data.substring(2);
+    let DataStudent = '';
+    if (typeof Data === 'string') {
+        DataStudent = Data.substring(0, 2);
+    }
+
+    let DataStudClass = '';
+    if (typeof Data === 'string') {
+        DataStudClass = Data.substring(2);
+    }
     const DataClass = DataStudent + '/' + DataStudClass;
 
     const [navVisible, showNavbar] = useState(true);
@@ -44,12 +51,28 @@ const ResultData = () => {
         }
     }, [S_Class_code]);
 
-    useEffect(() => {
-        getAllStudent();
-        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    }, [getAllStudent]);
-
     //----------------- Fetch Student ------------------------------
+
+
+    //-----------------Fetch Results ----------------
+
+    const [allReslt, setAllReslt] = useState([]);
+
+    const getResult = async (studentId) => {
+        const S_icard_Id = studentId;
+        const response = await fetch(Api_keys.fetch_results_of_student, {
+            method: "POST",
+            body: JSON.stringify({ S_icard_Id }),
+            headers: {
+                "Content-Type": "application/json",
+                "authToken_admin": localStorage.getItem("AToken")
+            },
+        });
+        const json = await response.json();
+        setAllReslt(json);
+    };
+
+    //-----------------Fetch Results ----------------
 
     //----------------------- Add Result --------------------
 
@@ -59,6 +82,10 @@ const ResultData = () => {
         Term: '',
         result_photos: null,
     });
+
+    const clearFields = () => {
+        setResultData('');
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -78,13 +105,9 @@ const ResultData = () => {
             });
 
             if (response.data.success) {
-                toast.success("Reuslt generated successfully", { position: toast.POSITION.TOP_RIGHT });
-                setResultData({
-                    S_icard_Id: '',
-                    Result_Title: '',
-                    Term: '',
-                    result_photos: null,
-                });
+                toast.success("Result generated successfully", { position: toast.POSITION.TOP_RIGHT });
+                getResult();
+                clearFields();
             }
             else {
                 toast.error(response.data.error, { position: toast.POSITION.TOP_RIGHT });
@@ -104,29 +127,11 @@ const ResultData = () => {
 
     //----------------------- Add Result --------------------
 
-    //-----------------Fetch Notices ----------------
-
-    const [allReslt, setAllReslt] = useState([]);
-
-    const getResult = async (studentId) => {
-        let S_icard_Id = studentId;
-        const response = await fetch(Api_keys.fetch_results_of_student, {
-            method: "POST",
-            body: JSON.stringify({ S_icard_Id }),
-            headers: {
-                "Content-Type": "application/json",
-                "authToken_admin": localStorage.getItem("AToken")
-            },
-        });
-        const json = await response.json();
-        setAllReslt(json);
-    };
-
-    //-----------------Fetch Notices ----------------
-
     //---------------------- Delete Event --------------------
 
-    const deleteRest = (id) => {
+    const deleteRest = (id, studentId) => {
+        const S_icard_Id = studentId;
+        console.log(S_icard_Id);
         fetch(Api_keys.delete_results + id, {
             method: "DELETE",
             headers: {
@@ -137,22 +142,21 @@ const ResultData = () => {
             result.json().then((resp) => {
                 if (resp.success) {
                     toast.success("Result Deleted Successfully", { position: toast.POSITION.TOP_RIGHT });
-                    getResult();
                 }
                 else {
                     toast.error(resp.error, { position: toast.POSITION.TOP_RIGHT });
                 }
-                getResult()
             })
         })
-    }
+    };
 
     //---------------------- Delete Event --------------------
 
     useEffect(() => {
-        getResult();
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    }, []);
+        getResult();
+        getAllStudent();
+    }, [getAllStudent]);
 
     return (
         <>
@@ -169,7 +173,7 @@ const ResultData = () => {
                         <div className='studentid_detail'>
                             {
                                 studentClass === "Student Not Found" ?
-                                    <h2 style={{ color: "#E33535" }}>Results not found</h2>
+                                    <h2 style={{ color: "#E33535" }}>Students not found</h2>
                                     :
                                     studentClass && studentClass.map((d, i) => {
                                         return (
@@ -191,7 +195,17 @@ const ResultData = () => {
                                 <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
                                 <form onSubmit={handleSubmit} className="editid_form">
                                     <div className='input_part idcard_input'>
-                                        <label>ID Card</label> <br />
+                                        <label>Student Name</label><br />
+                                        <select className="any-options" onChange={onChange1} name='S_icard_Id' required id='S_icard_Id' defaultValue={"DEFAULT"}>
+                                            <option value="DEFAULT" disabled>Select Student Name</option>
+                                            {
+                                                studentClass && studentClass.map((item, index) => (
+                                                    <option value={item.S_icard_Id} key={index}>
+                                                        {item.S_name}
+                                                    </option>
+                                                ))
+                                            }
+                                        </select>
                                         <input type="text" id="S_icard_Id" name="S_icard_Id" required value={resultData.S_icard_Id} onChange={onChange1} />
                                     </div>
                                     <div className='input_part name_input'>
@@ -222,12 +236,12 @@ const ResultData = () => {
                     {/* generate Result */}
 
                     {/* Fetch Result */}
-                    <div className="modal fade" id="staticBackdrop123" aria-labelledby="staticBackdropLabel" aria-hidden="true" tabindex="-1">
+                    <div className="modal fade" id="staticBackdrop123" aria-labelledby="staticBackdropLabel" aria-hidden="true" tabIndex="-1">
                         <div className="modal-dialog">
                             <div className="modal-content editid_modal">
                                 <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
                                 <div className="all-the-data">
-                                    {allReslt === "No Result Found" ? <h2 style={{ color: "red" }}>Data Results Available</h2> :
+                                    {allReslt === "No Result Found" ? <h2 style={{ color: "red" }}>Results Not Available</h2> :
                                         allReslt.length > 0 && allReslt.map((item, index) => (
                                             <div key={index}>
                                                 <div className="main-div-flex">
@@ -260,7 +274,9 @@ const ResultData = () => {
                                                         ))
                                                     }
                                                 </div>
-                                                <AiFillDelete style={{ cursor: "pointer" }} onClick={() => deleteRest(item._id)} />
+                                                <div className='delete-btn-r'>
+                                                    <AiFillDelete style={{ cursor: "pointer", fontSize: "27px" }} onClick={() => deleteRest(item._id)} />
+                                                </div>
                                             </div>
                                         ))}
                                 </div>

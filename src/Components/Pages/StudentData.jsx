@@ -80,9 +80,6 @@ const StudentData = () => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
     }
 
-
-
-
     //----------------- Fetch all students  ------------------------------
 
     const [YourRestList, YoursetRestList] = useState();

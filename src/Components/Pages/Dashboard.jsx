@@ -6,7 +6,7 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Link } from 'react-router-dom'
 import { FaAngleRight } from "react-icons/fa"
-import Calendar from "react-calendar";
+// import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import n1 from "../Images/n1.svg"
 import n2 from "../Images/n2.svg"
@@ -17,10 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import apiConst from "../Api_keys"
 
 const Dashboard = () => {
-
-    console.log();
-
-    const [value, onChange] = useState(new Date());
+    // const [value, onChange] = useState(new Date());
     const [navVisible, showNavbar] = useState(true);
 
     useEffect(() => {
@@ -30,6 +27,7 @@ const Dashboard = () => {
         getclassesCount();
         getLatestNotices();
         getclasses();
+        getEvents();
     }, []);
 
     const [percentage, setpercentage] = useState()
@@ -126,6 +124,23 @@ const Dashboard = () => {
     };
     // ---------------fetch all standards-------------------
 
+    //------------------------- Fetch Events --------------------
+    const [events, setEvents] = useState();
+    console.log(events);
+    const getEvents = async () => {
+        const response = await fetch(apiConst.get_two_event, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "authToken_admin": localStorage.getItem("AToken")
+            },
+        });
+        const json = await response.json();
+        setEvents(json);
+    };
+    //------------------------- Fetch Events --------------------
+
+
     return (
         <>
             <div className="main-content">
@@ -196,7 +211,7 @@ const Dashboard = () => {
                                 {
                                     latestNotices === "Data Not Found"
                                         ?
-                                        <h3 style={{ color: "#E33535",textAlign:"center",marginBottom:"200px" }}>Data Not Found</h3>
+                                        <h3 style={{ color: "#E33535", textAlign: "center", marginBottom: "200px" }}>Data Not Found</h3>
                                         :
                                         latestNotices && latestNotices.map((item, index) => {
                                             return (
@@ -224,35 +239,32 @@ const Dashboard = () => {
                                 <p className='u-event'>Upcoming events</p>
                                 <div className="event-inner-sec">
                                     <div className="das-calender">
-                                        <div className="das-events_calender">
-                                            <Calendar onChange={onChange} value={value} />
-                                        </div>
+                                        {/* <div className="das-events_calender">
+                                            <Calendar value={value} onChange={onChange}/>
+                                        </div> */}
                                     </div>
                                     <div className="event-cel">
-                                        <div className="e1">
-                                            <p className='spt-p' >Sports day celebration</p>
-                                            <div className="s-date">
-                                                <p className='st'>Students</p>
-                                                <p style={{ margin: "0px" }}>Date: 03/08/2023</p>
-                                            </div>
-                                        </div>
-                                        <div className="e1">
-                                            <p className='spt-p' >Sports day celebration</p>
-                                            <div className="s-date">
-                                                <p className='st'>Students</p>
-                                                <p style={{ margin: "0px" }}>Date: 03/08/2023</p>
-                                            </div>
-                                        </div>
-                                        <div className="e1" style={{ margin: "0px" }}>
-                                            <p className='spt-p' >Sports day celebration</p>
-                                            <div className="s-date">
-                                                <p className='st'>Students</p>
-                                                <p style={{ margin: "0px" }}>Date: 03/08/2023</p>
-                                            </div>
+                                        {events === "Data Not Found"
+                                            ?
+                                            <h3 style={{ color: "#E33535", textAlign: "center", marginBottom: "200px" }}>Data Not Found</h3>
+                                            :
+                                            events && events.map((a, i) => (
+                                                <div className="e1" key={i}>
+                                                    <p className='spt-p' >{a.Event_title}</p>
+                                                    <div className="s-date">
+                                                        <p className='st'>{a.Groups}</p>
+                                                        <p style={{ margin: "0px" }}>Date: {a.Event_Start.split('T')[0]}</p>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        <div className="v-all">
+                                            <Link to={"/Events"}>
+                                                <button style={{ color: "white" }}>View All<FaAngleRight /></button>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="lst-info">
+                                {/* <div className="lst-info">
                                     <div className="hday">
                                         <p style={{ margin: "0px" }}>Ram Navami</p>
                                     </div>
@@ -261,7 +273,7 @@ const Dashboard = () => {
                                             <button>View All<FaAngleRight /></button>
                                         </Link>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                             <div className="fees-inner-sec">
                                 <div className="pendding-fees-part">

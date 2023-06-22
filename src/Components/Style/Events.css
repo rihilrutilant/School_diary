@@ -96,9 +96,9 @@
   width: 100%;
 }
 
-.eventList_table tr {
+/* .eventList_table tr {
   border-bottom: 1px solid black;
-}
+} */
 
 .eventList_table tr:last-child {
   border-bottom: 1px solid transparent;
@@ -133,7 +133,6 @@
   align-items: center;
   width: 100%;
   gap: 30px;
-  padding-top: 50px;
 }
 
 .eventFor_modal h5 {
@@ -151,12 +150,10 @@
 }
 
 .eventModal_table {
-  /* padding: 85px 50px; */
-  margin: 50px auto;
+  margin: 20px auto;
 }
 
 .eTable_title input {
-  margin-top: 20px;
   border: none;
   outline: none;
   padding: 15px 15px 5px 15px;
@@ -202,7 +199,6 @@
 }
 
 .eTable_date input {
-  margin-top: 20px;
   border: none;
   border-bottom: 1px solid black;
   outline: none;
@@ -245,8 +241,7 @@
   outline: none;
   border: none;
   border-bottom: 1px solid black;
-  width: 100%;
-  margin-top: 20px;
+  width: 100%
 }
 
 .ev_photo {

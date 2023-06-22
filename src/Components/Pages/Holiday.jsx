@@ -351,7 +351,7 @@ const Holiday = () => {
                       <div className="h_timetable">
                         <div className="hTable_title">
                           <label htmlFor="">Holiday Title</label>
-                          <input type="text" placeholder="Fees notification" name="Holiday_title" onChange={onChanges} value={updateHoliday.Holiday_title} />
+                          <input type="text" name="Holiday_title" onChange={onChanges} value={updateHoliday.Holiday_title} />
                         </div>
 
                         <div className="hTable_date">
@@ -418,9 +418,9 @@ const Holiday = () => {
                   <div className="modal-content">
                     <div className="modal-header">
                       <div className="h_timetable">
-                        <div className="hTable_title">
+                        <div className="hTable_note">
                           <label htmlFor="">Holiday Title</label>
-                          <input type="text" placeholder="Holiday title" name="Holiday_title" onChange={onChangesholiday} />
+                          <input type="text" name="Holiday_title" onChange={onChangesholiday} />
                         </div>
 
                         <div className="hTable_date">
@@ -436,7 +436,7 @@ const Holiday = () => {
 
                         <div className="hTable_note">
                           <label>Note</label>
-                          <input type="text" onChange={onChangesholiday} name="Holiday_description" placeholder="Holiday description" />
+                          <input type="text" onChange={onChangesholiday} name="Holiday_description" />
                         </div>
                       </div>
                       <div className="second-part">

@@ -151,7 +151,7 @@ const TimeTableData = () => {
       });
 
     const json = await response.json();
-
+    console.log(json);
     if (json.success === false) {
       setnotDataForm(true)
     }
@@ -1752,10 +1752,10 @@ const TimeTableData = () => {
                                 </select>
                               </td>
                               <td>
-                                <input type='time' value={value.Time_From} onChange={(e) => { console.log(e.target.value); }} />
+                                <input type='text' value={value.Time_From} onChange={onChangeTimeTable} />
                               </td>
                               <td>
-                                <input type='time' value={value.TIme_TO} onChange={(e) => { console.log(e.target.value); }} />
+                                <input type='text' value={value.TIme_TO} onChange={onChangeTimeTable} />
                               </td>
                             </tr>
                           ))}

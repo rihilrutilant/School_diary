@@ -218,7 +218,6 @@ const Events = () => {
 
                   <div className="eventList_table">
                     <table>
-
                       <thead>
                         <tr>
                           <th>Event title</th>
@@ -228,26 +227,39 @@ const Events = () => {
                           <th>Action</th>
                         </tr>
                       </thead>
-
-                      {events && events.map((a, i) => (
-                        <tbody key={i}>
+                      <tbody>
+                        {events === "Data Not Found" ? (
                           <tr>
-                            <td>{a.Event_title}</td>
-                            <td>{a.Groups} </td>
-                            <td>{a.Event_Start.split('T')[0]}</td>
-                            <td>{a.Event_End.split('T')[0]}</td>
-                            <td>
-                              <button>
-                                <FaEdit onClick={() => updateRestEvents(a)} />
-                              </button>
-                              <button>
-                                <FaRegTrashAlt onClick={() => deleteRest(a._id)} />
-                              </button>
+                            <td colSpan="5">
+                              <div>
+                                <h3 style={{ color: "#E33535", textAlign: "center", marginBottom: "200px" }}>
+                                  Data Not Found
+                                </h3>
+                              </div>
                             </td>
                           </tr>
-                        </tbody>
-                      ))}
+                        ) : (
+                          events &&
+                          events.map((a, i) => (
+                            <tr key={i}>
+                              <td>{a.Event_title}</td>
+                              <td>{a.Groups}</td>
+                              <td>{a.Event_Start.split("T")[0]}</td>
+                              <td>{a.Event_End.split("T")[0]}</td>
+                              <td>
+                                <button>
+                                  <FaEdit onClick={() => updateRestEvents(a)} />
+                                </button>
+                                <button>
+                                  <FaRegTrashAlt onClick={() => deleteRest(a._id)} />
+                                </button>
+                              </td>
+                            </tr>
+                          ))
+                        )}
+                      </tbody>
                     </table>
+
                   </div>
                 </div>
               </div>
@@ -285,7 +297,6 @@ const Events = () => {
                             <label htmlFor="">Event title</label>
                             <input
                               type="text"
-                              placeholder="Fees notification"
                               name="Event_title" onChange={onChangesEvents}
                             />
                           </div>
@@ -305,7 +316,6 @@ const Events = () => {
                             <label htmlFor="">Note</label>
                             <input
                               type="text"
-                              placeholder="The fee notification is sent electronically to the main contact stated in the ear-portal."
                               name="Event_description" onChange={onChangesEvents}
                             />
                           </div>

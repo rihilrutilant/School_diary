@@ -23,16 +23,20 @@ const Id = () => {
   ReactSession.setStoreType("localStorage");
   const [navVisible, showNavbar] = useState(true);
 
+  const [addBtn, setAddBtn] = useState(true)
+
   const [checkbox1Checked, setCheckbox1Checked] = useState(true);
   const [checkbox2Checked, setCheckbox2Checked] = useState(false);
   const handleCheckbox1Change = () => {
     setCheckbox1Checked(!checkbox1Checked);
     setCheckbox2Checked(false);
+    setAddBtn(true)
   };
 
   const handleCheckbox2Change = () => {
     setCheckbox2Checked(!checkbox2Checked);
     setCheckbox1Checked(false);
+    setAddBtn(false)
   };
 
   const onChange = (event) => {
@@ -92,7 +96,6 @@ const Id = () => {
   });
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
     const {
       T_icard_Id,
@@ -270,45 +273,64 @@ const Id = () => {
           <div className="container-fluid">
             <h4 className='main-name'>Generate ID</h4>
             <div className='ganerate_id_part'>
-              <div className='ganerate_id_check'>
-                <div className="first-haft">
-                  <h3>Generate ID for</h3>
-                  <label className='ganerateid_opt'>
-                    <input type="radio" checked={checkbox1Checked} onChange={handleCheckbox1Change} />
-                    Teacher
-                  </label>
-                  <label>
-                    <input type="radio" checked={checkbox2Checked} onChange={handleCheckbox2Change} />
-                    Students
-                  </label>
-                </div>
-                <button className='teacherid_create' data-bs-toggle="modal" data-bs-target="#staticBackdrop">+ Generate Teacher ID</button>
-              </div>
-              <div className='ganerateid_cnt'>
-                <div className='ganerateid_cnt_inn'>
-
-                  {checkbox1Checked && (
-                    <div className='teacherid_check'>
-                      <div className='teacherid_detail'>{
-                        teachers && teachers.map((d, i) => (
-                          <button className='studentid_btn' key={i}>
-                            <div className="t_name" onClick={() => teacherDetails(d)}>
-                              {d.T_name}
-                            </div>
-                            <Link className="edit_btn" onClick={() => updateRestTeacher(d)}>
-                              <img src={Edit} alt="edit" />
-                            </Link>
-                            <Link className='delete_btn' onClick={() => deleteRest(d._id)}>
-                              <img src={Delete} alt="delete" />
-                            </Link>
-                          </button>
-                        ))}
+              {checkbox1Checked && (
+                <>
+                  <div className='ganerate_id_check'>
+                    <div className="first-haft">
+                      <h3>Generate ID for</h3>
+                      <label className='ganerateid_opt'>
+                        <input type="radio" checked={checkbox1Checked} onChange={handleCheckbox1Change} />
+                        Teacher
+                      </label>
+                      <label>
+                        <input type="radio" checked={checkbox2Checked} onChange={handleCheckbox2Change} />
+                        Students
+                      </label>
+                    </div>
+                    <button className='teacherid_create' data-bs-toggle="modal" data-bs-target="#staticBackdrop">+ Generate Teacher ID</button>
+                  </div>
+                  <div className='ganerateid_cnt'>
+                    <div className='ganerateid_cnt_inn'>
+                      <div className='teacherid_check'>
+                        <div className='teacherid_detail'>{
+                          teachers && teachers.map((d, i) => (
+                            <button className='studentid_btn' key={i}>
+                              <div className="t_name" onClick={() => teacherDetails(d)}>
+                                {d.T_name}
+                              </div>
+                              <Link className="edit_btn" onClick={() => updateRestTeacher(d)}>
+                                <img src={Edit} alt="edit" />
+                              </Link>
+                              <Link className='delete_btn' onClick={() => deleteRest(d._id)}>
+                                <img src={Delete} alt="delete" />
+                              </Link>
+                            </button>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  )}
+                  </div>
+                </>
+              )}
 
-                  {checkbox2Checked && (
-                    <>
+              {checkbox2Checked && (
+                <>
+                  <div className='ganerate_id_check'>
+                    <div className="first-haft">
+                      <h3>Generate ID for</h3>
+                      <label className='ganerateid_opt'>
+                        <input type="radio" checked={checkbox1Checked} onChange={handleCheckbox1Change} />
+                        Teacher
+                      </label>
+                      <label>
+                        <input type="radio" checked={checkbox2Checked} onChange={handleCheckbox2Change} />
+                        Students
+                      </label>
+                    </div>
+                  </div>
+                  <div className='ganerateid_cnt'>
+                    <div className='ganerateid_cnt_inn'>
+                      <div className='teacherid_check'></div>
                       {YourRestList && YourRestList.map((a, b) => (
 
                         <select key={b} defaultValue={"DEFAULT"} className="student_class" onChange={onChange} >
@@ -320,144 +342,144 @@ const Id = () => {
                             ))}
                         </select>
                       ))}
-                    </>
-                  )}
-
-                  <button type="button" ref={ref2} style={{ display: "none" }} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editTeacherModal">
-                    Launch demo modal
-                  </button>
-                  <div className="modal" id="editTeacherModal">
-                    <div className="modal-dialog">
-                      <div className="modal-content editid_modal">
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" ref={refClose2}></button>
-                        <form id="editid_form1" className="editid_form">
-                          <div className='input_part idcard_input'>
-                            <label>ID Card</label> <br />
-                            <input type="text" id="idcard1" name="T_icard_Id" required onChange={onChanges} value={updateTeacher.T_icard_Id} />
-                          </div>
-                          <div className='input_part name_input'>
-                            <label>Name</label> <br />
-                            <input type="text" id="name1" name="T_name" required onChange={onChanges} value={updateTeacher.T_name} />
-                          </div>
-                          <div className='input_part standard_input'>
-                            <label>Subject code</label> <br />
-                            <input type="text" id="standard1" name="Subject_code" required onChange={onChanges} value={updateTeacher.Subject_code} />
-                          </div>
-                          <div className='input_part classcode_input'>
-                            <label>Class Code</label> <br />
-                            <input type="text" id="classcode1" name="T_Class_code" required onChange={onChanges} value={updateTeacher.T_Class_code} />
-                          </div>
-                          <div className='input_part mobile_input'>
-                            <label>Mobile</label> <br />
-                            <input type="number" id="mobile1" name="T_mobile_no" required onChange={onChanges} value={updateTeacher.T_mobile_no} />
-                          </div>
-                          <div className='input_part address_input'>
-                            <label>Address</label> <br />
-                            <input type="text" id="address1" name="T_address" required onChange={onChanges} value={updateTeacher.T_address} />
-                          </div>
-                          <div className='input_part password_input'>
-                            <label>Password</label> <br />
-                            <input type="password" id="password1" name="T_Password" required onChange={onChanges} value={updateTeacher.T_Password} />
-                          </div>
-                          <div className="save_part">
-                            <button className="save_btn" type="submit" onClick={handleSubmit1}>SAVE</button>
-                          </div>
-                        </form>
-                      </div>
                     </div>
                   </div>
+                </>
+              )}
 
-                  <div className="modal fade sp_model_1" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div className="modal-dialog">
-                      <div className="modal-content editid_modal">
-                        <button type="button" className="btn-close" ref={refClose} data-bs-dismiss="modal"></button>
-                        <form id="editid_form" className="editid_form" onSubmit={handleSubmit}>
-                          <div className='input_part idcard_input'>
-                            <label>ID Card</label> <br />
-                            <input type="text" id="idcard" name="T_icard_Id" required onChange={onChange1} />
-                          </div>
-                          <div className='input_part name_input'>
-                            <label>Name</label> <br />
-                            <input type="text" id="name" name="T_name" required onChange={onChange1} />
-                          </div>
-                          <div className='input_part standard_input'>
-                            <label>Subject code</label> <br />
-                            <input type="text" id="standard" name="Subject_code" required onChange={onChange1} />
-                          </div>
-                          <div className='input_part classcode_input'>
-                            <label>Class Code</label> <br />
-                            <input type="text" id="classcode" name="T_Class_code" required onChange={onChange1} />
-                          </div>
-                          <div className='input_part mobile_input'>
-                            <label>Mobile</label> <br />
-                            <input type="number" id="mobile" name="T_mobile_no" required onChange={onChange1} />
-                          </div>
-                          <div className='input_part address_input'>
-                            <label>Address</label> <br />
-                            <input type="text" id="address" name="T_address" required onChange={onChange1} />
-                          </div>
-                          <div className='input_part password_input'>
-                            <label>Password</label> <br />
-                            <input type="password" id="password" name="T_Password" required onChange={onChange1} />
-                          </div>
-                          <div className="save_part">
-                            <button className="save_btn" type="submit">SAVE</button>
-                          </div>
-                        </form>
+              <button type="button" ref={ref2} style={{ display: "none" }} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editTeacherModal">
+                Launch demo modal
+              </button>
+              <div className="modal" id="editTeacherModal">
+                <div className="modal-dialog">
+                  <div className="modal-content editid_modal">
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" ref={refClose2}></button>
+                    <form id="editid_form1" className="editid_form">
+                      <div className='input_part idcard_input'>
+                        <label>ID Card</label> <br />
+                        <input type="text" id="idcard1" name="T_icard_Id" required onChange={onChanges} value={updateTeacher.T_icard_Id} />
                       </div>
-                    </div>
+                      <div className='input_part name_input'>
+                        <label>Name</label> <br />
+                        <input type="text" id="name1" name="T_name" required onChange={onChanges} value={updateTeacher.T_name} />
+                      </div>
+                      <div className='input_part standard_input'>
+                        <label>Subject code</label> <br />
+                        <input type="text" id="standard1" name="Subject_code" required onChange={onChanges} value={updateTeacher.Subject_code} />
+                      </div>
+                      <div className='input_part classcode_input'>
+                        <label>Class Code</label> <br />
+                        <input type="text" id="classcode1" name="T_Class_code" required onChange={onChanges} value={updateTeacher.T_Class_code} />
+                      </div>
+                      <div className='input_part mobile_input'>
+                        <label>Mobile</label> <br />
+                        <input type="number" id="mobile1" name="T_mobile_no" required onChange={onChanges} value={updateTeacher.T_mobile_no} />
+                      </div>
+                      <div className='input_part address_input'>
+                        <label>Address</label> <br />
+                        <input type="text" id="address1" name="T_address" required onChange={onChanges} value={updateTeacher.T_address} />
+                      </div>
+                      <div className='input_part password_input'>
+                        <label>Password</label> <br />
+                        <input type="password" id="password1" name="T_Password" required onChange={onChanges} value={updateTeacher.T_Password} />
+                      </div>
+                      <div className="save_part">
+                        <button className="save_btn" type="submit" onClick={handleSubmit1}>SAVE</button>
+                      </div>
+                    </form>
                   </div>
+                </div>
+              </div>
 
-
-                  <button type="button" ref={ref3} style={{ display: "none" }} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#onlyData">
-                    Launch demo modal
-                  </button>
-                  <div className="modal fade sp_model_1" id="onlyData" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div className="modal-dialog">
-                      <div className="modal-content nanu-model">
-                        <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
-                        <form id="editid_form2" className="editid_form">
-                          <div className="upper-section-onlydata">
-                            <div className="first-photo">
-                              {!T_Details.T_img
-                                ?
-                                <img src={teacher} alt=" " />
-                                :
-                                <img src={`http://localhost:5050/teacher_img/${T_Details.T_img}`} alt=" " />
-                              }
-                              <p> Teacher Photo</p>
-                            </div>
-                          </div>
-                          <div className="lower-section-onlydata">
-                            <div className="dust-div">
-                              <span className='title-onlydata'>Id card  id : </span>
-                              <span className='data-onlydata'>{T_Details.T_icard_Id}</span>
-                            </div>
-                            <div className="dust-div">
-                              <span className='title-onlydata'>Name : </span>
-                              <span className='data-onlydata'>{T_Details.T_name}</span>
-                            </div>
-                            <div className="dust-div">
-                              <span className='title-onlydata'>Subject Code : </span>
-                              <span className='data-onlydata'>{T_Details.Subject_code}</span>
-                            </div>
-                            <div className="dust-div">
-                              <span className='title-onlydata'>Class code : </span>
-                              <span className='data-onlydata'>{T_Details.T_Class_code}</span>
-                            </div>
-                            <div className="dust-div">
-                              <span className='title-onlydata'>Mobile No. : </span>
-                              <span className='data-onlydata'>{T_Details.T_mobile_no}</span>
-                            </div>
-                            <div className="dust-div">
-                              <span className='title-onlydata'>Address : </span>
-                              <span className='data-onlydata'>{T_Details.T_address}</span>
-                            </div>
-                          </div>
-                          {/* <p>{}</p> */}
-                        </form>
+              <div className="modal fade sp_model_1" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                  <div className="modal-content editid_modal">
+                    <button type="button" className="btn-close" ref={refClose} data-bs-dismiss="modal"></button>
+                    <form id="editid_form" className="editid_form" onSubmit={handleSubmit}>
+                      <div className='input_part idcard_input'>
+                        <label>ID Card</label> <br />
+                        <input type="text" id="idcard" name="T_icard_Id" required onChange={onChange1} />
                       </div>
-                    </div>
+                      <div className='input_part name_input'>
+                        <label>Name</label> <br />
+                        <input type="text" id="name" name="T_name" required onChange={onChange1} />
+                      </div>
+                      <div className='input_part standard_input'>
+                        <label>Subject code</label> <br />
+                        <input type="text" id="standard" name="Subject_code" required onChange={onChange1} />
+                      </div>
+                      <div className='input_part classcode_input'>
+                        <label>Class Code</label> <br />
+                        <input type="text" id="classcode" name="T_Class_code" required onChange={onChange1} />
+                      </div>
+                      <div className='input_part mobile_input'>
+                        <label>Mobile</label> <br />
+                        <input type="number" id="mobile" name="T_mobile_no" required onChange={onChange1} />
+                      </div>
+                      <div className='input_part address_input'>
+                        <label>Address</label> <br />
+                        <input type="text" id="address" name="T_address" required onChange={onChange1} />
+                      </div>
+                      <div className='input_part password_input'>
+                        <label>Password</label> <br />
+                        <input type="password" id="password" name="T_Password" required onChange={onChange1} />
+                      </div>
+                      <div className="save_part">
+                        <button className="save_btn" type="submit">SAVE</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+
+              <button type="button" ref={ref3} style={{ display: "none" }} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#onlyData">
+                Launch demo modal
+              </button>
+              <div className="modal fade sp_model_1" id="onlyData" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                  <div className="modal-content nanu-model">
+                    <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
+                    <form id="editid_form2" className="editid_form">
+                      <div className="upper-section-onlydata">
+                        <div className="first-photo">
+                          {!T_Details.T_img
+                            ?
+                            <img src={teacher} alt=" " />
+                            :
+                            <img src={`http://localhost:5050/teacher_img/${T_Details.T_img}`} alt=" " />
+                          }
+                          <p> Teacher Photo</p>
+                        </div>
+                      </div>
+                      <div className="lower-section-onlydata">
+                        <div className="dust-div">
+                          <span className='title-onlydata'>Id card  id : </span>
+                          <span className='data-onlydata'>{T_Details.T_icard_Id}</span>
+                        </div>
+                        <div className="dust-div">
+                          <span className='title-onlydata'>Name : </span>
+                          <span className='data-onlydata'>{T_Details.T_name}</span>
+                        </div>
+                        <div className="dust-div">
+                          <span className='title-onlydata'>Subject Code : </span>
+                          <span className='data-onlydata'>{T_Details.Subject_code}</span>
+                        </div>
+                        <div className="dust-div">
+                          <span className='title-onlydata'>Class code : </span>
+                          <span className='data-onlydata'>{T_Details.T_Class_code}</span>
+                        </div>
+                        <div className="dust-div">
+                          <span className='title-onlydata'>Mobile No. : </span>
+                          <span className='data-onlydata'>{T_Details.T_mobile_no}</span>
+                        </div>
+                        <div className="dust-div">
+                          <span className='title-onlydata'>Address : </span>
+                          <span className='data-onlydata'>{T_Details.T_address}</span>
+                        </div>
+                      </div>
+                      {/* <p>{}</p> */}
+                    </form>
                   </div>
                 </div>
               </div>

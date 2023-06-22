@@ -476,9 +476,9 @@ const Complain = () => {
                   <div className="modal-content">
                     <div className="modal-header1">
                       <div className="h_timetable">
-                        <div className="hTable_title">
+                        <div className="hTable_note ">
                           <label htmlFor="">Complain Title</label>
-                          <input type="text" placeholder="Fees notification" name="Complain_title" value={updateEvents.Complain_title} onChange={onChanges} />
+                          <input type="text" name="Complain_title" value={updateEvents.Complain_title} onChange={onChanges} />
                         </div>
 
                         <div className="hTable_note">
@@ -517,13 +517,14 @@ const Complain = () => {
                   <div className="modal-content">
                     <div className="modal-header1">
                       <div className="h_timetable">
-
-                        <h3>Complain For</h3>
-                        <div className="eventfor_holiday">
-                          <input type="radio" checked={teacher} onChange={handleTeacher} name="Group" value="Teacher" />
-                          <label htmlFor="Teacher"> Teacher</label>
-                          <input type="radio" checked={student} onChange={handleStudent} name="Group" value="Student" />
-                          <label htmlFor="Student"> Student</label>
+                        <div className="display-flex-com">
+                          <h3>Complain For:</h3>
+                          <div className="eventfor_holiday">
+                            <input type="radio" checked={teacher} onChange={handleTeacher} name="Group" value="Teacher" />
+                            <label htmlFor="Teacher"> Teacher</label>
+                            <input type="radio" checked={student} onChange={handleStudent} name="Group" value="Student" />
+                            <label htmlFor="Student"> Student</label>
+                          </div>
                         </div>
 
                         {/* Teacher ADD */}
@@ -541,14 +542,14 @@ const Complain = () => {
                               </select>
                             </div>
 
-                            <div className="hTable_title" style={{ paddingTop: "30px" }}>
+                            <div className="hTable_note " style={{ paddingTop: "30px" }}>
                               <label htmlFor="">Complain Title</label>
-                              <input type="text" placeholder="Complain title" name="Complain_title" onChange={onChnageComplain} />
+                              <input type="text" name="Complain_title" onChange={onChnageComplain} />
                             </div>
 
                             <div className="hTable_note">
                               <label>Complain</label>
-                              <input type="text" name="Complain_description" placeholder="Complain description" onChange={onChnageComplain} />
+                              <input type="text" name="Complain_description" onChange={onChnageComplain} />
                             </div>
 
                             <button
@@ -616,14 +617,14 @@ const Complain = () => {
                               }
                             </div>
 
-                            <div className="hTable_title" style={{ paddingTop: "30px" }}>
+                            <div className="hTable_note " style={{ paddingTop: "30px" }}>
                               <label htmlFor="">Complain Title</label>
-                              <input type="text" placeholder="Complain title" name="Complain_title" onChange={onChnageComplainS} />
+                              <input type="text" name="Complain_title" onChange={onChnageComplainS} />
                             </div>
 
                             <div className="hTable_note">
                               <label>Complain</label>
-                              <input type="text" name="Complain_description" placeholder="Complain description" onChange={onChnageComplainS} />
+                              <input type="text" name="Complain_description" onChange={onChnageComplainS} />
                             </div>
 
                             <button

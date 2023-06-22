@@ -70,7 +70,6 @@ const Result = () => {
           <div className="container-fluid">
             <div className="add-btn">
               <h4 className='main-name'>Result</h4>
-              {/* <Link to="/AddResult"><button> + Add a exam result</button></Link> */}
             </div>
             <div className="r-info">
               <div className="sel-sec">
@@ -97,9 +96,6 @@ const Result = () => {
                   </select>
                 </div>
               </div>
-              {/* <div className="t-btn1">
-                <button className='t-submit'>SUBMIT</button>
-              </div> */}
             </div>
           </div>
         </div>
