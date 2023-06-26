@@ -139,6 +139,8 @@ const ExamData = () => {
         EndTime: ""
     })
 
+    console.log(updateExam);
+
 
     const updateRestExam = (currentExam) => {
         ref.current.click();
@@ -174,13 +176,11 @@ const ExamData = () => {
             body: JSON.stringify({ Subject_code, Marks, Date, StartTime, EndTime })
         });
 
-        // console.log(responseHoliday);
         const json = await responseHoliday.json();
 
-        // console.log(json);
         if (json.success === true) {
             ref.current.click();
-            toast.success("Holiday Update", { position: toast.POSITION.TOP_RIGHT });
+            toast.success("Exam Update", { position: toast.POSITION.TOP_RIGHT });
         }
         else {
             if (!json.error[0].msg) {
@@ -271,11 +271,11 @@ const ExamData = () => {
                                     </div>
                                     <div className='input_part idcard_input'>
                                         <label>Start Time</label> <br />
-                                        <input type="text" value={credentials.Exam_TimeTable[0].StartTime} name="StartTime" required onChange={onChange} />
+                                        <input type="time" value={credentials.Exam_TimeTable[0].StartTime} name="StartTime" required onChange={onChange} />
                                     </div>
                                     <div className='input_part idcard_input'>
                                         <label>End Time</label> <br />
-                                        <input type="text" value={credentials.Exam_TimeTable[0].EndTime} name="EndTime" required onChange={onChange} />
+                                        <input type="time" value={credentials.Exam_TimeTable[0].EndTime} name="EndTime" required onChange={onChange} />
                                     </div>
                                     <div className="save_part">
                                         <button className="save_btn" data-bs-dismiss="modal" type="submit">SAVE</button>
@@ -311,11 +311,11 @@ const ExamData = () => {
                                     </div>
                                     <div className='input_part idcard_input'>
                                         <label>Start Time</label> <br />
-                                        <input type="text" id="StartTime" name="StartTime" value={updateExam.StartTime} required onChange={onChanges} />
+                                        <input type="time" id="StartTime" name="StartTime" value={updateExam.StartTime} required onChange={onChanges} />
                                     </div>
                                     <div className='input_part idcard_input'>
                                         <label>End Time</label> <br />
-                                        <input type="text" id="EndTime" name="EndTime" value={updateExam.EndTime} required onChange={onChanges} />
+                                        <input type="time" id="EndTime" name="EndTime" value={updateExam.EndTime} required onChange={onChanges} />
                                     </div>
                                     <div className="save_part">
                                         <button className="save_btn" type="submit">SAVE</button>

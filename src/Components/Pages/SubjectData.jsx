@@ -51,7 +51,6 @@ const SubjectData = () => {
         Subject_Code: "",
     })
 
-    console.log(newSubjects.Subject_Code);
     const addSubject = async (e) => {
         e.preventDefault();
         const Standard = DataStudent;
@@ -89,19 +88,16 @@ const SubjectData = () => {
         }
     }
 
+    const [dynamicValue, setDynamicValue] = useState('');
     const onChangesSubject = (e) => {
-        setNewSubjects({ ...newSubjects, [e.target.name]: e.target.value })
+        if (e.target.name === 'Subject_Code') {
+            const inputValue = e.target.value;
+            setDynamicValue(inputValue.slice(2))
+            setNewSubjects({ dynamicValue, [e.target.name]: e.target.value })
+        } else {
+            setNewSubjects({ ...newSubjects, [e.target.name]: e.target.value })
+        }
     }
-    // const [dynamicValue, setDynamicValue] = useState('');
-    // const onChangesSubject = (e) => {
-    //     if (e.target.name === 'Subject_Code') {
-    //         const inputValue = e.target.value;
-    //         setDynamicValue(inputValue.slice(2))
-    //         setNewSubjects({ dynamicValue, [e.target.name]: e.target.value })
-    //     } else {
-    //         setNewSubjects({ ...newSubjects, [e.target.name]: e.target.value })
-    //     }
-    // }
 
     //-----------------Add Subject -------------------
 
@@ -168,7 +164,6 @@ const SubjectData = () => {
                                                         </div>
                                                     </td>
                                                 </tr>
-
                                             )
                                         })
                                 }
@@ -190,8 +185,7 @@ const SubjectData = () => {
                                             </div>
                                             <div className="sTable_title">
                                                 <label>Subject Code</label><br />
-                                                <input type="text" name="Subject_Code" onChange={onChangesSubject} id='Subject_Code' maxLength={5} />
-                                                {/* value={`${DataStudent}${dynamicValue}`} */}
+                                                <input type="text" name="Subject_Code" value={`${DataStudent}${dynamicValue}`} onChange={onChangesSubject} id='Subject_Code' maxLength={5} />
                                             </div>
                                             <div className="sTable_title">
                                                 <label>Subject Name</label><br />

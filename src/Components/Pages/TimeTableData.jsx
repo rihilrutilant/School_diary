@@ -127,7 +127,7 @@ const TimeTableData = () => {
 
     const json = await response.json();
     setSubject(json);
-  }, []);
+  }, [DataStudent]);
 
   //--------------- Subject Data --------------------
 
@@ -151,7 +151,6 @@ const TimeTableData = () => {
       });
 
     const json = await response.json();
-    console.log(json);
     if (json.success === false) {
       setnotDataForm(true)
     }
@@ -163,7 +162,7 @@ const TimeTableData = () => {
       setFriday(json.Daily_TimeTable[0].Friday)
       setSaturday(json.Daily_TimeTable[0].Saturday)
     }
-  }, []);
+  }, [Data]);
 
 
   const [Monday, setMonday] = useState({
@@ -400,19 +399,6 @@ const TimeTableData = () => {
     }
   })
 
-  //---------------- Timtable Data --------------------
-  // const [timeString, setTimeString] = useState('');
-  // const [timeObject, setTimeObject] = useState(null);
-
-  // const handleInputChange = (event) => {
-  //   const inputTime = event.target.value;
-  //   setTimeString(inputTime);
-  //   console.log(inputTime);
-
-  //   const convertedTime = new Date(`2000-01-01T${inputTime}`);
-  //   setTimeObject(convertedTime);
-  // };
-
   //---------------- Create Time Table ----------------
   const [createTimeTable, setCreateTimeTable] = useState({
     Class_code: "",
@@ -444,28 +430,59 @@ const TimeTableData = () => {
 
   //--------------- Edit Time Table --------------------
 
-  const [editTable, seteditTable] = useState()
+  const [editTable, seteditTable] = useState({
+    T_icard_Id: "",
+    Subject_Code: "",
+    Time_From: "",
+    TIme_TO: ""
+  })
 
-  const onChangeTimeTable = (e) => {
+  console.log(editTable);
+
+  const onChangesTimeTableX = (e) => {
     seteditTable({ ...editTable, [e.target.name]: e.target.value })
   }
 
-  // const apiTime = "8:00 AM";
+  const onChangesTimeTableY = (e) => {
+    const inputValue = e.target.value;
+    seteditTable({
+      ...editTable,
+      Time_From: convertToTwelveHourFormat(inputValue),
+      TIme_TO: convertToTwelveHourFormat(inputValue),
+    });
+  };
 
-  // // Function to convert the time value to a valid format
-  // const convertToValidTimeFormat = (timeString) => {
-  //   const [time, period] = timeString.split(' ');
-  //   let [hours, minutes] = time.split(':');
+  const onChangesTimeTableZ = (e) => {
+    const inputValue = e.target.value;
+    seteditTable({
+      ...editTable,
+      TIme_TO: convertToTwelveHourFormat(inputValue),
+    });
+  };
 
-  //   if (period === 'PM' && hours !== '12') {
-  //     hours = String(parseInt(hours, 10) + 12);
-  //   } else if (period === 'AM' && hours === '12') {
-  //     hours = '00';
-  //   }
+  const convertToTwelveHourFormat = (twentyFourHourTime) => {
+    if (twentyFourHourTime === '') {
+      return '';
+    }
 
-  //   return `${hours}:${minutes}`;
-  // };
-  // const formattedTime = convertToValidTimeFormat(apiTime);
+    const [time, period] = twentyFourHourTime.split(' ');
+    let [hours, minutes] = time.split(':');
+    hours = parseInt(hours);
+
+    if (hours === 0) {
+      hours = 12;
+    } else if (hours > 12) {
+      hours -= 12;
+    }
+
+    const converted = `${hours.toString().padStart(2, '0')}:${minutes}`;
+    if (period) {
+      return `${converted} ${period.toUpperCase()}`;
+    } else {
+      return converted;
+    }
+  };
+
 
   //--------------- Edit Time Table --------------------
   useEffect(() => {
@@ -474,6 +491,7 @@ const TimeTableData = () => {
     getSubject();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [getTeachers, getSubject, getTimetable]);
+
 
   return (
     <div className="main-content">
@@ -1732,7 +1750,7 @@ const TimeTableData = () => {
                           {Object.entries(Monday).map(([key, value]) => (
                             <tr key={key}>
                               <td>
-                                <select className="select-any-options" name='user' required id='User_name' value={value.T_icard_Id} onChange={onChangeTimeTable}>
+                                <select className="select-any-options" required id='User_name' name='T_icard_Id' value={value.T_icard_Id} onChange={onChangesTimeTableX}>
                                   <option value="" disabled>Select Teacher Name</option>
                                   {teachers && teachers.map((item, index) => (
                                     <option value={item.T_icard_Id} key={index}>
@@ -1742,7 +1760,7 @@ const TimeTableData = () => {
                                 </select>
                               </td>
                               <td>
-                                <select className="select-any-options" name="subject" required id="subject" value={value.Subject_Code} onChange={onChangeTimeTable}>
+                                <select className="select-any-options" required id="subject" name='Subject_Code' value={value.Subject_Code} onChange={onChangesTimeTableX}>
                                   <option value="" disabled>Select Subject</option>
                                   {subject && subject.map((item, index) => (
                                     <option value={item.Subject_Code} key={index}>
@@ -1752,10 +1770,10 @@ const TimeTableData = () => {
                                 </select>
                               </td>
                               <td>
-                                <input type='text' value={value.Time_From} onChange={onChangeTimeTable} />
+                                <input type='time' name='Time_From' value={convertToTwelveHourFormat(value.Time_From)} onChange={onChangesTimeTableY} />
                               </td>
                               <td>
-                                <input type='text' value={value.TIme_TO} onChange={onChangeTimeTable} />
+                                <input type='time' name='TIme_TO' value={convertToTwelveHourFormat(value.TIme_TO)} onChange={onChangesTimeTableZ} />
                               </td>
                             </tr>
                           ))}
@@ -2005,6 +2023,6 @@ const TimeTableData = () => {
       </div>
     </div >
   )
-}
+};
 
 export default TimeTableData

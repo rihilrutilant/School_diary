@@ -152,6 +152,12 @@ const ResultData = () => {
 
     //---------------------- Delete Event --------------------
 
+    //---------------------Edit Event ------------------------
+
+    
+
+    //---------------------Edit Event ------------------------
+
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
         getResult();
