@@ -11,6 +11,8 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BiEditAlt } from 'react-icons/bi';
 import axios from 'axios';
+import { AiFillEye } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 
 const ExamData = () => {
 
@@ -178,6 +180,7 @@ const ExamData = () => {
                                     <th>Exam Type</th>
                                     <th>Document</th>
                                     <th></th>
+                                    <th></th>
                                 </tr>
                                 {allSubject.length === 0 ?
                                     <h2 style={{ color: "#E33535", textAlign: "center" }}>Exams not found</h2>
@@ -201,11 +204,18 @@ const ExamData = () => {
                                             ))
                                             }
                                             </td>
-                                            <td><td>
+                                            <td>
                                                 <div className='delete-btn-r'>
                                                     <BiEditAlt style={{ cursor: "pointer", fontSize: "21px" }} onClick={() => updateRestNotice(item)} />
                                                 </div>
-                                            </td></td>
+                                            </td>
+                                            <td>
+                                                <div className='open-full'>
+                                                    <Link target='_blank' to={`http://localhost:5050/exam_time_table/${item.Exam_TimeTable}`}>
+                                                        <AiFillEye />
+                                                    </Link>
+                                                </div>
+                                            </td>
                                         </tr>
                                     ))}
                             </tbody>

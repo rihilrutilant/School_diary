@@ -8,8 +8,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import "../Style/Result.css"
 import { AiFillDelete } from 'react-icons/ai';
+import { MdOutlineOpenInFull } from 'react-icons/md'
+import { Link } from 'react-router-dom';
 
-const ResultData = () => {
+const ResultData = ({ imageUrl }) => {
     ReactSession.setStoreType("localStorage");
     const Data = ReactSession.get("jenish");
 
@@ -173,7 +175,7 @@ const ResultData = () => {
                         </div>
                         <div className='studentid_detail'>
                             {
-                                studentClass === "Student Not Found" ?
+                                studentClass.length === 0 ?
                                     <h2 style={{ color: "#E33535" }}>Students not found</h2>
                                     :
                                     studentClass && studentClass.map((d, i) => {
@@ -259,6 +261,7 @@ const ResultData = () => {
                                                 </div>
                                                 <div className="main-div-flex">
                                                     <label htmlFor="" className='label-title'>Document:</label>&nbsp;&nbsp;
+
                                                     {
                                                         item.Result_copy && (item.Result_copy.slice(-4).toLowerCase() === ".pdf" ? (
                                                             <iframe
@@ -275,6 +278,11 @@ const ResultData = () => {
                                                         ))
                                                     }
                                                 </div>
+                                                <div className='open-full'>
+                                                    <Link target='_blank' to={`http://localhost:5050/result_data/${item.Result_copy}`}>
+                                                        <MdOutlineOpenInFull />
+                                                    </Link>
+                                                </div>
                                                 <div className='delete-btn-r'>
                                                     <AiFillDelete style={{ cursor: "pointer", fontSize: "27px" }} onClick={() => deleteRest(item._id)} />
                                                 </div>
@@ -285,9 +293,8 @@ const ResultData = () => {
                         </div>
                     </div>
                     {/* Fetch Result */}
-
                 </div>
-            </div>
+            </div >
         </>
     )
 }

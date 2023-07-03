@@ -118,12 +118,18 @@
 }
 
 .gene-edit-time {
-    position: absolute;
+    /* position: absolute;
     left: 0;
-    top: 0;
+    top: 0; */
     border: none;
     padding: 8px;
     border-radius: 5px;
     color: black;
     background: #00C6F9;
+}
+
+.timetable-photo{
+    width: 100%;
+    max-width: 220px;
+    margin-bottom: 40px;
 }

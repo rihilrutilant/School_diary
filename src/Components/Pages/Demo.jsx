@@ -1,64 +1,63 @@
-import React from 'react'
-import StudentAttendanceGraph from './StudentAttendanceGraph';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 const Demo = () => {
-  const data = [
-    {
-      present: [
-        {
-          Name: 'wxy',
-          S_Icard_Id: 'SXYAB01A09',
-        },
-        {
-          Name: 'Vaidik',
-          S_Icard_Id: 'SXY10A02',
-        },
-        {
-          Name: 'milan',
-          S_Icard_Id: 'SXY01AMS',
-        }
-      ],
-      absent: [
-        {
-          Name: 'Vaidik this me',
-          S_Icard_Id: 'SXY10A01',
-        },
-        {
-          Name: 'Vaidik',
-          S_Icard_Id: 'SXY10A05',
-        },
-        {
-          Name: 'milan',
-          S_Icard_Id: 'SXY02AMS',
-        },
-        {
-          Name: 'rihil',
-          S_Icard_Id: 'SXY11AMS01',
-        },
-        {
-          Name: 'Rihil P. S.',
-          S_Icard_Id: 'SXYSR01A22',
-        },
-        {
-          Name: 'rihil',
-          S_Icard_Id: 'SXY11AMS',
-        },
-        {
-          Name: 'milan',
-          S_Icard_Id: 'SXY01AMS02',
-        },
-      ],
-    },
-  ];
 
-  return (
-    <div>
-      <h1>Student Attendance</h1>
-      <div style={{ width: '100px', height: '300px' }}>
-        <StudentAttendanceGraph data={data[0]} />
+  const FileComponent = ({ file }) => {
+    if (file.type.startsWith('image/')) {
+      return <img src={file.url} alt={file.name} />;
+    } else if (file.type === 'application/pdf') {
+      return <embed src={file.url} type="application/pdf" />;
+    } else {
+      return <span>Unsupported file type: {file.name}</span>;
+    }
+  };
+
+  const FileList = ({ files }) => {
+    return (
+      <div>
+        {files.map((file, index) => (
+          <FileComponent file={file} key={index} />
+        ))}
       </div>
-    </div>
-  );
+    );
+  };
+
+  const fetchFiles = async () => {
+    try {
+      const response = await axios.get('http://localhost:5050/api/examtimetable/edit_examtimetable/', {
+        headers: {
+          'authToken_admin': localStorage.getItem('AToken')
+        }
+      });
+      const files = response.data.files;
+      console.log(response);
+      return files;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  };
+
+  // Usage
+  const FileGallery = () => {
+    const [files, setFiles] = useState([]);
+
+    useEffect(() => {
+      const fetchData = async () => {
+        const filesData = await fetchFiles();
+        setFiles(filesData);
+      };
+      fetchData();
+    }, []);
+
+    return (
+      <FileList files={files} />
+    );
+  };
+
+  <FileGallery />
+
 }
 
 export default Demo

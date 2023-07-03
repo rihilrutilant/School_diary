@@ -7,6 +7,8 @@ import apiConst from "../Api_keys"
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { MdOutlineOpenInFull } from 'react-icons/md'
+import { Link } from 'react-router-dom';
 
 const TimeTableData = () => {
 
@@ -37,6 +39,8 @@ const TimeTableData = () => {
     const json = await response.json();
     setAllSubject(json)
   }, [DataStudent]);
+
+  console.log();
 
   //----------------------------- Fetch Exam ------------------------
 
@@ -91,16 +95,19 @@ const TimeTableData = () => {
 
   //--------------------------- Update Exam --------------------
 
-  const ref = useRef(null);
+  const refClose = useRef(null);
 
   const [updateNotice, setUpdateNotice] = useState({
     tt_img: null,
   })
 
+  console.log(updateNotice);
+
   const updateRestNotice = (currentNotice) => {
-    ref.current.click();
+    console.log(currentNotice);
+    refClose.current.click();
     setUpdateNotice({
-      id: currentNotice._id,
+      id: currentNotice,
       tt_img: currentNotice.tt_img
     })
   }
@@ -114,6 +121,7 @@ const TimeTableData = () => {
   }
 
   const RestUpdateNotice = async (id, tt_img) => {
+    console.log(id);
     try {
       const updateformData = new FormData();
       updateformData.append('tt_img', tt_img);
@@ -124,16 +132,20 @@ const TimeTableData = () => {
           "authToken_admin": localStorage.getItem("AToken"),
         }
       });
+      console.log(response);
+
+      const json = response.data
+      console.log(json);
 
       if (response.data.success) {
-        toast.success("Exam Updated Successfully", { position: toast.POSITION.TOP_RIGHT });
+        toast.success("TimeTable Updated Successfully", { position: toast.POSITION.TOP_RIGHT });
         getSubject();
       }
       else {
-        toast.error(response.data.error, { position: toast.POSITION.TOP_RIGHT });
+        toast.error("response.data.error", { position: toast.POSITION.TOP_RIGHT });
       }
     } catch (error) {
-      toast.error(error.response.data.error[0].msg, { position: toast.POSITION.TOP_RIGHT });
+      toast.error(error, { position: toast.POSITION.TOP_RIGHT });
     }
   }
 
@@ -163,7 +175,7 @@ const TimeTableData = () => {
           <Topbar />
           <div className="container-fluid">
             <div className="studentid_cnt">
-              <h4 className='main-name'>Time Table  <span>{DataClass}</span></h4>
+              <h4 className='main-name'>Time Table<span>{DataClass}</span></h4>
             </div>
             <div className='ganerate_id_part'>
               <div className='ganerateid_cnt'>
@@ -179,22 +191,25 @@ const TimeTableData = () => {
                         <iframe
                           src={`http://localhost:5050/time_table/${dailyTimeTable}`}
                           title={dailyTimeTable}
-                          className="height-and"
-                          width="100%"
+                          className="timetable-photo"
                         />
-                        {/* <button className='gene-edit-time' data-bs-toggle="modal" data-bs-target="#staticBackdrop">Edit TimeTable</button> */}
                       </>
                     ) : (
                       <>
                         <img
                           src={`http://localhost:5050/time_table/${dailyTimeTable}`}
                           alt={dailyTimeTable}
-                          width="100%"
+                          className="timetable-photo"
                         />
-                        {/* <button className='gene-edit-time' onClick={(id) => updateRestNotice(id)}>Edit TimeTable</button> */}
                       </>
                     )
                 }
+              </div>
+              <button className='gene-edit-time' onClick={() => updateRestNotice(allSubject._id)}>Edit TimeTable</button>
+              <div className='open-full'>
+                <Link target='_blank' to={`http://localhost:5050/time_table/${dailyTimeTable}`}>
+                  <MdOutlineOpenInFull />
+                </Link>
               </div>
             </div>
 
@@ -225,7 +240,7 @@ const TimeTableData = () => {
             {/* generate Exam */}
 
             {/* Update Exam */}
-            {/* <button type="button" ref={ref} style={{ display: "none" }} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit3">
+            <button type="button" ref={refClose} style={{ display: "none" }} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit3">
               Launch demo modal
             </button>
 
@@ -238,7 +253,7 @@ const TimeTableData = () => {
                   <div className="modal-body">
                     <div className="update-part">
                       <div className="first-part-update">
-                        <p className='send'>Send Notification</p>
+                        <p className='send'>Update TimeTable</p>
                         <div className="tb1-update ">
                           <label className='amt' name='tt_img'>Document</label>
                           <input type="file" accept="image/*, application/pdf" onChange={onChanges} name='tt_img' /><br />
@@ -251,8 +266,9 @@ const TimeTableData = () => {
                     <button type="button" className="btn-upd" onClick={handleSubmit1} data-bs-dismiss="modal" aria-label="Close">UPDATE</button>
                   </div>
                 </div>
+
               </div>
-            </div> */}
+            </div>
 
             {/* Update Exam */}
           </div>

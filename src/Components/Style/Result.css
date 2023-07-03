@@ -169,7 +169,7 @@ ul li {
     justify-content: space-evenly;
 }
 
-.delete-btn-r{
+.delete-btn-r {
     text-align: center;
     padding: 10px 0;
 }
@@ -224,4 +224,17 @@ ul li {
         flex-direction: column;
         align-items: center;
     }
+}
+
+.open-full {
+    text-align: end;
+    cursor: pointer;
+    font-size: 25px;
+    color: #000;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.open-full a{
+    color: #000;
 }
