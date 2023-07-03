@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import "../Style/Exam.css"
 import { ReactSession } from 'react-client-session';
 import Topbar from './Topbar';
@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BiEditAlt } from 'react-icons/bi';
-import { useRef } from 'react';
+import axios from 'axios';
 
 const ExamData = () => {
 
@@ -27,8 +27,6 @@ const ExamData = () => {
     //----------------------------- Fetch Exam ------------------------
 
     const [allSubject, setAllSubject] = useState([]);
-    const [notDataForm, setNotDataForm] = useState(false);
-
     const getSubject = useCallback(async () => {
         const Standard = DataStudent;
         const response = await fetch(apiConst.fetch_all_examtimetable, {
@@ -41,161 +39,120 @@ const ExamData = () => {
         });
 
         const json = await response.json();
-
-        if (json.length === 0) {
-            setNotDataForm(true)
-        }
-        else {
-            setAllSubject(json[0].Exam_Type)
-            setAllSubject(json[0].Exam_TimeTable)
-        }
+        setAllSubject(json)
     }, [DataStudent]);
 
     //----------------------------- Fetch Exam ------------------------
 
-    //----------------------------- Create Exam -----------------------
+    //--------------------------- Create Exam --------------------
 
-    const [credentials, setCredentials] = useState({
-        Standard: "",
-        Exam_Type: "",
-        Exam_TimeTable: [
-            {
-                Subject_code: "",
-                Date: "",
-                EndTime: "",
-                StartTime: "",
-                Marks: ""
-            }],
+    const [examData, setExamData] = useState({
+        Standard: '',
+        Exam_Type: '',
+        exam_tt_img: null,
     });
 
+    const clearFields = () => {
+        setExamData('');
+    };
+
     const handleSubmit = async (e) => {
-
         e.preventDefault();
-        const Standard = DataStudent;
-        const {
-            Exam_Type,
-            Exam_TimeTable: [
-                { Subject_code,
-                    Date,
-                    EndTime,
-                    StartTime,
-                    Marks }]
-        } = credentials;
-        const response = await fetch(apiConst.set_examtimetable, {
-            method: 'POST',
-            body: JSON.stringify({
-                Standard,
-                Exam_Type,
-                Exam_TimeTable: [
-                    {
-                        Subject_code,
-                        Date,
-                        EndTime,
-                        StartTime,
-                        Marks
-                    }]
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-                'authToken_admin': localStorage.getItem("AToken")
-            }
-        });
+        try {
+            const formData = new FormData();
+            formData.append('Standard', examData.Standard);
+            formData.append('Exam_Type', examData.Exam_Type);
+            formData.append('exam_tt_img', examData.exam_tt_img);
 
-        const json = await response.json();
-        console.log(json);
-        if (json.success) {
-            toast.success("Student Created", { position: toast.POSITION.TOP_RIGHT });
-        }
-        else {
-            toast.error(json.error, { position: toast.POSITION.TOP_RIGHT });
+
+            const response = await axios.post(apiConst.set_examtimetable, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "authToken_admin": localStorage.getItem("AToken"),
+                }
+            });
+
+            if (response.data.success) {
+                toast.success("Exam Time Table generated successfully", { position: toast.POSITION.TOP_RIGHT });
+                getSubject();
+                clearFields();
+            }
+            else {
+                toast.error(response.data.error, { position: toast.POSITION.TOP_RIGHT });
+            }
+        } catch (error) {
+            toast.error(error.response.data.error[0].msg, { position: toast.POSITION.TOP_RIGHT });
         }
     }
 
     const onChange = (e) => {
-        if (e.target.name === 'Subject_code' || e.target.name === 'Date' ||
-            e.target.name === 'EndTime' || e.target.name === 'StartTime' ||
-            e.target.name === 'Marks') {
-            const updatedExamTimeTable = credentials.Exam_TimeTable.map((item) => {
-                return { ...item, [e.target.name]: e.target.value };
-            });
-            setCredentials({ ...credentials, Exam_TimeTable: updatedExamTimeTable });
+        if (e.target.name === 'exam_tt_img') {
+            setExamData({ ...examData, [e.target.name]: e.target.files[0] });
         } else {
-            setCredentials({ ...credentials, [e.target.name]: e.target.value });
+            setExamData({ ...examData, [e.target.name]: e.target.value });
         }
     }
 
+    //--------------------------- Create Exam --------------------
 
-    //----------------------------- Create Exam -----------------------
-
-    // ---------------------------- Updadte Exam ----------------------
+    //--------------------------- Update Exam --------------------
 
     const ref = useRef(null);
 
-    const [updateExam, setUpdateExam] = useState({
-        Subject_code: "",
-        Marks: "",
-        Date: "",
-        StartTime: "",
-        EndTime: ""
+    const [updateNotice, setUpdateNotice] = useState({
+        exam_tt_img: null,
     })
 
-    console.log(updateExam);
-
-
-    const updateRestExam = (currentExam) => {
+    const updateRestNotice = (currentNotice) => {
         ref.current.click();
-        setUpdateExam({
-            id: currentExam._id,
-            Subject_code: currentExam.Subject_code,
-            Marks: currentExam.Marks,
-            Date: currentExam.Date,
-            StartTime: currentExam.StartTime.split('T')[0],
-            EndTime: currentExam.EndTime.split('T')[0]
+        setUpdateNotice({
+            id: currentNotice._id,
+            exam_tt_img: currentNotice.exam_tt_img
         })
     }
 
-    const handleSubmitExam = (e) => {
+    const handleSubmit1 = (e) => {
         e.preventDefault();
-        RestUpdateHoliday(
-            updateExam.id,
-            updateExam.Subject_code,
-            updateExam.Marks,
-            updateExam.Date,
-            updateExam.StartTime,
-            updateExam.EndTime
+        RestUpdateNotice(
+            updateNotice.id,
+            updateNotice.exam_tt_img
         );
     }
 
-    const RestUpdateHoliday = async (id, Subject_code, Marks, Date, StartTime, EndTime) => {
-        const responseHoliday = await fetch(apiConst.edit_examtimetable + id, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                "authToken_admin": localStorage.getItem("AToken"),
-            },
-            body: JSON.stringify({ Subject_code, Marks, Date, StartTime, EndTime })
-        });
+    const RestUpdateNotice = async (id, exam_tt_img) => {
+        try {
+            const updateformData = new FormData();
+            updateformData.append('exam_tt_img', exam_tt_img);
 
-        const json = await responseHoliday.json();
+            const response = await axios.patch(apiConst.edit_examtimetable + id, updateformData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "authToken_admin": localStorage.getItem("AToken"),
+                }
+            });
 
-        if (json.success === true) {
-            ref.current.click();
-            toast.success("Exam Update", { position: toast.POSITION.TOP_RIGHT });
-        }
-        else {
-            if (!json.error[0].msg) {
-                toast.error(json.error, { position: toast.POSITION.TOP_RIGHT });
+            if (response.data.success) {
+                toast.success("Exam Updated Successfully", { position: toast.POSITION.TOP_RIGHT });
+                getSubject();
             }
             else {
-                toast.error(json.error[0].msg, { position: toast.POSITION.TOP_RIGHT });
+                toast.error(response.data.error, { position: toast.POSITION.TOP_RIGHT });
             }
+        } catch (error) {
+            toast.error(error.response.data.error[0].msg, { position: toast.POSITION.TOP_RIGHT });
         }
     }
 
     const onChanges = (e) => {
-        setUpdateExam({ ...updateExam, [e.target.name]: e.target.value });
+        if (e.target.name === 'exam_tt_img') {
+            setUpdateNotice({ ...updateNotice, [e.target.name]: e.target.files[0] });
+        } else {
+            setUpdateNotice({ ...updateNotice, [e.target.name]: e.target.value });
+        }
     }
-    // ---------------------------- Updadte Exam ----------------------
+
+    console.log(allSubject.length);
+    // ----------------------------------------------------------------Update Notices --------------------------------
 
     useEffect(() => {
         getSubject();
@@ -216,33 +173,41 @@ const ExamData = () => {
                         </div>
                         <table className='subject-table'>
                             <tbody>
-                                {
-                                    notDataForm === false
-                                        ?
-                                        <>
-                                            <tr>
-                                                <th>Subject code</th>
-                                                <th>Marks</th>
-                                                <th>Date</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                                <th></th>
-                                            </tr>
-                                            {allSubject.map((subject, index) => (
-                                                <tr key={index}>
-                                                    <td>{subject.Subject_code}</td>
-                                                    <td>{subject.Marks}</td>
-                                                    <td>{subject.Date}</td>
-                                                    <td>{subject.StartTime}</td>
-                                                    <td>{subject.EndTime}</td>
-                                                    <td><BiEditAlt style={{ cursor: "pointer" }} size={30} onClick={() => updateRestExam(subject)} />
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </>
-                                        :
-                                        <h1>Not Available</h1>
-                                }
+                                <tr>
+                                    <th>Standard</th>
+                                    <th>Exam Type</th>
+                                    <th>Document</th>
+                                    <th></th>
+                                </tr>
+                                {allSubject.length === 0 ?
+                                    <h2 style={{ color: "#E33535", textAlign: "center" }}>Exams not found</h2>
+                                    :
+                                    allSubject && allSubject.map((item, index) => (
+                                        <tr key={index}>
+                                            <td>{item.Standard}</td>
+                                            <td>{item.Exam_Type}</td>
+                                            <td>{item.Exam_TimeTable && (item.Exam_TimeTable.slice(-4).toLowerCase() === ".pdf" ? (
+                                                <iframe
+                                                    src={`http://localhost:5050/exam_time_table/${item.Exam_TimeTable}`}
+                                                    title={item.Exam_TimeTable}
+                                                    className='height-and'
+                                                ></iframe>
+                                            ) : (
+                                                <img
+                                                    src={`http://localhost:5050/exam_time_table/${item.Exam_TimeTable}`}
+                                                    alt={item.Exam_TimeTable}
+                                                    className='height-and'
+                                                />
+                                            ))
+                                            }
+                                            </td>
+                                            <td><td>
+                                                <div className='delete-btn-r'>
+                                                    <BiEditAlt style={{ cursor: "pointer", fontSize: "21px" }} onClick={() => updateRestNotice(item)} />
+                                                </div>
+                                            </td></td>
+                                        </tr>
+                                    ))}
                             </tbody>
                         </table>
                     </div>
@@ -254,28 +219,22 @@ const ExamData = () => {
                                 <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
                                 <form id="editid_form" className="editid_form" onSubmit={handleSubmit}>
                                     <div className='input_part idcard_input'>
-                                        <label>Subject Code</label> <br />
-                                        <input type="text" value={credentials.Exam_TimeTable[0].Subject_code} name="Subject_code" onChange={onChange} />
+                                        <label>Standard Code</label> <br />
+                                        <input type="text" value={examData.Standard} name="Standard" onChange={onChange} />
                                     </div>
                                     <div className='input_part idcard_input'>
-                                        <label>Exam_Type</label> <br />
-                                        <input type="text" id="Exam_Type" name="Exam_Type" required onChange={onChange} />
+                                        <label>Exam Type</label> <br />
+                                        <select className="any-options" defaultValue={"DEFAULT"} name="Exam_Type" id="Exam_Type" required onChange={onChange}>
+                                            <option value="DEFAULT" disabled>Select Term</option>
+                                            <option value="Weekly">Weekly</option>
+                                            <option value="Monthly">Monthly</option>
+                                            <option value="First Term">First Term</option>
+                                            <option value="Second Term">Second Term</option>
+                                        </select>
                                     </div>
                                     <div className='input_part idcard_input'>
-                                        <label>Mark</label> <br />
-                                        <input type="text" value={credentials.Exam_TimeTable[0].Marks} name="Marks" required onChange={onChange} />
-                                    </div>
-                                    <div className='input_part idcard_input'>
-                                        <label>Date</label> <br />
-                                        <input type="date" value={credentials.Exam_TimeTable[0].Date} name="Date" required onChange={onChange} />
-                                    </div>
-                                    <div className='input_part idcard_input'>
-                                        <label>Start Time</label> <br />
-                                        <input type="time" value={credentials.Exam_TimeTable[0].StartTime} name="StartTime" required onChange={onChange} />
-                                    </div>
-                                    <div className='input_part idcard_input'>
-                                        <label>End Time</label> <br />
-                                        <input type="time" value={credentials.Exam_TimeTable[0].EndTime} name="EndTime" required onChange={onChange} />
+                                        <label>Document</label> <br />
+                                        <input type="file" accept="application/pdf" required name="exam_tt_img" onChange={onChange} /><br />
                                     </div>
                                     <div className="save_part">
                                         <button className="save_btn" data-bs-dismiss="modal" type="submit">SAVE</button>
@@ -287,40 +246,31 @@ const ExamData = () => {
                     {/* generate Exam */}
 
                     {/* Update Exam */}
-
-                    <button type="button" ref={ref} style={{ display: "none" }} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exam_one">
+                    <button type="button" ref={ref} style={{ display: "none" }} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit3">
                         Launch demo modal
                     </button>
 
-                    <div className="modal fade sp_model_1" id="exam_one" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" tabIndex='-1'>
+                    <div className="modal fade" id="edit3" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog">
-                            <div className="modal-content editid_modal">
-                                <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
-                                <form id="editid_form" className="editid_form" onSubmit={handleSubmitExam}>
-                                    <div className='input_part idcard_input'>
-                                        <label>Subject Code</label> <br />
-                                        <input type="text" id="Subject_code" name="Subject_code" value={updateExam.Subject_code} required onChange={onChanges} />
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div className="modal-body">
+                                    <div className="update-part">
+                                        <div className="first-part-update">
+                                            <p className='send'>Send Notification</p>
+                                            <div className="tb1-update ">
+                                                <label className='amt' name='exam_tt_img'>Document</label>
+                                                <input type="file" accept="image/*, application/pdf" onChange={onChanges} name='exam_tt_img' /><br />
+                                                <p className='only-accepts'>(Only Accepts Images and PDF)</p><br />
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className='input_part idcard_input'>
-                                        <label>Marks</label> <br />
-                                        <input type="text" id="Marks" name="Marks" required value={updateExam.Marks} onChange={onChanges} />
-                                    </div>
-                                    <div className='input_part idcard_input'>
-                                        <label>Date</label> <br />
-                                        <input type="text" id="Date" name="Date" value={updateExam.Date} required onChange={onChanges} />
-                                    </div>
-                                    <div className='input_part idcard_input'>
-                                        <label>Start Time</label> <br />
-                                        <input type="time" id="StartTime" name="StartTime" value={updateExam.StartTime} required onChange={onChanges} />
-                                    </div>
-                                    <div className='input_part idcard_input'>
-                                        <label>End Time</label> <br />
-                                        <input type="time" id="EndTime" name="EndTime" value={updateExam.EndTime} required onChange={onChanges} />
-                                    </div>
-                                    <div className="save_part">
-                                        <button className="save_btn" type="submit">SAVE</button>
-                                    </div>
-                                </form>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn-upd" onClick={handleSubmit1} data-bs-dismiss="modal" aria-label="Close">UPDATE</button>
+                                </div>
                             </div>
                         </div>
                     </div>

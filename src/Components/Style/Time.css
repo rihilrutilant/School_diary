@@ -13,7 +13,7 @@
     top: -100px;
 }
 
-.modal-content .btn-close{
+.modal-content .btn-close {
     z-index: 1;
 }
 
@@ -98,10 +98,32 @@
     position: relative;
 }
 
-.ganerate_id_part{
+.ganerate_id_part {
     margin-bottom: 120px;
 }
 
-.final-submit{
+.final-submit {
     padding: 20px;
+}
+
+.gene-time {
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    color: black;
+    background: #00C6F9;
+}
+
+.gene-edit-time {
+    position: absolute;
+    left: 0;
+    top: 0;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    color: black;
+    background: #00C6F9;
 }

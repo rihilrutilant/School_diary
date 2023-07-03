@@ -58,6 +58,7 @@ const apiConst = {
   set_examtimetable: `${BASE_URL}examtimetable/set_examtimetable`,
   fetch_all_examtimetable: `${BASE_URL}examtimetable/fetch_all_examtimetable`,
   edit_examtimetable: `${BASE_URL}examtimetable/edit_examtimetable/`,
+  edit_timetable: `${BASE_URL}timetable/edit_timetable/`,
 
   upload_results: `${BASE_URL}results/upload_results`,
   fetch_results_of_student: `${BASE_URL}results/fetch_results_of_student`,

@@ -25,6 +25,7 @@ const Result = () => {
   }, []);
 
   // -----------------------Fetch all Standards ---------------------
+
   const [classes, setclasses] = useState()
   const getclasses = async (e) => {
     const response = await fetch(apiConst.fetch_all_standards, {
@@ -42,6 +43,7 @@ const Result = () => {
   const [classVal] = useState('');
 
   //-----------------------Fetch all Classcode standard wise-------------------------
+  
   const [classCode, setclassCode] = useState()
   const getclasscodes = async (e) => {
     const Standard = e.target.value
