@@ -88,14 +88,16 @@ const Dashboard = () => {
     // ----------- latest 2 notices----------------------
 
     const [latestNotices, setlatestNotices] = useState()
+    console.log(localStorage.getItem("AToken"));
     const getLatestNotices = async () => {
         const response = await fetch(apiConst.get_two_notices, {
             method: "POST",
             headers: {
-                "authToken_admin": localStorage.getItem("AToken")
+                "pa": "parthiv"
             },
         });
         const json = await response.json();
+        console.log(json);
         setlatestNotices(json)
     };
 
@@ -212,7 +214,7 @@ const Dashboard = () => {
                                         ?
                                         <h3 style={{ color: "#E33535", textAlign: "center", marginBottom: "200px" }}>Data Not Found</h3>
                                         :
-                                        latestNotices && latestNotices.map((item, index) => {
+                                        latestNotices && latestNotices?.map((item, index) => {
                                             return (
                                                 <div className={index === 0 ? "sports-inner" : "sports-inner2"} key={index}>
                                                     <p className={index === 0 ? "spt" : "spt2"}>{item.Notice_title}</p>
