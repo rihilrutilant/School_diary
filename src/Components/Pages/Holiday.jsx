@@ -20,7 +20,6 @@ const Holiday = () => {
   //------------- Update Holidays ------------------------------
 
   const ref = useRef(null);
-
   const [updateHoliday, setUpdateHoliday] = useState({
     Holiday_title: "",
     Holiday_description: "",
@@ -43,14 +42,15 @@ const Holiday = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    RestUpdateHoliday(
-      updateHoliday.id,
-      updateHoliday.Holiday_title,
-      updateHoliday.Holiday_description,
-      updateHoliday.Holiday_Start,
-      updateHoliday.Holiday_End,
-      updateHoliday.Groups
-    );
+    console.log(updateHoliday);
+    // RestUpdateHoliday(
+    //   updateHoliday.id,
+    //   updateHoliday.Holiday_title,
+    //   updateHoliday.Holiday_description,
+    //   updateHoliday.Holiday_Start,
+    //   updateHoliday.Holiday_End,
+    //   updateHoliday.Groups
+    // );
   }
 
   const RestUpdateHoliday = async (id, Holiday_title, Holiday_description, Holiday_Start, Holiday_End, Groups) => {
@@ -62,11 +62,7 @@ const Holiday = () => {
       },
       body: JSON.stringify({ Holiday_title, Holiday_description, Holiday_Start, Holiday_End, Groups })
     });
-
-    // console.log(responseHoliday);
     const json = await responseHoliday.json();
-
-    // console.log(json);
     if (json.success === true) {
       refClose2.current.click();
       fetchData();
@@ -87,31 +83,6 @@ const Holiday = () => {
   }
 
   //------------- Update Holidays ------------------------------
-
-  //------------- Select Group ------------------------------
-
-  const [teacher, setTeacher] = useState(false);
-  const [student, setStudent] = useState(false);
-  const [all, setAll] = useState(true);
-
-  const handleTeacher = () => {
-    setTeacher(!teacher);
-    setStudent(false);
-    setAll(false);
-  };
-
-  const handleStudent = () => {
-    setTeacher(false);
-    setStudent(!student);
-    setAll(false);
-  };
-
-  const handleAll = () => {
-    setTeacher(false);
-    setStudent(false);
-    setAll(!all);
-  };
-
 
   const [datas, setDatas] = useState([]);
 
@@ -134,15 +105,12 @@ const Holiday = () => {
   };
 
   //------------------------------- Fetch Holidays ------------------------------
+  const [all, setAll] = useState("all");
+  const selectCategoryOfData = (e) => {
+    setAll(e.target.value);
+  }
 
-  const filteredStudent = datas.filter(item => item.Groups === 'Students');
-  const filteredTeacher = datas.filter(item => item.Groups === 'Teachers');
-  const filteredAll = datas.filter(item => item.Groups === 'All');
-
-  //------------- Select Group ------------------------------
-
-
-  //------------------------Add Holidays---------------------
+  //------------------------ Add Holidays ---------------------
 
   const [newHoliday, setNewHoliday] = useState({
     Holiday_title: "",
@@ -199,9 +167,9 @@ const Holiday = () => {
     setNewHoliday({ ...newHoliday, [e.target.name]: e.target.value })
   }
 
-  //------------------------Add Holidays---------------------
+  //------------------------ Add Holidays ---------------------
 
-  //-----------------------Delete Holiday --------------------------------
+  //----------------------- Delete Holiday --------------------------------
 
   const deleteRest = (id) => {
     fetch(Api_keys.delete_holidays + id, {
@@ -224,8 +192,7 @@ const Holiday = () => {
     })
   }
 
-
-  //----------------------------------------------------------------Delete Holiday --------------------------------
+  //----------------------- Delete Holiday --------------------------------
 
   return (
     <>
@@ -244,15 +211,14 @@ const Holiday = () => {
             <div className="eventFor">
               <h3>Event History For</h3>
               <div className="eventfor_holiday">
-                <input type="radio" checked={teacher} onChange={handleTeacher} />
+                <input type="radio" style={{ cursor: "pointer" }} name="gender" checked={all === "teachers" ? true : false} value={"teachers"} onChange={selectCategoryOfData} />
                 <label htmlFor="Teacher"> Teacher</label>
-                <input type="radio" checked={student} onChange={handleStudent} />
+                <input type="radio" style={{ cursor: "pointer" }} name="gender" checked={all === "students" ? true : false} value={"students"} onChange={selectCategoryOfData} />
                 <label htmlFor="Student"> Student</label>
-                <input type="radio" checked={all} onChange={handleAll} />
+                <input type="radio" style={{ cursor: "pointer" }} name="gender" checked={all === "all" ? true : false} value={"all"} onChange={selectCategoryOfData} />
                 <label htmlFor="All"> All</label>
               </div>
             </div>
-
             <section>
               <table className="tab_holiday" style={{ marginBottom: "99px" }}>
                 <>
@@ -263,88 +229,68 @@ const Holiday = () => {
                       <th>Holiday to date</th>
                       <th>Groups</th>
                       <th>Note</th>
-                      <th></th>
+                      <th colSpan={2}>Action</th>
                     </tr>
                   </thead>
-                  {all && (
-                    <tbody>
-                      {filteredAll.map((a, i) => (
-                        <tr key={i}>
-                          <td>{a.Holiday_title}</td>
-                          <td>{a.Holiday_Start.split('T')[0]}</td>
-                          <td>{a.Holiday_End.split('T')[0]}</td>
-                          <td>{a.Groups}</td>
-                          <td>
-                            <p className="des">
-                              {a.Holiday_description}
-                            </p>
-                          </td>
-                          <td className="edit-delete">
-                            <BiEditAlt style={{ cursor: "pointer" }} size={30} onClick={() => updateRestHoliday(a)} />
-                            <FaRegTrashAlt className="FaRegTrashAlt" style={{ cursor: "pointer", marginLeft: "10px" }} size={20} onClick={() => deleteRest(a._id)} />
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  )}
-                  {teacher && (
-                    <tbody>
-                      {filteredTeacher.map((a) => (
-                        <tr key={a._id}>
-                          <td>{a.Holiday_title}</td>
-                          <td>{a.Holiday_Start.split('T')[0]}</td>
-                          <td>{a.Holiday_End.split('T')[0]}</td>
-                          <td>{a.Groups}</td>
-                          <td>
-                            <p className="des">
-                              {a.Holiday_description}
-                            </p>
-                          </td>
-                          <td className="edit-delete">
-                            <BiEditAlt style={{ cursor: "pointer" }} size={30} onClick={() => updateRestHoliday(a)} />
-                            <FaRegTrashAlt className="FaRegTrashAlt" style={{ cursor: "pointer", marginLeft: "10px" }} size={20} onClick={() => deleteRest(a._id)} />
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  )}
-                  {student && (
-                    <tbody>
-                      {filteredStudent.map((a) => (
-                        <tr key={a._id}>
-                          <td>{a.Holiday_title}</td>
-                          <td>{a.Holiday_Start.split('T')[0]}</td>
-                          <td>{a.Holiday_End.split('T')[0]}</td>
-                          <td>{a.Groups}</td>
-                          <td>
-                            <p className="des">
-                              {a.Holiday_description}
-                            </p>
-                          </td>
-                          <td className="edit-delete">
-                            <BiEditAlt style={{ cursor: "pointer" }} size={30} onClick={() => updateRestHoliday(a)} />
-                            <FaRegTrashAlt className="FaRegTrashAlt" style={{ cursor: "pointer", marginLeft: "10px" }} size={20} onClick={() => deleteRest(a._id)} />
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  )}
+                  <tbody>
+                    {
+                      all === "all" ? (
+                        <>
+                          {datas.map((a) => (
+                            <tr key={a._id}>
+                              <td>{a.Holiday_title}</td>
+                              <td>{a.Holiday_Start.split('T')[0]}</td>
+                              <td>{a.Holiday_End.split('T')[0]}</td>
+                              <td>{a.Groups}</td>
+                              <td>
+                                <p className="des">
+                                  {a.Holiday_description}
+                                </p>
+                              </td>
+                              <td className="edit-delete">
+                                <BiEditAlt style={{ cursor: "pointer" }} size={30} onClick={() => updateRestHoliday(a)} />
+                              </td>
+                              <td className="edit-delete">
+                                <FaRegTrashAlt className="FaRegTrashAlt" style={{ cursor: "pointer", marginLeft: "10px" }} size={20} onClick={() => deleteRest(a._id)} />
+                              </td>
+                            </tr>
+                          ))}
+                        </>
+                      ) : (
+                        <>
+                          {datas.filter((items) => items.Groups.toLowerCase() === all.toLowerCase()).map((a) => (
+                            <tr key={a._id}>
+                              <td>{a.Holiday_title}</td>
+                              <td>{a.Holiday_Start.split('T')[0]}</td>
+                              <td>{a.Holiday_End.split('T')[0]}</td>
+                              <td>{a.Groups}</td>
+                              <td>
+                                <p className="des">
+                                  {a.Holiday_description}
+                                </p>
+                              </td>
+                              <td className="edit-delete">
+                                <BiEditAlt style={{ cursor: "pointer" }} size={30} onClick={() => updateRestHoliday(a)} />
+                              </td>
+                              <td className="edit-delete">
+                                <FaRegTrashAlt className="FaRegTrashAlt" style={{ cursor: "pointer", marginLeft: "10px" }} size={20} onClick={() => deleteRest(a._id)} />
+                              </td>
+                            </tr>
+                          ))}
+                        </>
+                      )
+                    }
+                  </tbody>
                 </>
               </table>
 
-              {/* ------------------------ Update holiday MODAL     -----------------------------  */}
+              {/* ------------------------ Update holiday MODAL -----------------------------  */}
               <button type="button" ref={ref} style={{ display: "none" }} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#holiday_one">
                 Launch demo modal
               </button>
-              {/* ------------------------ Update holiday MODAL     -----------------------------  */}
+              {/* ------------------------ Update holiday MODAL -----------------------------  */}
 
-              <div
-                className="modal fade"
-                id="holiday_one"
-                tabIndex="-1"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-              >
+              <div className="modal fade" id="holiday_one" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                   <div className="modal-content">
                     <div className="modal-header">
@@ -353,7 +299,6 @@ const Holiday = () => {
                           <label htmlFor="">Holiday Title</label>
                           <input type="text" name="Holiday_title" onChange={onChanges} value={updateHoliday.Holiday_title} />
                         </div>
-
                         <div className="hTable_date">
                           <div className="date_from">
                             <label htmlFor="">Holiday from date</label>
@@ -387,14 +332,7 @@ const Holiday = () => {
                           </div>
                         </div>
                       </div>
-
-                      <button
-                        type="button"
-                        className="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                        ref={refClose2}
-                      ></button>
+                      <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" ref={refClose2}></button>
                     </div>
                     <div className="modal-footer">
                       <div className="hTable_btn">
@@ -405,15 +343,8 @@ const Holiday = () => {
                 </div>
               </div>
 
-
               {/* --------------------------------Add Holiday-------------------------------------- */}
-              <div
-                className="modal fade"
-                id="add_Holiday"
-                tabIndex="-1"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-              >
+              <div className="modal fade" id="add_Holiday" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                   <div className="modal-content">
                     <div className="modal-header">
@@ -422,7 +353,6 @@ const Holiday = () => {
                           <label htmlFor="">Holiday Title</label>
                           <input type="text" name="Holiday_title" onChange={onChangesholiday} />
                         </div>
-
                         <div className="hTable_date">
                           <div className="date_from">
                             <label htmlFor="">Holiday from date</label>
@@ -433,7 +363,6 @@ const Holiday = () => {
                             <input id="date" type="date" name="Holiday_End" onChange={onChangesholiday} />
                           </div>
                         </div>
-
                         <div className="hTable_note">
                           <label>Note</label>
                           <input type="text" onChange={onChangesholiday} name="Holiday_description" />
@@ -456,18 +385,11 @@ const Holiday = () => {
                           </div>
                         </div>
                       </div>
-
-                      <button
-                        type="button"
-                        className="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                        ref={refClose}
-                      ></button>
+                      <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" ref={refClose}></button>
                     </div>
                     <div className="modal-footer">
                       <div className="hTable_btn">
-                        <button className="save_btn" onClick={AddHoliday}> SAVE</button>
+                        <button className="save_btn" onClick={AddHoliday}>SAVE</button>
                       </div>
                     </div>
                   </div>

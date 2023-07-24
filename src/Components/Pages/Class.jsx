@@ -10,14 +10,12 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import apiConst from "../Api_keys"
 
-
 const Class = () => {
   ReactSession.setStoreType("localStorage");
   const [navVisible, showNavbar] = useState(true);
 
   // ------------- fetch all classes ------------------------
   const [Classes, setClasses] = useState();
-
 
   const getClasses = useCallback(async () => {
     const response = await fetch(apiConst.fetch_all_standards,
@@ -28,12 +26,10 @@ const Class = () => {
           "authToken_admin": localStorage.getItem("AToken")
         },
       });
-
     const json = await response.json();
     setClasses(json);
   }, []);
   // ------------- fetch all classes ------------------------
-
 
   //-------------- Create class ------------------------
 
@@ -46,16 +42,12 @@ const Class = () => {
       const element = classcode[index];
       nextChar = element.slice(-1);
     }
-
     const nextCharacter = String.fromCharCode(nextChar.charCodeAt(0) + 1);
     setnextclasscode(Standard + nextCharacter)
   };
 
-
   const CreateClasses = async (Classcode) => {
-
     const Standard = Classcode.substring(0, 2);
-
     const responseTeacher = await fetch(apiConst.create_class_code, {
       method: "POST",
       headers: {
@@ -64,7 +56,6 @@ const Class = () => {
       },
       body: JSON.stringify({ Standard, Classcode })
     });
-
     const json = await responseTeacher.json();
     if (json.success) {
       closemodel.current.click();
@@ -83,11 +74,9 @@ const Class = () => {
 
   //-------------- Create class ------------------------
 
-
   //------------- Delete Classes ------------------
   const deleteClass = async (id, Classcode) => {
-
-    const responseTeacher = await fetch(apiConst.delete_class_code+id, {
+    const responseTeacher = await fetch(apiConst.delete_class_code + id, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -95,7 +84,6 @@ const Class = () => {
       },
       body: JSON.stringify({ Classcode })
     });
-
     const json = await responseTeacher.json();
     if (json.success) {
       getClasses()
@@ -111,8 +99,6 @@ const Class = () => {
     }
   }
   //------------- Delete Classes ------------------
-
-
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -165,7 +151,6 @@ const Class = () => {
         </div>
       </div>
     </>
-
   )
 }
 

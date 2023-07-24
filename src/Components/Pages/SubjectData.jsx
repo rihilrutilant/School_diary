@@ -19,7 +19,6 @@ const SubjectData = () => {
     if (typeof Data === 'string') {
         DataStudent = Data.substring(0, 2);
     }
-
     const [navVisible, showNavbar] = useState(true);
 
     //-----------------Fetch Subjects ----------------
@@ -44,7 +43,6 @@ const SubjectData = () => {
     //-----------------Add Subject -------------------
 
     const refClose = useRef(null)
-
     const [newSubjects, setNewSubjects] = useState({
         Standard: "",
         Subject_Name: "",
@@ -70,9 +68,7 @@ const SubjectData = () => {
                 'authToken_admin': localStorage.getItem("AToken")
             }
         });
-
         const json = await response.json();
-        console.log(json);
         if (json.success) {
             refClose.current.click();
             toast.success("Subject added successfully", { position: toast.POSITION.TOP_RIGHT });
@@ -147,7 +143,7 @@ const SubjectData = () => {
                                 <tr>
                                     <th>Subject Code</th>
                                     <th>Subject Name</th>
-                                    <th></th>
+                                    <th>Action</th>
                                 </tr>
                                 {
                                     allSubject === "Subject Not Found" ?
@@ -170,9 +166,7 @@ const SubjectData = () => {
                             </tbody>
                         </table>
                     </div>
-
                     {/* ------------------------Add Subject-------------------------- */}
-
                     <div className="modal fade" id="event_one" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog">
                             <div className="modal-content">
@@ -193,14 +187,7 @@ const SubjectData = () => {
                                             </div>
                                         </div>
                                     </div>
-
-                                    <button
-                                        type="button"
-                                        className="btn-close"
-                                        data-bs-dismiss="modal"
-                                        aria-label="Close"
-                                        ref={refClose}
-                                    ></button>
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" ref={refClose}></button>
                                 </div>
                                 <div className="modal-footer">
                                     <div className="hTable_btn">
@@ -210,7 +197,6 @@ const SubjectData = () => {
                             </div>
                         </div>
                     </div>
-
                     {/* ------------------------Add Subject-------------------------- */}
                 </div>
             </div>

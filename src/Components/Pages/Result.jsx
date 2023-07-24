@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react'
 import "../Style/Result.css"
 import Navbar from "../Pages/Navbar"
@@ -43,7 +42,7 @@ const Result = () => {
   const [classVal] = useState('');
 
   //-----------------------Fetch all Classcode standard wise-------------------------
-  
+
   const [classCode, setclassCode] = useState()
   const getclasscodes = async (e) => {
     const Standard = e.target.value
@@ -57,8 +56,8 @@ const Result = () => {
     });
     const json = await response.json();
     setclassCode(json)
-
     const value = e.target.value;
+    console.log(value);
     ReactSession.set("jenish", value);
   };
   //-----------------------Fetch all Classcode standard wise-------------------------

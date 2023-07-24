@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react'
 import Navbar from "../Pages/Navbar"
 import Topbar from './Topbar';
@@ -46,7 +45,6 @@ const Subject = () => {
                     <div className="container-fluid">
                         <div className="add-btn">
                             <h4 className='main-name'>Subjects</h4>
-                            {/* <Link to="/AddResult"><button> + Add a exam result</button></Link> */}
                         </div>
                         <div className="r-info">
                             <div className="sel-sec">

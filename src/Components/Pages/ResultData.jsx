@@ -31,7 +31,6 @@ const ResultData = ({ imageUrl }) => {
     //----------------- Fetch all students  ------------------------------
 
     const [studentClass, setStudentClass] = useState([]);
-    console.log(studentClass);
     const S_Class_code = Data
 
     const getAllStudent = useCallback(async () => {
@@ -99,17 +98,15 @@ const ResultData = ({ imageUrl }) => {
             formData.append('Term', resultData.Term);
             formData.append('result_photos', resultData.result_photos);
 
-
             const response = await axios.post(Api_keys.upload_results, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     "authToken_admin": localStorage.getItem("AToken"),
                 }
             });
-
             if (response.data.success) {
                 toast.success("Result generated successfully", { position: toast.POSITION.TOP_RIGHT });
-                getResult();
+                // getResult();
                 clearFields();
             }
             else {
@@ -134,7 +131,6 @@ const ResultData = ({ imageUrl }) => {
 
     const deleteRest = (id, studentId) => {
         const S_icard_Id = studentId;
-        console.log(S_icard_Id);
         fetch(Api_keys.delete_results + id, {
             method: "DELETE",
             headers: {
@@ -157,7 +153,7 @@ const ResultData = ({ imageUrl }) => {
 
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-        getResult();
+        // getResult();
         getAllStudent();
     }, [getAllStudent]);
 
@@ -170,7 +166,10 @@ const ResultData = ({ imageUrl }) => {
                     <Topbar />
                     <div className="container-fluid">
                         <div className='studentid_cnt'>
-                            <h3>Students / <span>{DataClass}</span></h3>
+                            <div className='breadcumb-part d-flex'>
+                                <h3><Link style={{ textDecoration: "none", color: "#28A7E8" }} to='/Result'>Result / </Link></h3>
+                                <h3 className='breadcumb-active'>Class - {DataClass}</h3>
+                            </div>
                             <button className='studentid_create' data-bs-toggle="modal" data-bs-target="#staticBackdrop">+ Generate Result</button>
                         </div>
                         <div className='studentid_detail'>

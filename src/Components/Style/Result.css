@@ -198,6 +198,11 @@ ul li {
     font-size: 25px;
 }
 
+.breadcumb-active {
+    color: rgba(0, 0, 0, .88) !important;
+    margin-left: 7px !important;
+}
+
 @media screen and (max-width: 1316px) {
     .ref-inner-2nd {
         max-width: 327px;
@@ -235,6 +240,6 @@ ul li {
     margin-top: 10px;
 }
 
-.open-full a{
+.open-full a {
     color: #000;
 }

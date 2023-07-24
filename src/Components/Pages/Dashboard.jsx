@@ -126,7 +126,6 @@ const Dashboard = () => {
 
     //------------------------- Fetch Events --------------------
     const [events, setEvents] = useState();
-    console.log(events);
     const getEvents = async () => {
         const response = await fetch(apiConst.get_two_event, {
             method: "POST",

@@ -127,14 +127,6 @@
   margin: 0 !important;
 }
 
-.edit-delete {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-}
-
 .tab_holiday tr {
   border-bottom: 1px solid black;
 }

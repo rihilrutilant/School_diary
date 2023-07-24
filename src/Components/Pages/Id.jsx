@@ -43,10 +43,9 @@ const Id = () => {
     const value = event.target.value;
     ReactSession.set("username", value);
     navigate('/StudentData')
-    // window.location.href = `/StudentData`;
   };
 
-  //-------Student Data--------/
+  //------- Student Data --------/
   const [YourRestList, YoursetRestList] = useState();
 
 
@@ -64,10 +63,9 @@ const Id = () => {
     YoursetRestList(json);
   }, []);
 
-  //-------Teacher Data ----------//
+  //------- Teacher Data  ----------//
 
   const [teachers, setTeachers] = useState();
-
   const getTeachers = useCallback(async () => {
     const response = await fetch(Api_keys.fetch_all_teachers, {
       method: "POST",
@@ -76,14 +74,12 @@ const Id = () => {
         "authToken_admin": localStorage.getItem("AToken")
       },
     });
-
     const json = await response.json();
     setTeachers(json);
-    // console.log(json);
+    console.log(json);
   }, []);
 
-  //-------Create Teacher ---------//
-
+  //------- Create Teacher ---------//
 
   const [credentials, setCredentials] = useState({
     T_icard_Id: "",
@@ -97,33 +93,17 @@ const Id = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const {
-      T_icard_Id,
-      T_name,
-      T_mobile_no,
-      T_address,
-      Subject_code,
-      T_Class_code,
-      T_Password
-    } = credentials;
+    const { T_icard_Id, T_name, T_mobile_no, T_address, Subject_code, T_Class_code, T_Password } = credentials;
     const response = await fetch(Api_keys.create_teacher, {
       method: 'POST',
-      body: JSON.stringify({
-        T_icard_Id,
-        T_name,
-        T_mobile_no,
-        T_address,
-        Subject_code,
-        T_Class_code,
-        T_Password
-      }),
+      body: JSON.stringify({ T_icard_Id, T_name, T_mobile_no, T_address, Subject_code, T_Class_code, T_Password }),
       headers: {
         'Content-Type': 'application/json',
         'authToken_admin': localStorage.getItem("AToken")
       }
     });
-
     const json = await response.json();
+    console.log(json);
     if (json.success) {
       getTeachers();
       refClose.current.click();
@@ -242,6 +222,7 @@ const Id = () => {
     T_Class_code: "",
     T_Password: ""
   })
+
   const teacherDetails = (T_data) => {
     ref3.current.click();
     setT_Details({
@@ -292,27 +273,27 @@ const Id = () => {
                   <div className='ganerateid_cnt'>
                     <div className='ganerateid_cnt_inn'>
                       <div className='teacherid_check'>
-                        <div className='teacherid_detail'>{
-                          teachers && teachers.map((d, i) => (
-                            <button className='studentid_btn' key={i}>
-                              <div className="t_name" onClick={() => teacherDetails(d)}>
-                                {d.T_name}
-                              </div>
-                              <Link className="edit_btn" onClick={() => updateRestTeacher(d)}>
-                                <img src={Edit} alt="edit" />
-                              </Link>
-                              <Link className='delete_btn' onClick={() => deleteRest(d._id)}>
-                                <img src={Delete} alt="delete" />
-                              </Link>
-                            </button>
-                          ))}
+                        <div className='teacherid_detail'>
+                          {
+                            teachers && teachers.map((d, i) => (
+                              <button className='studentid_btn' key={i}>
+                                <div className="t_name" onClick={() => teacherDetails(d)}>
+                                  {d.T_name}
+                                </div>
+                                <Link className="edit_btn" onClick={() => updateRestTeacher(d)}>
+                                  <img src={Edit} alt="edit" />
+                                </Link>
+                                <Link className='delete_btn' onClick={() => deleteRest(d._id)}>
+                                  <img src={Delete} alt="delete" />
+                                </Link>
+                              </button>
+                            ))}
                         </div>
                       </div>
                     </div>
                   </div>
                 </>
               )}
-
               {checkbox2Checked && (
                 <>
                   <div className='ganerate_id_check'>
@@ -346,10 +327,10 @@ const Id = () => {
                   </div>
                 </>
               )}
-
               <button type="button" ref={ref2} style={{ display: "none" }} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editTeacherModal">
                 Launch demo modal
               </button>
+              {/* ------------------------ Update Teacher & Student Data ------------------------ */}
               <div className="modal" id="editTeacherModal">
                 <div className="modal-dialog">
                   <div className="modal-content editid_modal">
@@ -390,7 +371,7 @@ const Id = () => {
                   </div>
                 </div>
               </div>
-
+              {/* ------------------------ Add Teacher & Student Data ------------------------ */}
               <div className="modal fade sp_model_1" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog">
                   <div className="modal-content editid_modal">
@@ -431,8 +412,6 @@ const Id = () => {
                   </div>
                 </div>
               </div>
-
-
               <button type="button" ref={ref3} style={{ display: "none" }} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#onlyData">
                 Launch demo modal
               </button>

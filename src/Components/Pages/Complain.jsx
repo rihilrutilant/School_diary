@@ -480,13 +480,11 @@ const Complain = () => {
                           <label htmlFor="">Complain Title</label>
                           <input type="text" name="Complain_title" value={updateEvents.Complain_title} onChange={onChanges} />
                         </div>
-
                         <div className="hTable_note">
                           <label>Note</label>
                           <input type="text" name="Complain_description" value={updateEvents.Complain_description} onChange={onChanges} />
                         </div>
                       </div>
-
                       <button
                         type="button"
                         className="btn-close"
@@ -503,7 +501,6 @@ const Complain = () => {
                   </div>
                 </div>
               </div>
-
 
               {/* --------------------------------Add Complain-------------------------------------- */}
               <div

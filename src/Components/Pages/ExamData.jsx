@@ -14,16 +14,14 @@ import axios from 'axios';
 import { AiFillEye } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
+let DataStudent = '';
 const ExamData = () => {
-
     ReactSession.setStoreType("localStorage");
-    const Data = ReactSession.get("jenish123");
+    const Data = ReactSession.get("standardCode");
 
-    let DataStudent = '';
     if (typeof Data === 'string') {
         DataStudent = Data.substring(0, 2);
     }
-
     const [navVisible, showNavbar] = useState(true);
 
     //----------------------------- Fetch Exam ------------------------
@@ -39,7 +37,6 @@ const ExamData = () => {
                 "authToken_admin": localStorage.getItem("AToken")
             },
         });
-
         const json = await response.json();
         setAllSubject(json)
     }, [DataStudent]);
@@ -49,7 +46,7 @@ const ExamData = () => {
     //--------------------------- Create Exam --------------------
 
     const [examData, setExamData] = useState({
-        Standard: '',
+        Standard: DataStudent,
         Exam_Type: '',
         exam_tt_img: null,
     });
@@ -65,7 +62,6 @@ const ExamData = () => {
             formData.append('Standard', examData.Standard);
             formData.append('Exam_Type', examData.Exam_Type);
             formData.append('exam_tt_img', examData.exam_tt_img);
-
 
             const response = await axios.post(apiConst.set_examtimetable, formData, {
                 headers: {
@@ -153,7 +149,6 @@ const ExamData = () => {
         }
     }
 
-    console.log(allSubject.length);
     // ----------------------------------------------------------------Update Notices --------------------------------
 
     useEffect(() => {
@@ -164,26 +159,33 @@ const ExamData = () => {
     return (
         <>
             <ToastContainer />
-            <div className="main-content">
+            <div className="main-content exam-section">
                 <Navbar visible={navVisible} show={showNavbar} />
-                <div className="inner-main-content"  >
+                <div className="inner-main-content">
                     <Topbar />
                     <div className="container-fluid">
                         <div className='studentid_cnt'>
-                            <h3>Exam / <span>{DataStudent}</span></h3>
+                            <div className='breadcumb-part d-flex'>
+                                <h3><Link style={{ textDecoration: "none", color: "#28A7E8" }} to='/Exam'>Exam / </Link></h3>
+                                <h3 className='breadcumb-active'>Class-{DataStudent}</h3>
+                            </div>
                             <button className='studentid_create' data-bs-toggle="modal" data-bs-target="#staticBackdrop">+ Generate Exam</button>
                         </div>
                         <table className='subject-table'>
-                            <tbody>
+                            <thead>
                                 <tr>
-                                    <th>Standard</th>
-                                    <th>Exam Type</th>
-                                    <th>Document</th>
-                                    <th></th>
-                                    <th></th>
+                                    <th className='text-center'>Standard</th>
+                                    <th className='text-center'>Exam Type</th>
+                                    <th className='text-center'>Document</th>
+                                    <th colSpan={2} className="text-center">Action</th>
                                 </tr>
-                                {allSubject.length === 0 ?
-                                    <h2 style={{ color: "#E33535", textAlign: "center" }}>Exams not found</h2>
+                            </thead>
+                            <tbody>
+                                {allSubject.length === 0 ? (
+                                    <tr>
+                                        <td colSpan={4} className="text-center"><h1>Exams not found</h1></td>
+                                    </tr>
+                                )
                                     :
                                     allSubject && allSubject.map((item, index) => (
                                         <tr key={index}>
@@ -205,14 +207,14 @@ const ExamData = () => {
                                             }
                                             </td>
                                             <td>
-                                                <div className='delete-btn-r'>
-                                                    <BiEditAlt style={{ cursor: "pointer", fontSize: "21px" }} onClick={() => updateRestNotice(item)} />
+                                                <div className='delete-btn-r text-center'>
+                                                    <BiEditAlt style={{ cursor: "pointer", fontSize: "25px" }} onClick={() => updateRestNotice(item)} />
                                                 </div>
                                             </td>
                                             <td>
-                                                <div className='open-full'>
+                                                <div className='open-full text-center'>
                                                     <Link target='_blank' to={`http://localhost:5050/exam_time_table/${item.Exam_TimeTable}`}>
-                                                        <AiFillEye />
+                                                        <AiFillEye style={{ cursor: "pointer", fontSize: "25px" }} />
                                                     </Link>
                                                 </div>
                                             </td>
@@ -230,7 +232,7 @@ const ExamData = () => {
                                 <form id="editid_form" className="editid_form" onSubmit={handleSubmit}>
                                     <div className='input_part idcard_input'>
                                         <label>Standard Code</label> <br />
-                                        <input type="text" value={examData.Standard} name="Standard" onChange={onChange} />
+                                        <input type="text" value={examData.Standard} name="Standard" readOnly />
                                     </div>
                                     <div className='input_part idcard_input'>
                                         <label>Exam Type</label> <br />

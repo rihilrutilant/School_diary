@@ -19,7 +19,6 @@ const Fees = () => {
   const [FeesField1, setFeesField1] = useState('');
   const [FeesField4, setFeesField4] = useState('');
 
-
   const handleFeeSubmit = (e) => {
     e.preventDefault();
     if (FeesField1 && FeesField4) {
@@ -29,7 +28,6 @@ const Fees = () => {
       setError("Please fill all fields");
     }
   };
-
 
   //----------------fetch all fees of all standards----------------------
 
@@ -76,7 +74,6 @@ const Fees = () => {
   };
   //---------------Update Fees----------------------------------------
 
-
   // -----------------------Fetch all Standards ---------------------
 
   const [classes, setclasses] = useState()
@@ -112,8 +109,7 @@ const Fees = () => {
   };
   //-----------------------Fetch all Classcode standard wise-------------------------
 
-
-  const getdatas= (e)=>{
+  const getdatas = (e) => {
     setClassVal(e.target.value)
   }
   return (

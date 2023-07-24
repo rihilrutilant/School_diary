@@ -12,14 +12,14 @@ const Exam = () => {
 
   const onChange = (event) => {
     const value = event.target.value;
-    ReactSession.set("jenish123", value);
+    ReactSession.set("standardCode", value);
     navigate('/ExamData')
   };
 
   const [navVisible, showNavbar] = useState(true);
 
   // -----------------------Fetch all Standards ---------------------
-  
+
   const [classes, setclasses] = useState()
   const getclasses = async () => {
     const response = await fetch(apiConst.fetch_all_standards, {
@@ -30,7 +30,7 @@ const Exam = () => {
     });
     const json = await response.json();
     setclasses(json)
-    ReactSession.set("jenish123", json);
+    // ReactSession.set("jenish123", json);
   };
   // -----------------------Fetch all Standards ---------------------
 

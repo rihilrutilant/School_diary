@@ -44,7 +44,6 @@ const Notice = () => {
       formData.append('Group', noticeData.Group);
       formData.append('notice_attach', noticeData.noticeFile);
 
-
       const response = await axios.post(Api_keys.send_notice, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -93,6 +92,7 @@ const Notice = () => {
     });
 
     const json = await response.json();
+    console.log(json);
     setNotice(json);
   };
 

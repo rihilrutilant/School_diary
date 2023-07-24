@@ -7,9 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import Api_keys from '../Api_keys'
 
-
 const Time = () => {
-
   const navigate = useNavigate();
   //--------Main Content--------//
 
@@ -24,9 +22,7 @@ const Time = () => {
 
   //-------Student Data--------/
   const [YourRestList, YoursetRestList] = useState();
-
   let Standard;
-
   const getYourRestaurant = useCallback(async () => {
     const response = await fetch(Api_keys.fetch_all_standards, {
       method: "POST",
@@ -38,7 +34,6 @@ const Time = () => {
         "authToken_admin": localStorage.getItem("AToken")
       },
     });
-
     const json = await response.json();
     YoursetRestList(json);
   }, [Standard]);
@@ -60,7 +55,6 @@ const Time = () => {
               <div className='ganerateid_cnt'>
                 <div className='ganerateid_cnt_inn'>
                   {YourRestList && YourRestList.map((a, b) => (
-
                     <select key={b} defaultValue={"DEFAULT"} className="student_class" onChange={onChange} >
                       <option value="DEFAULT" disabled>Standard {a.Standard}</option>{
                         a.ClassCode.map((d, i) => (

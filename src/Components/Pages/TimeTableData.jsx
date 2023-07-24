@@ -11,12 +11,9 @@ import { MdOutlineOpenInFull } from 'react-icons/md'
 import { Link } from 'react-router-dom';
 
 const TimeTableData = () => {
-
   const [navVisible, showNavbar] = useState(true);
-
   ReactSession.setStoreType("localStorage");
   const Data = ReactSession.get("username");
-
   const DataStudent = Data.substring(0, 2);
   const DataStudClass = Data.substring(2);
   const DataClass = DataStudent + '/' + DataStudClass;
@@ -24,7 +21,6 @@ const TimeTableData = () => {
   //----------------------------- Fetch Exam ------------------------
 
   const [allSubject, setAllSubject] = useState();
-
   const getSubject = useCallback(async () => {
     const Class_code = Data;
     const response = await fetch(apiConst.fetch_all_timetable_by_classes, {
@@ -35,21 +31,17 @@ const TimeTableData = () => {
         "authToken_admin": localStorage.getItem("AToken")
       },
     });
-
     const json = await response.json();
     setAllSubject(json)
   }, [DataStudent]);
 
-  console.log();
+  const dailyTimeTable = allSubject?.Daily_TimeTable || '';
 
   //----------------------------- Fetch Exam ------------------------
 
   //--------------------------- Create Exam --------------------
 
-  const [examData, setExamData] = useState({
-    Class_code: '',
-    tt_img: null,
-  });
+  const [examData, setExamData] = useState({ Class_code: '', tt_img: null })
 
   const clearFields = () => {
     setExamData('');
@@ -96,15 +88,9 @@ const TimeTableData = () => {
   //--------------------------- Update Exam --------------------
 
   const refClose = useRef(null);
-
-  const [updateNotice, setUpdateNotice] = useState({
-    tt_img: null,
-  })
-
-  console.log(updateNotice);
+  const [updateNotice, setUpdateNotice] = useState({ tt_img: null })
 
   const updateRestNotice = (currentNotice) => {
-    console.log(currentNotice);
     refClose.current.click();
     setUpdateNotice({
       id: currentNotice,
@@ -121,22 +107,16 @@ const TimeTableData = () => {
   }
 
   const RestUpdateNotice = async (id, tt_img) => {
-    console.log(id);
     try {
       const updateformData = new FormData();
       updateformData.append('tt_img', tt_img);
-
       const response = await axios.patch(apiConst.edit_timetable + id, updateformData, {
         headers: {
           "Content-Type": "multipart/form-data",
           "authToken_admin": localStorage.getItem("AToken"),
         }
       });
-      console.log(response);
-
       const json = response.data
-      console.log(json);
-
       if (response.data.success) {
         toast.success("TimeTable Updated Successfully", { position: toast.POSITION.TOP_RIGHT });
         getSubject();
@@ -159,8 +139,6 @@ const TimeTableData = () => {
 
   // ----------------------------------------------------------------Update Notices --------------------------------
 
-  const dailyTimeTable = allSubject?.Daily_TimeTable || '';
-
   useEffect(() => {
     getSubject();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -175,7 +153,7 @@ const TimeTableData = () => {
           <Topbar />
           <div className="container-fluid">
             <div className="studentid_cnt">
-              <h4 className='main-name'>Time Table<span>{DataClass}</span></h4>
+              <h4 className='main-name'>Time Table<span> {DataClass}</span></h4>
             </div>
             <div className='ganerate_id_part'>
               <div className='ganerateid_cnt'>
@@ -266,10 +244,8 @@ const TimeTableData = () => {
                     <button type="button" className="btn-upd" onClick={handleSubmit1} data-bs-dismiss="modal" aria-label="Close">UPDATE</button>
                   </div>
                 </div>
-
               </div>
             </div>
-
             {/* Update Exam */}
           </div>
         </div>
