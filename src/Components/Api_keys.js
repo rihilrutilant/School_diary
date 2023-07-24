@@ -1,5 +1,5 @@
 // const BASE_URL = "http://localhost:5050/api/";
-const BASE_URL = "https://api.nutanpublic.naavhub.com/api/";
+const BASE_URL = "http://api.nutanpublic.naavhub.com:5050/api/";
 
 const apiConst = {
   count_students: `${BASE_URL}admin/fetch_count_of_the_Students`,

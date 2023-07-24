@@ -43,14 +43,14 @@ const Holiday = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(updateHoliday);
-    // RestUpdateHoliday(
-    //   updateHoliday.id,
-    //   updateHoliday.Holiday_title,
-    //   updateHoliday.Holiday_description,
-    //   updateHoliday.Holiday_Start,
-    //   updateHoliday.Holiday_End,
-    //   updateHoliday.Groups
-    // );
+    RestUpdateHoliday(
+      updateHoliday.id,
+      updateHoliday.Holiday_title,
+      updateHoliday.Holiday_description,
+      updateHoliday.Holiday_Start,
+      updateHoliday.Holiday_End,
+      updateHoliday.Groups
+    );
   }
 
   const RestUpdateHoliday = async (id, Holiday_title, Holiday_description, Holiday_Start, Holiday_End, Groups) => {

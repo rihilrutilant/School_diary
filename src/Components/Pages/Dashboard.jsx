@@ -88,12 +88,11 @@ const Dashboard = () => {
     // ----------- latest 2 notices----------------------
 
     const [latestNotices, setlatestNotices] = useState()
-    console.log(localStorage.getItem("AToken"));
     const getLatestNotices = async () => {
         const response = await fetch(apiConst.get_two_notices, {
             method: "POST",
             headers: {
-                "pa": "parthiv"
+                "authToken_admin": localStorage.getItem("AToken")
             },
         });
         const json = await response.json();
