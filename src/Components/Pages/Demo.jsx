@@ -25,7 +25,7 @@ const Demo = () => {
 
   const fetchFiles = async () => {
     try {
-      const response = await axios.get('http://localhost:5050/api/examtimetable/edit_examtimetable/', {
+      const response = await axios.get('http://api.nutanpublic.naavhub.com:5050/api/examtimetable/edit_examtimetable/', {
         headers: {
           'authToken_admin': localStorage.getItem('AToken')
         }

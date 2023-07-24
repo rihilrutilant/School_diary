@@ -269,13 +269,13 @@ const Notice = () => {
                         <td>
                           {
                             a.Notice_attechments.slice(-4).toLowerCase() === '.pdf' ?
-                              <iframe src={`http://localhost:5050/notices/${a.Notice_attechments}`} title={a.Notice_attechments} style={{ width: "100px" }} ></iframe>
+                              <iframe src={`http://api.nutanpublic.naavhub.com:5050/notices/${a.Notice_attechments}`} title={a.Notice_attechments} style={{ width: "100px" }} ></iframe>
                               :
                               a.Notice_attechments.slice(-4).toLowerCase() === '.mp4'
                                 ?
-                                <video autoplay="autoplay" src={`http://localhost:5050/notices/${a.Notice_attechments}`} title={a.Notice_attechments} style={{ width: "100px" }} ></video>
+                                <video autoplay="autoplay" src={`http://api.nutanpublic.naavhub.com:5050/notices/${a.Notice_attechments}`} title={a.Notice_attechments} style={{ width: "100px" }} ></video>
                                 :
-                                <div className="himg"><img src={`http://localhost:5050/notices/${a.Notice_attechments}`} style={{ width: "100px" }} alt={a.Notice_attechments} /></div>
+                                <div className="himg"><img src={`http://api.nutanpublic.naavhub.com:5050/notices/${a.Notice_attechments}`} style={{ width: "100px" }} alt={a.Notice_attechments} /></div>
                           }
                         </td>
                         <td className='dust'>

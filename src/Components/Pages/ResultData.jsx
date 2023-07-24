@@ -264,13 +264,13 @@ const ResultData = ({ imageUrl }) => {
                                                     {
                                                         item.Result_copy && (item.Result_copy.slice(-4).toLowerCase() === ".pdf" ? (
                                                             <iframe
-                                                                src={`http://localhost:5050/result_data/${item.Result_copy}`}
+                                                                src={`http://api.nutanpublic.naavhub.com:5050/result_data/${item.Result_copy}`}
                                                                 title={item.Result_copy}
                                                                 className='height-and'
                                                             ></iframe>
                                                         ) : (
                                                             <img
-                                                                src={`http://localhost:5050/result_data/${item.Result_copy}`}
+                                                                src={`http://api.nutanpublic.naavhub.com:5050/result_data/${item.Result_copy}`}
                                                                 alt={item.Result_copy}
                                                                 className='height-and'
                                                             />
@@ -278,7 +278,7 @@ const ResultData = ({ imageUrl }) => {
                                                     }
                                                 </div>
                                                 <div className='open-full'>
-                                                    <Link target='_blank' to={`http://localhost:5050/result_data/${item.Result_copy}`}>
+                                                    <Link target='_blank' to={`http://api.nutanpublic.naavhub.com:5050/result_data/${item.Result_copy}`}>
                                                         <MdOutlineOpenInFull />
                                                     </Link>
                                                 </div>

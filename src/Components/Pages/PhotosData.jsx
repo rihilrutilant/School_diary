@@ -34,9 +34,9 @@ const PhotosData = () => {
                                                     {
                                                         item.slice(-4).toLowerCase() === '.mp4'
                                                             ?
-                                                            <video autoPlay="autoplay" src={`http://localhost:5050/event_photos/${item}`} title={item.Event_Photos}></video>
+                                                            <video autoPlay="autoplay" src={`http://api.nutanpublic.naavhub.com:5050/event_photos/${item}`} title={item.Event_Photos}></video>
                                                             :
-                                                            <img src={`http://localhost:5050/event_photos/${item}`} alt={item.Event_Photos} />
+                                                            <img src={`http://api.nutanpublic.naavhub.com:5050/event_photos/${item}`} alt={item.Event_Photos} />
                                                     }
                                                 </div>
                                             </div>

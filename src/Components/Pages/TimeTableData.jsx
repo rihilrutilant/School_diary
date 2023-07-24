@@ -167,7 +167,7 @@ const TimeTableData = () => {
                     dailyTimeTable && dailyTimeTable.toLowerCase().endsWith('.pdf') ? (
                       <>
                         <iframe
-                          src={`http://localhost:5050/time_table/${dailyTimeTable}`}
+                          src={`http://api.nutanpublic.naavhub.com:5050/time_table/${dailyTimeTable}`}
                           title={dailyTimeTable}
                           className="timetable-photo"
                         />
@@ -175,7 +175,7 @@ const TimeTableData = () => {
                     ) : (
                       <>
                         <img
-                          src={`http://localhost:5050/time_table/${dailyTimeTable}`}
+                          src={`http://api.nutanpublic.naavhub.com:5050/time_table/${dailyTimeTable}`}
                           alt={dailyTimeTable}
                           className="timetable-photo"
                         />
@@ -185,7 +185,7 @@ const TimeTableData = () => {
               </div>
               <button className='gene-edit-time' onClick={() => updateRestNotice(allSubject._id)}>Edit TimeTable</button>
               <div className='open-full'>
-                <Link target='_blank' to={`http://localhost:5050/time_table/${dailyTimeTable}`}>
+                <Link target='_blank' to={`http://api.nutanpublic.naavhub.com:5050/time_table/${dailyTimeTable}`}>
                   <MdOutlineOpenInFull />
                 </Link>
               </div>
