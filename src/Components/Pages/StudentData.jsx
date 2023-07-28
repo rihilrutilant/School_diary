@@ -369,7 +369,7 @@ const StudentData = () => {
                                                     ?
                                                     <img src={teacher} alt=" " />
                                                     :
-                                                    <img src={`http://api.nutanpublic.naavhub.com:5050/student_img/${S_Details.S_img}`} alt=" " />
+                                                    <img src={`https://api.nutanpublic.naavhub.com/student_img/${S_Details.S_img}`} alt=" " />
                                                 }
                                                 <p>Student Photo</p>
                                             </div>
@@ -378,7 +378,7 @@ const StudentData = () => {
                                                     ?
                                                     <img src={teacher} alt=" " />
                                                     :
-                                                    <img src={`http://api.nutanpublic.naavhub.com:5050/student_img/${S_Details.S_father_img}`} alt=" " />
+                                                    <img src={`https://api.nutanpublic.naavhub.com/student_img/${S_Details.S_father_img}`} alt=" " />
                                                 }
                                                 <p>Father Photo</p>
                                             </div>
@@ -387,7 +387,7 @@ const StudentData = () => {
                                                     ?
                                                     <img src={teacher} alt=" " />
                                                     :
-                                                    <img src={`http://api.nutanpublic.naavhub.com:5050/student_img/${S_Details.S_mother_img}`} alt=" " />
+                                                    <img src={`https://api.nutanpublic.naavhub.com/student_img/${S_Details.S_mother_img}`} alt=" " />
                                                 }
                                                 <p>Mother Photo</p>
                                             </div>

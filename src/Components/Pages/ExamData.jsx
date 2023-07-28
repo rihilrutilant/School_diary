@@ -193,13 +193,13 @@ const ExamData = () => {
                                             <td>{item.Exam_Type}</td>
                                             <td>{item.Exam_TimeTable && (item.Exam_TimeTable.slice(-4).toLowerCase() === ".pdf" ? (
                                                 <iframe
-                                                    src={`http://api.nutanpublic.naavhub.com:5050/exam_time_table/${item.Exam_TimeTable}`}
+                                                    src={`https://api.nutanpublic.naavhub.com/exam_time_table/${item.Exam_TimeTable}`}
                                                     title={item.Exam_TimeTable}
                                                     className='height-and'
                                                 ></iframe>
                                             ) : (
                                                 <img
-                                                    src={`http://api.nutanpublic.naavhub.com:5050/exam_time_table/${item.Exam_TimeTable}`}
+                                                    src={`https://api.nutanpublic.naavhub.com/exam_time_table/${item.Exam_TimeTable}`}
                                                     alt={item.Exam_TimeTable}
                                                     className='height-and'
                                                 />
@@ -213,7 +213,7 @@ const ExamData = () => {
                                             </td>
                                             <td>
                                                 <div className='open-full text-center'>
-                                                    <Link target='_blank' to={`http://api.nutanpublic.naavhub.com:5050/exam_time_table/${item.Exam_TimeTable}`}>
+                                                    <Link target='_blank' to={`https://api.nutanpublic.naavhub.com/exam_time_table/${item.Exam_TimeTable}`}>
                                                         <AiFillEye style={{ cursor: "pointer", fontSize: "25px" }} />
                                                     </Link>
                                                 </div>

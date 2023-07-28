@@ -426,7 +426,7 @@ const Id = () => {
                             ?
                             <img src={teacher} alt=" " />
                             :
-                            <img src={`http://api.nutanpublic.naavhub.com:5050/teacher_img/${T_Details.T_img}`} alt=" " />
+                            <img src={`https://api.nutanpublic.naavhub.com/teacher_img/${T_Details.T_img}`} alt=" " />
                           }
                           <p> Teacher Photo</p>
                         </div>
