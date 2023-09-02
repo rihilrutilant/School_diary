@@ -72,6 +72,7 @@ const apiConst = {
   // demo_attendance: `${BASE_URL}attendance/demo_attendance`,
   demo_attendance: 'http://localhost:5050/api/attendance/demo_attendance',
   demo_attendance_fetch: 'http://localhost:5050/api/attendance/demo_attendance_fetch',
+  demo_attendance_status: 'http://localhost:5050/api/attendance/demo_attendance_status',
 
 };
 
