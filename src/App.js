@@ -22,6 +22,7 @@ import TimeTableData from "./Components/Pages/TimeTableData";
 import ResultData from "./Components/Pages/ResultData";
 import SubjectData from "./Components/Pages/SubjectData";
 import ExamData from "./Components/Pages/ExamData";
+import Attendence from "./Components/Pages/Attendence";
 
 function App() {
   const userData = localStorage.getItem("AToken");
@@ -54,6 +55,7 @@ function App() {
             <Route path="/ResultData" element={<ResultData />} />
             <Route path="/SubjectData" element={<SubjectData />} />
             <Route path="/ExamData" element={<ExamData />} />
+            <Route path="/Attendence" element={<Attendence />} />
 
             <Route path="/demoo" element={<Demoo />} />
             <Route path="Demo" element={<Demo />} />

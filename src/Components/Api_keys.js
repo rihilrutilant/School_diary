@@ -68,6 +68,11 @@ const apiConst = {
   create_subject: `${BASE_URL}subject/create_subject`,
   get_all_subjects_class_wise: `${BASE_URL}subject/get_all_subjects_class_wise`,
   delete_subject: `${BASE_URL}subject/delete_subject/`,
+
+  // demo_attendance: `${BASE_URL}attendance/demo_attendance`,
+  demo_attendance: 'http://localhost:5050/api/attendance/demo_attendance',
+  demo_attendance_fetch: 'http://localhost:5050/api/attendance/demo_attendance_fetch',
+
 };
 
 export default apiConst;

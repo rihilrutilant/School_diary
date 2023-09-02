@@ -45,6 +45,10 @@ function Navbar({ visible, show }) {
 							<FaThLarge size={ICON_SIZE} />
 							<span>Dashboard</span>
 						</NavLink>
+						<NavLink to="/Attendence" className="nav-link">
+							<FaThLarge size={ICON_SIZE} />
+							<span>Attendence</span>
+						</NavLink>
 						<NavLink to="/id" className="nav-link">
 							<BsPersonLinesFill size={ICON_SIZE} />
 							<span>Generate ID</span>
