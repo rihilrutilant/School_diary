@@ -36,7 +36,7 @@ function Attendence() {
     }
     const getAllStudentData = async () => {
         try {
-            const response = await fetch(apiConst.demo_attendance_fetch, {
+            const response = await fetch(apiConst.excel_attandence, {
                 method: "GET",
             });
             const jsonData = await response.json();

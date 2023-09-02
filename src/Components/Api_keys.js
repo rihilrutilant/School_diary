@@ -1,4 +1,4 @@
-// const BASE_URL = "http://localhost/api/";
+// const BASE_URL = "http://localhost:5050/api/";
 const BASE_URL = "https://api.nutanpublic.naavhub.com/api/";
 
 const apiConst = {
@@ -70,9 +70,9 @@ const apiConst = {
   delete_subject: `${BASE_URL}subject/delete_subject/`,
 
   // demo_attendance: `${BASE_URL}attendance/demo_attendance`,
-  demo_attendance: `${BASE_URL}attendance/demo_attendance`,
-  demo_attendance_fetch: `${BASE_URL}attendance/demo_attendance_fetch`,
-  demo_attendance_status: `${BASE_URL}attendance/demo_attendance_status`,
+  excel_attandence: `${BASE_URL}attendance/excel_attandence`,
+  excel_attandence_fetch: `${BASE_URL}attendance/excel_attandence_fetch`,
+  excel_attandence_status: `${BASE_URL}attendance/excel_attandence_status`,
 
 };
 
