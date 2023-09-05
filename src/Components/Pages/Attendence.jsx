@@ -5,6 +5,8 @@ import { useState } from 'react';
 import apiConst from '../Api_keys';
 import { useRef } from 'react';
 import { useEffect } from 'react';
+import axios from 'axios';
+
 
 function Attendence() {
     const [navVisible, showNavbar] = useState(true);
@@ -35,15 +37,18 @@ function Attendence() {
         }
     }
     const getAllStudentData = async () => {
-        try {
-            const response = await fetch(apiConst.excel_attandence, {
-                method: "GET",
-            });
-            const jsonData = await response.json();
-            setAttendanceData(jsonData.data)
-        } catch (error) {
-            console.error(error);
-        }
+        axios.get(apiConst.excel_attandence_fetch, {
+            headers: {
+                "Content-Type": "application/application/json"
+            }
+        })
+            .then((response) => {
+                console.log(response);
+                setAttendanceData(response)
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }
     useEffect(() => {
         getAllStudentData()
@@ -60,40 +65,48 @@ function Attendence() {
                             <button data-bs-target="#edit_complain" data-bs-toggle="modal">+ Add Sheet</button>
                         </div>
                         <section>
-                            <table className="tab_holiday" style={{ marginBottom: "99px" }}>
-                                <thead>
-                                    <tr className="tbl-tr">
-                                        <th>Code</th>
-                                        <th>Name</th>
-                                        <th>Device Code</th>
-                                        <th>Gender</th>
-                                        <th>Department</th>
-                                        {/* <th>DOJ</th> */}
-                                        {/* <th>DOC</th> */}
-                                        <th>Status</th>
-                                        {/* <th>DOR</th> */}
-                                        <th>Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        attendanceData.map(items => (
-                                            <tr>
-                                                <td> {items.EmployeeCode} </td>
-                                                <td> {items.EmployeeName} </td>
-                                                <td> {items.DeviceCode} </td>
-                                                <td> {items.Gender} </td>
-                                                <td> {items.Department} </td>
-                                                {/* <td> {items.DOJ} </td> */}
-                                                {/* <td> {items.DOC} </td> */}
-                                                <td> {items.Status} </td>
-                                                {/* <td> {items.DOR} </td> */}
-                                                <td> {items.uploadDate.split("T")[0]} </td>
+                            {
+                                attendanceData.length > 0 ? (
+                                    <table>
+                                        <thead>
+                                            <tr className="tbl-tr">
+                                                <th>Code</th>
+                                                <th>Name</th>
+                                                <th>Device Code</th>
+                                                <th>Gender</th>
+                                                <th>Department</th>
+                                                {/* <th>DOJ</th> */}
+                                                {/* <th>DOC</th> */}
+                                                <th>Status</th>
+                                                {/* <th>DOR</th> */}
+                                                <th>Date</th>
                                             </tr>
-                                        ))
-                                    }
-                                </tbody>
-                            </table>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                attendanceData.map(items => (
+                                                    <tr>
+                                                        <td> {items.EmployeeCode} </td>
+                                                        <td> {items.EmployeeName} </td>
+                                                        <td> {items.DeviceCode} </td>
+                                                        <td> {items.Gender} </td>
+                                                        <td> {items.Department} </td>
+                                                        {/* <td> {items.DOJ} </td> */}
+                                                        {/* <td> {items.DOC} </td> */}
+                                                        <td> {items.Status} </td>
+                                                        {/* <td> {items.DOR} </td> */}
+                                                        <td> {items.uploadDate.split("T")[0]} </td>
+                                                    </tr>
+                                                ))
+                                            }
+                                        </tbody>
+                                    </table>
+                                ) : (
+                                    <>
+                                        <h1 className='text-center'>No Data Found...!</h1>
+                                    </>
+                                )
+                            }
                         </section>
                     </div>
                 </div>
