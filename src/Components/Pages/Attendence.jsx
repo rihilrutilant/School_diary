@@ -22,7 +22,7 @@ function Attendence() {
         formData.append("uploadDate", uploadDate)
         console.log(uploadDate);
         try {
-            const response = await fetch(apiConst.demo_attendance, {
+            const response = await fetch(apiConst.excel_attandence, {
                 method: "POST",
                 body: formData,
             });
@@ -43,8 +43,8 @@ function Attendence() {
             }
         })
             .then((response) => {
-                console.log(response);
-                setAttendanceData(response)
+                console.log("🚀 ~ file: Attendence.jsx:46 ~ .then ~ response:", response)
+                setAttendanceData(response.data.data)
             })
             .catch((error) => {
                 console.log(error);
@@ -84,8 +84,8 @@ function Attendence() {
                                         </thead>
                                         <tbody>
                                             {
-                                                attendanceData.map(items => (
-                                                    <tr>
+                                                attendanceData.map((items, index) => (
+                                                    <tr key={index}>
                                                         <td> {items.EmployeeCode} </td>
                                                         <td> {items.EmployeeName} </td>
                                                         <td> {items.DeviceCode} </td>

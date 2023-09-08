@@ -1,0 +1,306 @@
+.add_ePhoto {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add_ePhoto button {
+  border: 2px solid rgba(115, 115, 115, 1);
+  border-radius: 5px;
+  color: rgba(115, 115, 115, 1);
+  background: #f5f5f5;
+  font-size: 20px;
+  font-weight: 400;
+
+  padding: 14px 10px;
+  cursor: pointer;
+}
+
+.add_ePhoto button:hover {
+  background: #d8d8d8;
+}
+
+.about_events {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+/* ------------------------ CALENDR ------------------------------  */
+
+.events_calender .react-calendar {
+  box-sizing: border-box;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+  padding: 55px 25px;
+}
+
+.events_calender .react-calendar__navigation {
+  display: flex;
+  height: 44px;
+  margin-bottom: 1em;
+  margin-bottom: 30px;
+}
+
+.events_calender .react-calendar__navigation button {
+  border-radius: 5px;
+  margin: 0 3px;
+  cursor: pointer;
+}
+
+.events_calender .react-calendar__navigation button:hover {
+  background: linear-gradient(93.69deg, #00c5f9 2.23%, #0083dc 96.2%);
+}
+
+.events_calender .react-calendar__navigation .react-calendar__navigation__prev-button,
+.events_calender .react-calendar__navigation .react-calendar__navigation__next-button {
+  /* margin: 0 5px; */
+  border-radius: 5px;
+  background: linear-gradient(93.69deg, #00c5f9 2.23%, #0083dc 96.2%);
+}
+
+.events_calender .react-calendar__navigation .react-calendar__navigation__prev2-button,
+.events_calender .react-calendar__navigation .react-calendar__navigation__next2-button {
+  display: none;
+}
+
+/* ------------------------ LIST TABLE ------------------------------  */
+
+.event_list {
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 55px 35px 40px 35px;
+  border-radius: 10px;
+}
+
+.eventList_head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 40px;
+  border-bottom: 1px solid black;
+}
+
+.eventList_head button {
+  padding: 10px 15px;
+  font-size: 20px;
+  width: 500;
+  border-radius: 5px;
+  border: 2px solid rgba(115, 115, 115, 1);
+  color: rgba(115, 115, 115, 1);
+  background: #f5f5f5;
+}
+
+.eventList_table table {
+  width: 100%;
+}
+
+/* .eventList_table tr {
+  border-bottom: 1px solid black;
+} */
+
+.eventList_table tr:last-child {
+  border-bottom: 1px solid transparent;
+}
+
+.eventList_table th,
+.eventList_table td {
+  border-collapse: collapse;
+  font-size: 15px;
+  padding: 10px;
+}
+
+.eventList_table th {
+  font-size: 20px;
+}
+
+.eventList_table td button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+/* *************************        MODAL   1          ********************************************  */
+
+.addEvent_modal {
+  width: 100%;
+}
+
+.eventFor_modal {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 30px;
+}
+
+.eventFor_modal h5 {
+  font-size: 25px;
+  font-weight: 500;
+  margin: 0px;
+}
+
+.eventFor_modal_option {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+  gap: 6px;
+}
+
+.eventModal_table {
+  margin: 20px auto;
+}
+
+.eTable_title input {
+  border: none;
+  outline: none;
+  padding: 15px 15px 5px 15px;
+  font-size: 20px;
+  width: 100%;
+  border-bottom: 1px solid rgba(40, 167, 232, 1);
+}
+
+.eTable_title label {
+  font-size: 25px;
+  font-weight: 500;
+}
+
+/*date --------------------  */
+
+.eTable_date {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 50px;
+  width: 70%;
+}
+
+.eventsphoto:hover{
+  color: rgba(115, 115, 115, 1);
+}
+
+.eventsphoto {
+  text-decoration: none;
+  border: 2px solid;
+  border-radius: 5px;
+  padding: 15px;
+  color: rgba(115, 115, 115, 1);
+  background: #f5f5f5;
+}
+
+.eTable_date label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.eTable_date input {
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+  padding: 15px 15px 5px 15px;
+  font-size: 20px;
+  width: 100%;
+}
+
+.eTable_date .date_from,
+.eTable_date .date_to {
+  width: 45%;
+}
+
+/* class --------------------  */
+
+.eTable_date .dropdown_class {
+  margin-top: 20px;
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+  padding: 15px 15px 5px 15px;
+  font-size: 20px;
+  width: 100%;
+}
+
+/* note --------------------  */
+
+.eTable_note {
+  padding-top: 50px;
+}
+
+.eTable_note label {
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.eTable_note input {
+  font-size: 20px;
+  padding: 15px 15px 5px 15px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid black;
+  width: 100%
+}
+
+.ev_photo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 50px;
+  width: 100%;
+}
+
+.ev_photo input {
+  margin-top: 20px;
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+  padding: 15px 15px 5px 15px;
+  font-size: 20px;
+  width: 80%;
+}
+
+.ev_photo .evPhoto_dropdown {
+  margin-top: 20px;
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+  padding: 15px 15px 5px 15px;
+  font-size: 20px;
+  width: 80%;
+}
+
+.evphoto_btn {
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.ev_view_btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 235px;
+  width: 100%;
+}
+
+.ev_view_btn .viewAll_btn {
+  font-size: 20px;
+  font-weight: 500;
+  color: rgba(40, 167, 232, 1);
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+}
+
+@media screen and (max-width: 1337px) {
+  .about_events {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .eventList_table th {
+    font-size: 15px;
+  }
+}

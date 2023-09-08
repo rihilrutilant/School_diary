@@ -1,0 +1,135 @@
+.edit {
+    font-family: 'Archivo', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 20px;
+    color: #737373;
+    padding: 16px 56px;
+    border-radius: 5px;
+    border: 2px solid;
+    position: absolute;
+    right: 0;
+    top: -100px;
+}
+
+.modal-content .btn-close {
+    z-index: 1;
+}
+
+.weekdays {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    display: flex;
+    gap: 30px;
+    color: #272727;
+    cursor: pointer;
+    margin-bottom: 40px;
+}
+
+.active123 {
+    color: #28A7E8;
+}
+
+.tab-time {
+    border-radius: 10px;
+    padding: 55px 19px;
+    width: 100%;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+}
+
+.tab-time {
+    border-bottom: 1px solid black;
+    border-collapse: collapse;
+    padding: 30px 10px;
+    text-align: center;
+}
+
+.tbl-tr {
+    border-bottom: 1px solid black;
+    border-collapse: collapse;
+    padding: 30px 10px;
+    text-align: center;
+}
+
+.tab-time td {
+    border-bottom: 1px solid black;
+    border-collapse: collapse;
+    padding: 30px 10px;
+    text-align: center;
+}
+
+.tr-heading {
+    background: linear-gradient(90.2deg, #00C5F9 0%, #0084DC 100%);
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    font-family: 'Archivo', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    color: #FFFFFF;
+}
+
+.select-any-options {
+    padding: 10px 30px;
+    font-size: 15px;
+    border-radius: 5px;
+}
+
+.time-table-time {
+    padding: 10px 5px;
+    border-radius: 5px;
+    border: 1px solid;
+}
+
+.save-all-forms {
+    text-align: center;
+    border: none;
+    background: linear-gradient(91.02deg, #00C6F9 0%, #0083DC 100%);
+    padding: 10px;
+    width: 100%;
+    max-width: 100px;
+    color: #FFF;
+    border-radius: 7px;
+}
+
+.ganerateid_cnt {
+    position: relative;
+}
+
+.ganerate_id_part {
+    margin-bottom: 120px;
+}
+
+.final-submit {
+    padding: 20px;
+}
+
+.gene-time {
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    color: black;
+    background: #00C6F9;
+}
+
+.gene-edit-time {
+    /* position: absolute;
+    left: 0;
+    top: 0; */
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    color: black;
+    background: #00C6F9;
+}
+
+.timetable-photo{
+    width: 100%;
+    max-width: 220px;
+    margin-bottom: 40px;
+}

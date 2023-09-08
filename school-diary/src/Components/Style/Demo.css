@@ -1,0 +1,9 @@
+.main-content {
+    display: flex;
+}
+
+.inner-main-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
