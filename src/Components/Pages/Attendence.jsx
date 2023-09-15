@@ -7,7 +7,7 @@ import { useRef } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
 
-
+const adminToken = localStorage.getItem("AToken")
 function Attendence() {
     const [navVisible, showNavbar] = useState(true);
     const [sheetData, setSheetData] = useState('')
@@ -24,10 +24,13 @@ function Attendence() {
         try {
             const response = await fetch(apiConst.excel_attandence, {
                 method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "authToken_admin": adminToken
+                },
                 body: formData,
             });
-            const jsonData = await response.json();
-            console.log("🚀 ~ file: Attendence.jsx:28 ~ uploadSheet ~ jsonData:", jsonData)
+            await response.json();
             setSheetData("")
             setUploadDate("")
             refClose.current.click()
@@ -39,11 +42,11 @@ function Attendence() {
     const getAllStudentData = async () => {
         axios.get(apiConst.excel_attandence_fetch, {
             headers: {
-                "Content-Type": "application/application/json"
+                "Content-Type": "application/json",
+                "authToken_admin": adminToken
             }
         })
             .then((response) => {
-                console.log("🚀 ~ file: Attendence.jsx:46 ~ .then ~ response:", response)
                 setAttendanceData(response.data.data)
             })
             .catch((error) => {
