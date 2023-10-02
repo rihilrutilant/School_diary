@@ -20,23 +20,20 @@ function Attendence() {
         const formData = new FormData()
         formData.append("sheet", sheetData)
         formData.append("uploadDate", uploadDate)
-        console.log(uploadDate);
         try {
             const response = await fetch(apiConst.excel_attandence, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "authToken_admin": adminToken
-                },
                 body: formData,
+                headers: {
+                    "authToken_admin": localStorage.getItem("AToken")
+                },
             });
             await response.json();
-            setSheetData("")
-            setUploadDate("")
             refClose.current.click()
             getAllStudentData()
+            window.location.reload()
         } catch (error) {
-            console.error(error);
+            console.log(error);
         }
     }
     const getAllStudentData = async () => {
